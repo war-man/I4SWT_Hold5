@@ -18,7 +18,7 @@ namespace Calculator.Test.Unit
 			uut = new Calculator();
 		}
 
-		[TestCase(2, 4, 6)]
+		[TestCase(2.3, 4, 6.3)]
 	    [TestCase(-2, 4, 2)]
 	    [TestCase(2, -4, -2)]
 	    [TestCase(-2, -4, -6)]
@@ -54,5 +54,12 @@ namespace Calculator.Test.Unit
 	    {
 	        Assert.That(uut.Power(x, exp), Is.EqualTo(result));
 	    }
+    }
+}
+
+namespace Calculator.Test.Unit
+{
+    class TestFixtureAttribute : Attribute
+    {
     }
 }
