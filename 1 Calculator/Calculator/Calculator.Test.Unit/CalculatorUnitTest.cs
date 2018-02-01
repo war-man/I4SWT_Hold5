@@ -27,6 +27,23 @@ namespace Calculator.Test.Unit
 	        Assert.That(_uut.Add(a, b), Is.EqualTo(result));
 	    }
 
+        [TestCase(1, 1, 1, 3)]
+        [TestCase(1, 1, -1, 1)]
+        [TestCase(1, -2, 1, 0)]
+        [TestCase(-1, -1, -1, -3)]
+        [TestCase(1.1, 1.1, 1.1, 3.3)]
+        [TestCase(-1.1, -1.1, -1.1, -3.3)]
+        [TestCase(double.MaxValue, 1, 1, double.MaxValue)]
+        public void Add_By_accum_Neg_and_pos(double a, double b, double c, double result)
+	    {
+	        _uut.Add(a, b);
+
+	        Assert.That(_uut.Add(c), Is.EqualTo(result));
+	    }
+
+
+
+
 	    [TestCase(2, 4, -2)]
 	    [TestCase(-2, 4, -6)]
 	    [TestCase(2, -4, 6)]
