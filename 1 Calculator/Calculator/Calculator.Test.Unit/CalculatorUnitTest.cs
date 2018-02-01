@@ -34,7 +34,7 @@ namespace Calculator.Test.Unit
         [TestCase(1.1, 1.1, 1.1, 3.3)]
         [TestCase(-1.1, -1.1, -1.1, -3.3)]
         [TestCase(double.MaxValue, 1, 1, double.MaxValue)]
-        public void Add_By_accum_Neg_and_pos(double a, double b, double c, double result)
+        public void Add_By_accummulate_Neg_and_pos(double a, double b, double c, double result)
 	    {
 	        _uut.Add(a, b);
 
