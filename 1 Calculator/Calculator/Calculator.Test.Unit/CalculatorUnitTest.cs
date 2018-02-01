@@ -65,7 +65,22 @@ namespace Calculator.Test.Unit
 	        Assert.That(_uut.Multiply(a, b), Is.EqualTo(result));
 	    }
 
-	    [TestCase(3, 2, 9)]
+	    [TestCase(2.5, 5, 0.5)]
+	    [TestCase(9, -3, -3)]
+	    [TestCase(-9, 3, -3)]
+	    [TestCase(-9, -3, 3)]
+        public void Divide_DivideNumbers_ResultIsCorrect(double a, double b, double result)
+	    {
+            Assert.That(_uut.Divide(a,b),Is.EqualTo(result));
+	    }
+
+	    [Test]
+	    public void Divide_DivideByZero_ThrowsArithmeticException()
+	    {
+	        Assert.Throws<ArithmeticException>(() => _uut.Divide(5, 0));
+	    }
+
+        [TestCase(3, 2, 9)]
 	    [TestCase(-3, 2, 9)]
 	    [TestCase(3, 2.3, 12.513502532843182)]
 	    [TestCase(-3, 2.3, Double.NaN)]
@@ -113,6 +128,24 @@ namespace Calculator.Test.Unit
 		public void Accumulator_RaiseNumbers_ResultIsCorrect(double x, double exp, double result)
 		{
 			Assert.That(_uut.Power(x, exp), Is.EqualTo(_uut.Accumulator));
+		}
+
+		// ---------------------------------------------------------------------
+		// Test Clear
+		[TestCase()]
+		public void Clear_ClearWhenAccumulatorIsCleared_ResultIsZero()
+		{
+			_uut.Accumulator = 0;
+			_uut.Clear();
+			Assert.That(_uut.Accumulator, Is.EqualTo(0));
+		}
+
+		[TestCase()]
+		public void Clear_ClearWhenAccumulatorIsNotCleared_ResultIsZero()
+		{
+			_uut.Accumulator = 10;
+			_uut.Clear();
+			Assert.That(_uut.Accumulator, Is.EqualTo(0));
 		}
 	}
 }
