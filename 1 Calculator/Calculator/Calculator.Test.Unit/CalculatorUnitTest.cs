@@ -48,7 +48,22 @@ namespace Calculator.Test.Unit
 	        Assert.That(_uut.Multiply(a, b), Is.EqualTo(result));
 	    }
 
-	    [TestCase(3, 2, 9)]
+	    [TestCase(2.5, 5, 0.5)]
+	    [TestCase(9, -3, -3)]
+	    [TestCase(-9, 3, -3)]
+	    [TestCase(-9, -3, 3)]
+        public void Divide_DivideNumbers_ResultIsCorrect(double a, double b, double result)
+	    {
+            Assert.That(_uut.Divide(a,b),Is.EqualTo(result));
+	    }
+
+	    [Test]
+	    public void Divide_DivideByZero_ThrowsArithmeticException()
+	    {
+	        Assert.Throws<ArithmeticException>(() => _uut.Divide(5, 0));
+	    }
+
+        [TestCase(3, 2, 9)]
 	    [TestCase(-3, 2, 9)]
 	    public void Power_RaiseNumbers_ResultIsCorrect(double x, double exp, double result)
 	    {
