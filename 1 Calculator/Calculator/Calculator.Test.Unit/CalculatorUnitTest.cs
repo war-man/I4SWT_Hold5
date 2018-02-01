@@ -38,7 +38,7 @@ namespace Calculator.Test.Unit
 	    {
 	        _uut.Add(a, b);
 
-	        Assert.That(_uut.Add(c), Is.EqualTo(result));
+	        Assert.That(_uut.Add(c), Is.EqualTo(result).Within(0.1));
 	    }
 
 
