@@ -10,12 +10,12 @@ namespace Calculator.Test.Unit
 	[TestFixture]
 	public class CalculatorUnitTest
 	{
-		private Calculator uut;
+		private Calculator _uut;
 
 		[SetUp]
 		public void Init()
 		{
-			uut = new Calculator();
+			_uut = new Calculator();
 		}
 
 		[TestCase(2.3, 4, 6.3)]
@@ -24,7 +24,7 @@ namespace Calculator.Test.Unit
 	    [TestCase(-2, -4, -6)]
         public void Add_AddPosAndNegNumbers_ResultIsCorrect(double a, double b, double result)
 	    {
-	        Assert.That(uut.Add(a, b), Is.EqualTo(result));
+	        Assert.That(_uut.Add(a, b), Is.EqualTo(result));
 	    }
 
 	    [TestCase(2, 4, -2)]
@@ -33,7 +33,7 @@ namespace Calculator.Test.Unit
 	    [TestCase(-2, -4, 2)]
 	    public void Subtract_SubtractPosAndNegNumbers_ResultIsCorrect(double a, double b, double result)
 	    {
-	        Assert.That(uut.Subtract(a, b), Is.EqualTo(result));
+	        Assert.That(_uut.Subtract(a, b), Is.EqualTo(result));
 	    }
 
 	    [TestCase(2, 4, 8)]
@@ -45,14 +45,14 @@ namespace Calculator.Test.Unit
 	    [TestCase(0, 0, 0)]
 		public void Multiply_MultiplyNumbers_ResultIsCorrect(double a, double b, double result)
 	    {
-	        Assert.That(uut.Multiply(a, b), Is.EqualTo(result));
+	        Assert.That(_uut.Multiply(a, b), Is.EqualTo(result));
 	    }
 
 	    [TestCase(3, 2, 9)]
 	    [TestCase(-3, 2, 9)]
 	    public void Power_RaiseNumbers_ResultIsCorrect(double x, double exp, double result)
 	    {
-	        Assert.That(uut.Power(x, exp), Is.EqualTo(result));
+	        Assert.That(_uut.Power(x, exp), Is.EqualTo(result));
 	    }
     }
 }
