@@ -93,6 +93,24 @@ namespace Calculator.Test.Unit
 		{
 			Assert.That(_uut.Power(x, exp), Is.EqualTo(_uut.Accumulator));
 		}
+
+		// ---------------------------------------------------------------------
+		// Test Clear
+		[TestCase()]
+		public void Clear_ClearWhenAccumulatorIsCleared_ResultIsZero()
+		{
+			_uut.Accumulator = 0;
+			_uut.Clear();
+			Assert.That(_uut.Accumulator, Is.EqualTo(0));
+		}
+
+		[TestCase()]
+		public void Clear_ClearWhenAccumulatorIsNotCleared_ResultIsZero()
+		{
+			_uut.Accumulator = 10;
+			_uut.Clear();
+			Assert.That(_uut.Accumulator, Is.EqualTo(0));
+		}
 	}
 }
 
