@@ -147,7 +147,15 @@ namespace Calculator.Test.Unit
 			_uut.Clear();
 			Assert.That(_uut.Accumulator, Is.EqualTo(0));
 		}
-	}
+
+	    // ---------------------------------------------------------------------
+        // Jenkins/github webhook test that is always wrong
+	    [Test]
+	    public void AlwaysWrong()
+	    {
+            Assert.That(false, Is.EqualTo(true));
+	    }
+    }
 }
 
 namespace Calculator.Test.Unit
