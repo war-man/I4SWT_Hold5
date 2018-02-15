@@ -2,19 +2,21 @@
 {
 	public class FakeHeater : IHeater
 	{
+		public bool Status { get; private set; }
+
 		public bool RunSelfTest()
 		{
-			throw new System.NotImplementedException();
+			return true;
 		}
 
 		public void TurnOff()
 		{
-			throw new System.NotImplementedException();
+			Status = false;
 		}
 
 		public void TurnOn()
 		{
-			throw new System.NotImplementedException();
+			Status = true;
 		}
 	}
 }
