@@ -1,4 +1,8 @@
-﻿namespace ECS.Legacy
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("ECS.Legacy.Test.Unit")]
+
+namespace ECS.Legacy
 {
     public interface ITempSensor
     {
