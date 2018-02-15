@@ -2,16 +2,11 @@
 {
 	public class FakeTempSensor : ITempSensor
 	{
-		private int _temp;
-
-		public FakeTempSensor(int temp)
-		{
-			_temp = temp;
-		}
+		public int Temp { private get; set; } = 0;
 
 		public int GetTemp()
 		{
-			return _temp;
+			return Temp;
 		}
 
 		public bool RunSelfTest()
