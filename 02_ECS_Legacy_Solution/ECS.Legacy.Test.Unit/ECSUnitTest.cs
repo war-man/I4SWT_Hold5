@@ -14,13 +14,13 @@ namespace ECS.Legacy.Test.Unit
 	    [SetUp]
 	    public void Init()
 	    {
-		    _uut = new ECS(1, new FakeTempSensor(), new FakeHeater());
+		    _uut = new ECS(1, new FakeTempSensor(25), new FakeHeater());
 	    }
 
 		[Test]
 		public void dummy()
 		{
-			Assert.That(true, Is.EqualTo(true));
+			Assert.That(_uut.GetCurTemp(), Is.EqualTo(25));
 		}
 	}
 }
