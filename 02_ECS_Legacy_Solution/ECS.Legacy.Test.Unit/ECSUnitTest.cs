@@ -17,6 +17,10 @@ namespace ECS.Legacy.Test.Unit
 		    _uut = new ECS(1, new FakeTempSensor(), new FakeHeater());
 	    }
 
-
+		[Test]
+		public void dummy()
+		{
+			Assert.That(true, Is.EqualTo(true));
+		}
 	}
 }
