@@ -6,14 +6,14 @@
         private readonly ITempSensor _tempSensor;
         private readonly IHeater _heater;
 
-        public ECS(int thr, ITempSensor tempSensor, IHeater Heater)
+        public ECS(int thr, ITempSensor tempSensor, IHeater heater)
         {
             SetThreshold(thr);
             _tempSensor = tempSensor;
-            _heater = Heater;
+            _heater = heater;
         }
 
-        public void Regulate()
+	    public void Regulate()
         {
             var t = _tempSensor.GetTemp();
             if (t < _threshold)
