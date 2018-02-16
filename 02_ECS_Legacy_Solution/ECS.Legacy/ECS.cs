@@ -35,7 +35,7 @@
 
         public int GetCurTemp()
         {
-            return 0;
+            return _tempSensor.GetTemp();
         }
 
         public bool RunSelfTest()
