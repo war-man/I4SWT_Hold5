@@ -3,6 +3,7 @@
 	public class FakeTempSensor : ITempSensor
 	{
 		public int Temp { private get; set; } = 0;
+		public bool SelfTestStatus { private get; set; } = true;
 
 		public int GetTemp()
 		{
@@ -11,7 +12,7 @@
 
 		public bool RunSelfTest()
 		{
-			return true;
+			return SelfTestStatus;
 		}
 	}
 }

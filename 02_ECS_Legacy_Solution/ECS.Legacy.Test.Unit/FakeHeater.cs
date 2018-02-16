@@ -2,11 +2,12 @@
 {
 	public class FakeHeater : IHeater
 	{
-		public bool Status { get; private set; }
+		public bool Status { get; private set; } = false;
+		public bool SelfTestStatus { private get; set; } = true;
 
 		public bool RunSelfTest()
 		{
-			return true;
+			return SelfTestStatus;
 		}
 
 		public void TurnOff()

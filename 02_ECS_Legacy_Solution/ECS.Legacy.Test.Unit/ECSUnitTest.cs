@@ -31,5 +31,17 @@ namespace ECS.Legacy.Test.Unit
 			_temp.Temp = (temperature);
 			Assert.That(_uut.GetCurTemp(), Is.EqualTo(temperature));
 		}
+
+	    [TestCase(true, true, true)]
+	    [TestCase(true, false, false)]
+	    [TestCase(false, true, false)]
+	    [TestCase(false, false, false)]
+		public void RunSelfTest_SetTrueFalse_SelfTestIsCorrect(bool tempTest, bool heaterTest, bool result)
+	    {
+		    _temp.SelfTestStatus = tempTest;
+		    _heater.SelfTestStatus = heaterTest;
+
+			Assert.That(_uut.RunSelfTest(), Is.EqualTo(result));
+	    }
 	}
 }
