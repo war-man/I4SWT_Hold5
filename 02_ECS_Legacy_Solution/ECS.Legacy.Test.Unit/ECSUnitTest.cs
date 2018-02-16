@@ -31,5 +31,20 @@ namespace ECS.Legacy.Test.Unit
 			_temp.Temp = (temperature);
 			Assert.That(_uut.GetCurTemp(), Is.EqualTo(temperature));
 		}
+
+	    [Test]
+	    public void GetThreshold_GetConstructorAssignment_ThresholdIs1()
+	    {
+		    Assert.That(_uut.GetThreshold(), Is.EqualTo(1));
+	    }
+
+	    [TestCase(-100)]
+	    [TestCase(0)]
+	    [TestCase(100)]
+		public void GetThreshold_SetPosAndNegNumbers_ThresholdIsCorrect(int threshold)
+	    {
+			_uut.SetThreshold(threshold);
+		    Assert.That(_uut.GetThreshold(), Is.EqualTo(threshold));
+	    }
 	}
 }
