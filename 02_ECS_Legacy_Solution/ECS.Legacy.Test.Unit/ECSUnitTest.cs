@@ -46,5 +46,16 @@ namespace ECS.Legacy.Test.Unit
 			_uut.SetThreshold(threshold);
 		    Assert.That(_uut.GetThreshold(), Is.EqualTo(threshold));
 	    }
+
+	    [TestCase(25, 20, false)]
+	    [TestCase(20, 25, true)]
+	    [TestCase(25, 25, false)]
+	    public void Regulate_SetEqualAndNonEqualTempAndThreshold_StatusIsCorrect(int temp, int treshold, bool status)
+	    {
+		    _temp.Temp = temp;
+		    _uut.SetThreshold(treshold);
+		    _uut.Regulate();
+		    Assert.That(_heater.Status, Is.EqualTo(status));
+	    }
 	}
 }
