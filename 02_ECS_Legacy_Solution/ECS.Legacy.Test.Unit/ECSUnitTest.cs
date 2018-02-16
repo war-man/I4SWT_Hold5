@@ -43,5 +43,31 @@ namespace ECS.Legacy.Test.Unit
 
 			Assert.That(_uut.RunSelfTest(), Is.EqualTo(result));
 	    }
+
+	    [Test]
+	    public void GetThreshold_GetConstructorAssignment_ThresholdIs1()
+	    {
+		    Assert.That(_uut.GetThreshold(), Is.EqualTo(1));
+	    }
+
+	    [TestCase(-100)]
+	    [TestCase(0)]
+	    [TestCase(100)]
+		public void GetThreshold_SetPosAndNegNumbers_ThresholdIsCorrect(int threshold)
+	    {
+			_uut.SetThreshold(threshold);
+		    Assert.That(_uut.GetThreshold(), Is.EqualTo(threshold));
+	    }
+
+	    [TestCase(25, 20, false)]
+	    [TestCase(20, 25, true)]
+	    [TestCase(25, 25, false)]
+	    public void Regulate_SetEqualAndNonEqualTempAndThreshold_StatusIsCorrect(int temp, int treshold, bool status)
+	    {
+		    _temp.Temp = temp;
+		    _uut.SetThreshold(treshold);
+		    _uut.Regulate();
+		    Assert.That(_heater.Status, Is.EqualTo(status));
+	    }
 	}
 }
