@@ -8,6 +8,15 @@
   <ReportType>HTML<!-- [HTML|JSON|XML|NDependXML]. A type of the report. XML by default. --></ReportType>
   <InheritConsole><!-- [True|False] Lets the application being analysed to inherit dotCover console. True by default. --> </InheritConsole>
   
+  <Filters>
+    <IncludeFilters>
+      <FilterEntry>
+        <ClassMask>ECS.Legacy.ECS</ClassMask>
+      </FilterEntry>
+    </IncludeFilters>
+  </Filters>
+  
+  
   <!-- Coverage filters. It's possible to use asterisks as wildcard symbols.
   <Filters>
     <IncludeFilters>
