@@ -1,10 +1,14 @@
-﻿namespace RouletteGame.Legacy
+﻿using System;
+
+namespace RouletteGame.Legacy
 {
     internal class RouletteGameTestApplication
     {
         private static void Main()
         {
-            var game = new RouletteGame(new Roulette());
+
+            var game = new RouletteGame(new Roulette(new StandardFieldGenerator()));
+
             game.OpenBets();
             game.PlaceBet(new ColorBet("Player 1", 100, Field.Black));
             game.PlaceBet(new ColorBet("Player 1", 100, Field.Red));
@@ -18,6 +22,8 @@
             game.CloseBets();
             game.SpinRoulette();
             game.PayUp();
+
+            Console.ReadKey();
         }
     }
 }

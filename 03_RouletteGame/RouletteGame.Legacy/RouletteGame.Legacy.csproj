@@ -44,10 +44,12 @@
   <ItemGroup>
     <Compile Include="Bet.cs" />
     <Compile Include="Field.cs" />
+    <Compile Include="IFieldGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roulette.cs" />
     <Compile Include="RouletteGame.cs" />
     <Compile Include="RouletteGameTestApplication.cs" />
+    <Compile Include="StandardFieldGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
