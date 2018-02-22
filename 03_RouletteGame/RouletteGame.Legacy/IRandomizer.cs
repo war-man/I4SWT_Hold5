@@ -1,6 +1,6 @@
 ﻿namespace RouletteGame.Legacy
 {
-	interface IRandomizer
+	public interface IRandomizer
 	{
 		uint Next(int low, int high);
 	}

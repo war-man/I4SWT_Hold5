@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace RouletteGame.Legacy
 {
- 
     public class Roulette
     {
         private readonly List<Field> _fields;
         private Field _result;
-	    private IRandomizer _randomizer;
+	    private readonly IRandomizer _randomizer;
 
-        Roulette(IFieldFactory fieldFactory, IRandomizer randomizer)
+        public Roulette(IFieldFactory fieldFactory, IRandomizer randomizer)
         {
             _fields = fieldFactory.CreateFields();
             _result = _fields[0];
