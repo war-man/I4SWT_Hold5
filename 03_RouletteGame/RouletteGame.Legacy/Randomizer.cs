@@ -2,7 +2,7 @@
 
 namespace RouletteGame.Legacy
 {
-	class Randomizer : IRandomizer
+	public class Randomizer : IRandomizer
 	{
 		public uint Next(int low, int high)
 		{
