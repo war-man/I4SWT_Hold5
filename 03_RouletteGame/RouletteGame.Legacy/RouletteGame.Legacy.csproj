@@ -49,7 +49,7 @@
     <Compile Include="Roulette.cs" />
     <Compile Include="RouletteGame.cs" />
     <Compile Include="RouletteGameTestApplication.cs" />
-    <Compile Include="StandardFieldGenerator.cs" />
+    <Compile Include="StandardFieldFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

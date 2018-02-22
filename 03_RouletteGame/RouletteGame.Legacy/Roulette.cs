@@ -9,9 +9,9 @@ namespace RouletteGame.Legacy
         private readonly List<Field> _fields;
         private Field _result;
 
-        public Roulette(IFieldGenerator fieldGenerator)
+        public Roulette(IFieldFactory fieldFactory)
         {
-            _fields = fieldGenerator.Generator();
+            _fields = fieldFactory.CreateFields();
             _result = _fields[0];
         }
 
