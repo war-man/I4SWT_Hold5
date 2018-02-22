@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace RouletteGame.Legacy
 {
-    public interface IFieldGenerator
-    {
-        List<Field> Generator();
+    public interface IFieldFactory
+	{
+        List<Field> CreateFields();
     }
 }
