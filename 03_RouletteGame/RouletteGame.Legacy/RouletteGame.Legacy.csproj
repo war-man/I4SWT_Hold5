@@ -45,10 +45,13 @@
     <Compile Include="Bets\Bet.cs" />
     <Compile Include="Bets\ColorBet.cs" />
     <Compile Include="Bets\EvenOddBet.cs" />
-    <Compile Include="Field.cs" />
     <Compile Include="Bets\FieldBet.cs" />
+	<Compile Include="Field.cs" />
     <Compile Include="IFieldGenerator.cs" />
+    <Compile Include="IFieldFactory.cs" />
+    <Compile Include="IRandomizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Randomizer.cs" />
     <Compile Include="Roulette.cs" />
     <Compile Include="RouletteGame.cs" />
     <Compile Include="RouletteGameTestApplication.cs" />

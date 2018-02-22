@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RouletteGame.Legacy
 {
     public interface IFieldFactory
-    {
+	{
         List<Field> CreateFields();
     }
 }
