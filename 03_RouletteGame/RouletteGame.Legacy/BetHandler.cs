@@ -9,11 +9,12 @@ namespace RouletteGame.Legacy
     public class BetHandler : IBetHandler
     {
         private readonly List<Bet> _bets;
-        private readonly IGameDisplay _display;
+        // private readonly IGameDisplay _display;
 
         public BetHandler(IGameDisplay display)
+       //  public BetHandler()
         {
-            _display = display;
+          //  _display = display;
             _bets = new List<Bet>();
         }
         public bool Add(Bet bet)
@@ -25,13 +26,13 @@ namespace RouletteGame.Legacy
             }
             else return false;
         }
-
         public bool BettingOpen { get; set; }
+        // public void PayUp(Field result, IGameDisplay display)
         public void PayUp(Field result)
         {
             foreach (var bet in _bets)
             {
-                _display.PayUp(bet, result, bet.WonAmount(result));
+                display.PayUp(bet, result, bet.WonAmount(result));
             }
         }
     }

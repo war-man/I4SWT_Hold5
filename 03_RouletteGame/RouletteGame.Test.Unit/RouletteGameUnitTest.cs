@@ -10,14 +10,15 @@ namespace RouletteGame.Test.Unit
 	    private Legacy.RouletteGame _uut;
 	    private IRoulette _roulette;
 	    private IGameDisplay _display;
-
-		[SetUp]
+	    private IBetHandler _betHandler;
+        [SetUp]
 		public void Init()
 		{
 		    _roulette = Substitute.For<IRoulette>();
             _display = Substitute.For<IGameDisplay>();
+		    _betHandler = Substitute.For<IBetHandler>();
 
-            _uut = new Legacy.RouletteGame(_roulette, _display );
+            _uut = new Legacy.RouletteGame(_roulette, _display, _betHandler );
 		}
 
 	    [Test]
@@ -81,7 +82,7 @@ namespace RouletteGame.Test.Unit
             Field field = new Field(1, 1);
 
 	        _uut.SpinRoulette();
-	        _display.Received().SpinResult(field);
+	        _display.ReceivedWithAnyArgs().SpinResult(field);
 
 	    }
     }

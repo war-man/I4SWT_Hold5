@@ -6,8 +6,8 @@ namespace RouletteGame.Legacy
     {
         private static void Main()
         {
-
-            var game = new RouletteGame(new Roulette(new StandardFieldFactory(), new Randomizer()),new ConsoleDisplay());
+            IGameDisplay display = new ConsoleDisplay();
+            var game = new RouletteGame(new Roulette(new StandardFieldFactory(), new Randomizer()), display, new BetHandler(display));
 
             game.OpenBets();
             game.PlaceBet(new ColorBet("Player 1", 100, Field.Black));
