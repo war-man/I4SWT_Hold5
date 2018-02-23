@@ -10,7 +10,7 @@ namespace RouletteGame.Legacy
     {
         private readonly List<Bet> _bets;
         private readonly IGameDisplay _display;
-        //public BetHandler()
+        
         public BetHandler(IGameDisplay display)
         {
             _display = display;
@@ -26,13 +26,18 @@ namespace RouletteGame.Legacy
             else return false;
         }
         public bool BettingOpen { get; set; }
-        // public void PayUp(Field result, IGameDisplay display)
+        
         public void PayUp(Field result)
         {
             foreach (var bet in _bets)
             {
                 _display.PayUp(bet, result, bet.WonAmount(result));
             }
+        }
+
+        public List<Bet> GetList
+        {
+            get { return _bets; }
         }
     }
 }

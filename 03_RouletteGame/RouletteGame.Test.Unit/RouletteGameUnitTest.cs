@@ -99,7 +99,6 @@ namespace RouletteGame.Test.Unit
             _uut.PayUp();
             var result = _roulette.GetResult();
             
-
             _betHandler.Received().PayUp(result);
         }
     }
