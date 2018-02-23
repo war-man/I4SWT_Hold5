@@ -1,55 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
+
 namespace RouletteGame.Legacy
 {
-    public class RouletteGame
+    public class RouletteGame : IRouletteGame
     {
-        private readonly List<Bet> _bets;
-        private readonly Roulette _roulette;
-        private bool _roundIsOpen;
+        
+        private readonly IRoulette _roulette;
+        private readonly IGameDisplay _display;
+        private readonly IBetHandler _betHandler;
 
-        public RouletteGame(Roulette roulette)
+
+
+        public RouletteGame(IRoulette roulette, IGameDisplay display, IBetHandler betHandler)
         {
-            _bets = new List<Bet>();
+            _display = display;
             _roulette = roulette;
+            _betHandler = betHandler;
         }
 
         public void OpenBets()
         {
-            Console.WriteLine("Round is open for bets");
-            _roundIsOpen = true;
+            _display.BetsOpen();
+            _betHandler.BettingOpen = true;
+
         }
 
         public void CloseBets()
         {
-            Console.WriteLine("Round is closed for bets");
-            _roundIsOpen = false;
+            _display.BetsClosed();
+            _betHandler.BettingOpen = false;
         }
 
         public void PlaceBet(Bet bet)
         {
-            if (_roundIsOpen) _bets.Add(bet);
-            else throw new RouletteGameException("Bet placed while round closed");
+            if (!_betHandler.Add(bet))
+            _display.BetsClosedWarning();
         }
 
         public void SpinRoulette()
         {
-            Console.Write("Spinning...");
+            _display.Spin();
             _roulette.Spin();
-            Console.WriteLine("Result: {0}", _roulette.GetResult());
+            _display.SpinResult(_roulette.GetResult());
         }
 
         public void PayUp()
         {
-            var result = _roulette.GetResult();
-
-            foreach (var bet in _bets)
-            {
-                var won = bet.WonAmount(result);
-                if (won > 0)
-                    Console.WriteLine("{0} just won {1}$ on a {2}", bet.PlayerName, won, bet);
-            }
+            _betHandler.PayUp(_roulette.GetResult());
+            
         }
     }
 

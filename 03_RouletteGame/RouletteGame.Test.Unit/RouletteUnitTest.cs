@@ -13,6 +13,7 @@ namespace RouletteGame.Test.Unit
 		private IRandomizer _randomizer;
 		private Roulette _uut;
 
+
 		[Test]
 		public void Spin_RandomizerReceived_RandomizerNextIsReceived()
 		{
