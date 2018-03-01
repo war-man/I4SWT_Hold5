@@ -22,9 +22,15 @@ namespace RouletteGame.Legacy
 
         public void PayUp(Bet bet, Field field, double won)
         {
-            
-            if (won > 0)
-                Console.WriteLine("{0} just won {1}$ on a {2}", bet.PlayerName, bet.WonAmount(field), bet);
+	        try
+	        {
+		        if (won > 0)
+			        Console.WriteLine("{0} just won {1}$ on a {2}", bet.PlayerName, bet.WonAmount(field), bet);
+			}
+	        catch (NullReferenceException e)
+	        {
+		        Console.WriteLine(e.Message);
+	        }
         }
 
         public void Spin()
@@ -34,7 +40,8 @@ namespace RouletteGame.Legacy
 
         public void SpinResult(Field field)
         {
-            Console.WriteLine("Result: {0}", field);
+	        if (field != null)
+				Console.WriteLine("Result: {0}", field);
         }
     }
 }

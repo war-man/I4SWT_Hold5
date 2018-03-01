@@ -1,4 +1,6 @@
-﻿namespace RouletteGame.Legacy.Bets
+﻿using System;
+
+namespace RouletteGame.Legacy.Bets
 {
 	public class FieldBet : Bet
     {
@@ -11,8 +13,13 @@
 
         public override uint WonAmount(Field field)
         {
-            if (field.Number == _fieldNumber) return 36*Amount;
-            return 0;
+	        if (field != null)
+	        {
+		        if (field.Number == _fieldNumber) return 36 * Amount;
+		        return 0;
+			}
+
+	        throw new BetException("Field was null!");
         }
 
         public override string ToString()

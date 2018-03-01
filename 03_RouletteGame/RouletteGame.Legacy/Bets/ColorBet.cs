@@ -11,8 +11,13 @@
 
         public override uint WonAmount(Field field)
         {
-            if (field.Color == _color) return 2*Amount;
-            return 0;
+	        if (field != null)
+	        {
+				if (field.Color == _color) return 2 * Amount;
+		        return 0;
+			}
+
+	        throw new BetException("Field was null!");
         }
 
         public override string ToString()

@@ -11,8 +11,13 @@
 
         public override uint WonAmount(Field field)
         {
-            if (field.Even == _even) return 2*Amount;
-            return 0;
+	        if (field != null)
+	        {
+				if (field.Even == _even) return 2 * Amount;
+		        return 0;
+			}
+
+	        throw new BetException("Field was null!");
         }
 
         public override string ToString()

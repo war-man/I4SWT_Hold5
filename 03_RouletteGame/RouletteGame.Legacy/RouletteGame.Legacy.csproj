@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BetHandler.cs" />
     <Compile Include="Bets\Bet.cs" />
+    <Compile Include="Bets\BetException.cs" />
     <Compile Include="Bets\ColorBet.cs" />
     <Compile Include="Bets\EvenOddBet.cs" />
     <Compile Include="Bets\FieldBet.cs" />
