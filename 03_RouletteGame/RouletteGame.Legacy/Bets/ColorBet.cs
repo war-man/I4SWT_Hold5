@@ -1,4 +1,4 @@
-﻿namespace RouletteGame.Legacy
+﻿namespace RouletteGame.Legacy.Bets
 {
 	public class ColorBet : Bet
     {

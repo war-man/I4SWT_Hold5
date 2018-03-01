@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RouletteGame.Legacy.Bets;
 
 namespace RouletteGame.Legacy
 {
@@ -15,6 +11,4 @@ namespace RouletteGame.Legacy
 
         void PayUp(Field result);
     }
-
-   
 }

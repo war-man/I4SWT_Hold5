@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using RouletteGame.Legacy;
+using RouletteGame.Legacy.Bets;
 
 namespace RouletteGame.Test.Unit
 {

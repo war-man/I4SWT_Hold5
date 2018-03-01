@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using NSubstitute;
 using RouletteGame.Legacy;
+using RouletteGame.Legacy.Bets;
 
 namespace RouletteGame.Test.Unit
 {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using RouletteGame.Legacy.Bets;
 
 namespace RouletteGame.Legacy
 {
@@ -35,9 +32,6 @@ namespace RouletteGame.Legacy
             }
         }
 
-        public List<Bet> GetList
-        {
-            get { return _bets; }
-        }
+        public List<Bet> GetList => _bets;
     }
 }

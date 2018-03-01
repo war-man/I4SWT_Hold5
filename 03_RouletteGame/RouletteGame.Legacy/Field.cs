@@ -20,8 +20,8 @@ namespace RouletteGame.Legacy
 
         public uint Number
         {
-            get { return _number; }
-            private set
+            get => _number;
+	        private set
             {
                 if (value <= 36) _number = value;
                 else throw new FieldException($"Number {value} not a valid field number");
@@ -30,8 +30,8 @@ namespace RouletteGame.Legacy
 
         public uint Color
         {
-            get { return _color; }
-            private set
+            get => _color;
+	        private set
             {
                 if (value == Red || value == Black || value == Green) _color = value;
                 else
