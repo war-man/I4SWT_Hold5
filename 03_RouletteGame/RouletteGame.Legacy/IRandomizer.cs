@@ -2,6 +2,6 @@
 {
 	public interface IRandomizer
 	{
-		uint Next(int low, int high);
+		uint NextRandom(int low, int high);
 	}
 }

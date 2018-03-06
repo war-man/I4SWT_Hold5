@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace RouletteGame.Legacy
 {
@@ -62,10 +63,25 @@ namespace RouletteGame.Legacy
         }
     }
 
-    public class FieldException : Exception
+	[Serializable]
+	public class FieldException : Exception
     {
-        public FieldException(string s) : base(s)
+        public FieldException(string message) : base(message)
         {
         }
-    }
+
+	    public FieldException()
+	    {
+	    }
+
+	    public FieldException(string message, Exception inner) : base(message, inner)
+	    {
+	    }
+
+	    protected FieldException(
+		    SerializationInfo info,
+		    StreamingContext context) : base(info, context)
+	    {
+	    }
+	}
 }

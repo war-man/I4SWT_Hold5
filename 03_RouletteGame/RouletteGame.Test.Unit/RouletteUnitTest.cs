@@ -23,7 +23,7 @@ namespace RouletteGame.Test.Unit
 			_uut = new Roulette(_fieldFactory, _randomizer);
 
 			_uut.Spin();
-			_randomizer.Received().Next(Arg.Any<int>(), Arg.Any<int>());
+			_randomizer.Received().NextRandom(Arg.Any<int>(), Arg.Any<int>());
 		}
 
 		[TestCase((uint)0, (uint)0)]
@@ -44,7 +44,7 @@ namespace RouletteGame.Test.Unit
 			});
 
 			_randomizer = Substitute.For<IRandomizer>();
-			_randomizer.Next(Arg.Any<int>(), Arg.Any<int>()).Returns(spinResult);
+			_randomizer.NextRandom(Arg.Any<int>(), Arg.Any<int>()).Returns(spinResult);
 
 			_uut = new Roulette(_fieldFactory, _randomizer);
 			_uut.Spin();
@@ -71,7 +71,7 @@ namespace RouletteGame.Test.Unit
 			});
 
 			_randomizer = Substitute.For<IRandomizer>();
-			_randomizer.Next(Arg.Any<int>(), Arg.Any<int>()).Returns(spinResult);
+			_randomizer.NextRandom(Arg.Any<int>(), Arg.Any<int>()).Returns(spinResult);
 
 			_uut = new Roulette(_fieldFactory, _randomizer);
 			_uut.Spin();

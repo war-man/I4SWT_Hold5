@@ -18,7 +18,7 @@ namespace RouletteGame.Legacy
 
         public void Spin()
         {
-            uint n = _randomizer.Next(0, 37);
+            uint n = _randomizer.NextRandom(0, 37);
             _result = _fields[(int) n];
         }
 
