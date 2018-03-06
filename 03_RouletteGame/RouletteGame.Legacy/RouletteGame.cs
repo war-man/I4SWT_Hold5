@@ -34,8 +34,8 @@ namespace RouletteGame.Legacy
 
         public void PlaceBet(Bet bet)
         {
-            if (!_betHandler.Add(bet))
-            _display.BetsClosedWarning();
+            if (!_betHandler.Add(bet)) {
+            _display.BetsClosedWarning(); }
         }
 
         public void SpinRoulette()
