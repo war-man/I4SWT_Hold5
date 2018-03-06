@@ -15,12 +15,12 @@ namespace RouletteGame.Legacy
         }
         public bool Add(Bet bet)
         {
-            if (BettingOpen)
+            if(BettingOpen)
             {
                 _bets.Add(bet);
                 return true;
             }
-            else return false;
+           return false;
         }
         public bool BettingOpen { get; set; }
         

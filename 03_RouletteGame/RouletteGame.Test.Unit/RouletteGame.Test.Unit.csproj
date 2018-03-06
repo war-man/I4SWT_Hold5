@@ -58,7 +58,7 @@
     <Compile Include="EvenOddBetUnitTest.cs" />
     <Compile Include="FieldBetUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouletteGameUnitTest.cs" />
+    <Compile Include="DisplayUnitTest.cs" />
     <Compile Include="RouletteUnitTest.cs" />
     <Compile Include="StandardFieldFactoryUnitTest.cs" />
   </ItemGroup>

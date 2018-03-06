@@ -1,12 +1,13 @@
 ﻿using NUnit.Framework;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
 using RouletteGame.Legacy;
 using RouletteGame.Legacy.Bets;
 
 namespace RouletteGame.Test.Unit
 {
     [TestFixture]
-    public class RouletteGameUnitTest
+    public class DisplayUnitTest
     {
         private Legacy.RouletteGame _uut;
         private IRoulette _roulette;
@@ -24,7 +25,7 @@ namespace RouletteGame.Test.Unit
         }
 
         [Test]
-        public void RouletteGame_display_OpenBets_Called()
+        public void OpenBets_Called()
         {
             //act
             _uut.OpenBets();
@@ -34,7 +35,7 @@ namespace RouletteGame.Test.Unit
         }
 
         [Test]
-        public void RouletteGame_display_ClosedBets_Called()
+        public void ClosedBets_Called()
         {
             //act
             _uut.CloseBets();
@@ -45,7 +46,7 @@ namespace RouletteGame.Test.Unit
         }
 
         [Test]
-        public void RouletteGame_display_PlacedBet_Roundclosed_ClosedBetsWarning_Called()
+        public void PlacedBet_Roundclosed_ClosedBetsWarning_Called()
         {
             ColorBet bet = new ColorBet("test", 100, 2);
 
@@ -59,12 +60,13 @@ namespace RouletteGame.Test.Unit
         }
 
         [Test]
-        public void RouletteGame_display_PlacedBet_Roundopen_ClosedBetsWarning_NotCalled()
+        public void PlacedBet_Roundopen_ClosedBetsWarning_NotCalled()
         {
+            //arrange
             ColorBet bet = new ColorBet("test", 100, 2);
-
+            _betHandler.Add(bet).Returns(true);
+            
             //act
-            _uut.OpenBets();
             _uut.PlaceBet(bet);
 
             //assert
@@ -73,7 +75,7 @@ namespace RouletteGame.Test.Unit
         }
 
         [Test]
-        public void RouletteGame_display_SpinRoulette_Spin_called()
+        public void SpinRoulette_Spin_called()
         {
             _uut.SpinRoulette();
             _display.Received().Spin();
@@ -81,7 +83,7 @@ namespace RouletteGame.Test.Unit
         }
 
         [Test]
-        public void RouletteGame_display_SpinRoulette_SpinResult_called()
+        public void SpinRoulette_SpinResult_called()
         {
             Field field = new Field(1, 1);
 
@@ -93,7 +95,7 @@ namespace RouletteGame.Test.Unit
         }
 
         [Test]
-        public void RouletteGame_BetHandler_PayUp_called()
+        public void BetHandler_PayUp_called()
         {
             Field field = new Field(1, 1);
 
