@@ -36,7 +36,7 @@ namespace DoorControl
 			_state = DoorControlState.DoorClosed;
 		}
 
-		void RequestEntry(string id)
+		public void RequestEntry(string id)
 		{
 			switch (_state)
 			{
@@ -57,7 +57,7 @@ namespace DoorControl
 			}
 		}
 
-		void DoorOpened()
+		public void DoorOpened()
 		{
 			switch (_state)
 			{
@@ -74,7 +74,7 @@ namespace DoorControl
 			}
 		}
 
-		void DoorClosed()
+		public void DoorClosed()
 		{
 			switch (_state)
 			{
