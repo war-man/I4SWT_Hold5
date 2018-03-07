@@ -40,7 +40,7 @@ namespace DoorControl.Test.Unit
 		{
 			_fakeUserValidation.ValidateEntryRequest(Arg.Any<string>()).Returns(true);
 
-			_uut.RequestEntry("123");
+			_uut.RequestEntry(Arg.Any<string>());
 
 			_fakeDoor.Received().Open();
 		}
