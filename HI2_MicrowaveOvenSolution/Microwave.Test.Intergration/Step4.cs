@@ -125,24 +125,18 @@ namespace Microwave.Test.Intergration
 			for (int i = 0; i < powerPressed; i++)
 			{
 				_powerButton.Press();
-				output = consoleOutput.GetOuput();
 			}
 			for (int i = 0; i < timesPressed; i++)
 			{
 				_timerButton.Press();
-				output = consoleOutput.GetOuput();
 			}
-
-			output = null;
-
+			
 			//Act
 			_startButton.Press();
 			output = consoleOutput.GetOuput();
 
-			double procent = (powerPressed*50.0 / 750.0) * 100.0;
+			double procent = (powerPressed*50.0 / 700.0) * 100.0;
 			
-			//Console.WriteLine( $"ouput:\n {output} end");
-
 			//Assert
 			Assert.IsTrue(output.Contains("PowerTube") && output.Contains($"{(int)procent} %"));
 
@@ -153,7 +147,6 @@ namespace Microwave.Test.Intergration
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
-
 		    string output = String.Empty;
 
 		    for (int i = 0; i < powerPressed; i++)
@@ -166,12 +159,10 @@ namespace Microwave.Test.Intergration
 			    _timerButton.Press();
 			   
 		    }
-			
 			//Act
 			_startButton.Press();
 		    output = consoleOutput.GetOuput();
 
-		    Debug.WriteLine( $"ouput:\n {output} end");
 			//Assert
 			Assert.That(
 						output.Contains("Display") && 
