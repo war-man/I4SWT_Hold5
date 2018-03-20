@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -342,7 +343,7 @@ namespace Microwave.Test.Intergration
 			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
 
 			//Assert
-			_powerTubeOutput.Received().OutputLine($"PowerTube works with {50/7} %");
+			_powerTubeOutput.Received().OutputLine($"PowerTube works with {(int)(50 / 700.0 * 100.0)} %");
 		}
 
 		[Test]
@@ -359,7 +360,7 @@ namespace Microwave.Test.Intergration
 			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
 
 			//Assert
-			_powerTubeOutput.Received().OutputLine($"PowerTube works with {150/7} %");
+			_powerTubeOutput.Received().OutputLine($"PowerTube works with {(int)(150/700.0*100.0)} %");
 		}
 
 		#endregion
@@ -417,10 +418,85 @@ namespace Microwave.Test.Intergration
 		}
 
 		[Test]
-		public void UserInterface_CookingState_TimerTick_DisplayWritesTimeToLog()
+		public void UserInterface_CookingState_DoorOpened_PowerTubeWritesOffToLog()
 		{
 			//Arrange
-			int timesCalled = 0;
+			//Get to state
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+
+			//Act
+			_uutUserInterface.OnDoorOpened(_door, new EventArgs());
+
+			//Assert
+			_powerTubeOutput.Received().OutputLine($"PowerTube turned off");
+		}
+
+		[Test]
+		public void UserInterface_CookingState_DoorOpened_DisplayWritesClearedToLog()
+		{
+			//Arrange
+			//Get to state
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+
+			//Act
+			_uutUserInterface.OnDoorOpened(_door, new EventArgs());
+
+			//Assert
+			_displayOutput.Received().OutputLine("Display cleared");
+		}
+
+		[Test]
+		public void UserInterface_CookingState_DoorOpened_ValuesAreReset()
+		{
+			//Arrange
+			//Get to state and increase power a bit
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+
+			//Act
+			_uutUserInterface.OnDoorOpened(_door, new EventArgs());
+
+			//Rearrange
+			_uutUserInterface.OnDoorClosed(_door, new EventArgs());
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+
+			//Assert
+			_displayOutput.Received(2).OutputLine("Display shows: 50 W");
+		}
+
+		[Test]
+		public void UserInterface_CookingState_DoorOpened_LightWritesOnToLog()
+		{
+			//Arrange
+			//Get to state and increase power a bit
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+
+			//Act
+			_uutUserInterface.OnDoorOpened(_door, new EventArgs());
+
+			//Rearrange
+			_uutUserInterface.OnDoorClosed(_door, new EventArgs());
+
+			//Assert
+			_lightOutput.Received(1).OutputLine("Light is turned on");
+		}
+
+		[Test]
+		public void UserInterface_CookingState_TimerTickOneSec_DisplayWritesTimeToLog()
+		{
+			//Arrange
+			bool wasCalled = false;
 			//Get to state
 			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
 			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
@@ -429,11 +505,39 @@ namespace Microwave.Test.Intergration
 			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
 
 			//Assert
-			_displayOutput.When(x => x.OutputLine($"Display shows: 00:59"))
-				.Do(x => ++timesCalled);
+			//Set wasCalled, if OutputLine() was called with 00:59 time
+			_displayOutput
+				.When(x => x.OutputLine(Arg.Is<string>(
+					str => str.ToLower().Contains("display shows: 00:59")
+				)))
+				.Do(x => wasCalled = true);
 
 			//Assert
-			Assert.That(() => (timesCalled == 1), Is.True.After(5000));
+			Assert.That(() => (wasCalled), Is.True.After(1100));
+		}
+
+		[Test]
+		public void UserInterface_CookingState_TimerTickFiveSec_DisplayWritesTimeToLog()
+		{
+			//Arrange
+			bool wasCalled = false;
+			//Get to state
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
+
+			//Act
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+
+			//Assert
+			//Set wasCalled, if OutputLine() was called with 00:55 time
+			_displayOutput
+				.When(x => x.OutputLine(Arg.Is<string>(
+					str => str.ToLower().Contains("display shows: 00:55")
+				)))
+				.Do(x => wasCalled = true);
+
+			//Assert
+			Assert.That(() => (wasCalled), Is.True.After(5100));
 		}
 
 		#endregion
