@@ -27,9 +27,13 @@ namespace Microwave.Test.Intergration
 
 	    private IUserInterface _userInterface;
 
+	    private ConsoleOutput consoleOutput;
+
 		[SetUp]
         public void Setup()
         {
+	        consoleOutput = new ConsoleOutput();
+
 			_powerButton = new Button();
 	        _timerButton = new Button();
 			_startButton = new Button();
@@ -71,7 +75,7 @@ namespace Microwave.Test.Intergration
 		public void output_PowerbuttonPress_OutputCorrect(int timesToPress)
 	    {
 		    //Arrange
-		    var consoleOutput = new ConsoleOutput();
+		   
 
 			//Act
 		    for (int i = 0; i < timesToPress; i++)
@@ -142,11 +146,12 @@ namespace Microwave.Test.Intergration
 
 		}
 
-	    [TestCase(2, 1, 10)]
+	    [TestCase(2, 1, 1)]
+		[TestCase(2, 1, 10)]
 	    public void output_CookingState_TimeOutput(int timesPressed, int powerPressed, int testAfterTime)
 	    {
-		    //Arrange
-		    var consoleOutput = new ConsoleOutput();
+			//Arrange
+		    int timescalc = (timesPressed * 60) - testAfterTime;
 		    string output = String.Empty;
 
 		    for (int i = 0; i < powerPressed; i++)
@@ -161,12 +166,11 @@ namespace Microwave.Test.Intergration
 		    }
 			//Act
 			_startButton.Press();
-		    output = consoleOutput.GetOuput();
-
+			
 			//Assert
-			Assert.That(
-						output.Contains("Display") && 
-						output.Contains($"{timesPressed - 1:D2}:{60 - testAfterTime:D2}"),
+			Assert.That( () =>
+					consoleOutput.GetOuput().Contains("Display") &&
+					consoleOutput.GetOuput().Contains($"{(timescalc/60):D2}:{(timescalc % 60):D2}"),
 						Is.True.After(testAfterTime * 1000  + 500));
 
 		}
