@@ -512,7 +512,6 @@ namespace Microwave.Test.Intergration
 				)))
 				.Do(x => wasCalled = true);
 
-			//Assert
 			Assert.That(() => (wasCalled), Is.True.After(1100));
 		}
 
@@ -536,8 +535,53 @@ namespace Microwave.Test.Intergration
 				)))
 				.Do(x => wasCalled = true);
 
-			//Assert
 			Assert.That(() => (wasCalled), Is.True.After(5100));
+		}
+
+		[Test]
+		public void UserInterface_CookingState_CookingIsDone_DisplayWritesClearedToLog()
+		{
+			//Arrange
+			bool wasCalled = false;
+			//Get to state
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
+
+			//Act
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+
+			//Assert
+			//Set wasCalled, if OutputLine() was called with display cleared
+			_displayOutput
+				.When(x => x.OutputLine(Arg.Is<string>(
+					str => str.ToLower().Contains("display cleared")
+				)))
+				.Do(x => wasCalled = true);
+
+			Assert.That(() => (wasCalled), Is.True.After(60100));
+		}
+
+		[Test]
+		public void UserInterface_CookingState_CookingIsDone_ValuesAreReset()
+		{
+			//Arrange
+			//Get to state and increase power a bit
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+			_uutUserInterface.OnTimePressed(_timeButton, new EventArgs());
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+
+			//Act
+			_uutUserInterface.OnStartCancelPressed(_startCancelButton, new EventArgs());
+			//Wait for timer to expire
+			Thread.Sleep(61000);
+
+			//Rearrange
+			_uutUserInterface.OnPowerPressed(_powerButton, new EventArgs());
+
+			//Assert
+			_displayOutput.Received(2).OutputLine("Display shows: 50 W");
 		}
 
 		#endregion
