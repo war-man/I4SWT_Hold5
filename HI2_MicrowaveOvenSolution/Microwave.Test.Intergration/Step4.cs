@@ -64,8 +64,6 @@ namespace Microwave.Test.Intergration
 		    Assert.IsTrue(consoleOutput.GetOuput().Contains("Light") && consoleOutput.GetOuput().Contains("turned off"));
 	    }
 
-	    
-
 	    [TestCase(1)]
 	    [TestCase(5)]
 		public void output_PowerbuttonPress_OutputCorrect(int timesToPress)
@@ -121,53 +119,66 @@ namespace Microwave.Test.Intergration
 		{
 			//Arrange
 			var consoleOutput = new ConsoleOutput();
-			
+			string output = null;
 			for (int i = 0; i < powerPressed; i++)
 			{
 				_powerButton.Press();
+				output = consoleOutput.GetOuput();
 			}
 			for (int i = 0; i < timesPressed; i++)
 			{
 				_timerButton.Press();
+				output = consoleOutput.GetOuput();
 			}
+
+			output = null;
+
 			//Act
 			_startButton.Press();
+			output = consoleOutput.GetOuput();
 
-			double procent = (timesPressed*50.0 / 750.0) * 100.0;
+			double procent = (powerPressed*50.0 / 750.0) * 100.0;
 			
+			//Console.WriteLine( $"ouput:\n {output} end");
+
 			//Assert
-			Assert.IsTrue(consoleOutput.GetOuput().Contains("PowerTube") && consoleOutput.GetOuput().Contains($"{(int)procent} %"));
+			Assert.IsTrue(output.Contains("PowerTube") && output.Contains($"{(int)procent} %"));
 
 		}
 
-	    [TestCase(2, 3, 10)]
+	    [TestCase(2, 1, 10)]
 	    public void output_CookingState_TimeOutput(int timesPressed, int powerPressed, int testAfterTime)
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
-
-			for (int i = 0; i < powerPressed; i++)
-			{
-				_powerButton.Press();
-			}
-
-			for (int i = 0; i < timesPressed; i++)
+		    string output = null;
+		    for (int i = 0; i < powerPressed; i++)
+		    {
+			    _powerButton.Press();
+			   //output = consoleOutput.GetOuput();
+		    }
+		    for (int i = 0; i < timesPressed; i++)
 		    {
 			    _timerButton.Press();
+			    //output = consoleOutput.GetOuput();
 		    }
-		  
-			
-		    //Act
+
+			output = consoleOutput.GetOuput();
+			//Act
 			_startButton.Press();
-			
-			
+		    output = consoleOutput.GetOuput();
 
-			
+			for (int i = 0;i <testAfterTime; i++) {
+				
+				output = String.Empty;
+				output = consoleOutput.GetOuput();
 
-		    //Assert
-		    Assert.That(
-						consoleOutput.GetOuput().Contains("Display") && 
-						consoleOutput.GetOuput().Contains($"{timesPressed - 1:D2}:{60 - testAfterTime:D2}"),
+			}
+		    Console.WriteLine( $"ouput:\n {output} end");
+			//Assert
+			Assert.That(
+						output.Contains("Display") && 
+						output.Contains($"{timesPressed - 1:D2}:{60 - testAfterTime:D2}"),
 						Is.True.After(testAfterTime * 1000  +500));
 
 		}
