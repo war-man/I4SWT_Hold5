@@ -101,7 +101,8 @@ namespace Microwave.Test.Intergration
 
 		public class ConsoleOutput : IDisposable
 	    {
-		    private StringWriter stringWriter;
+			//From https://stackoverflow.com/questions/2139274/grabbing-the-output-sent-to-console-out-from-within-a-unit-test
+			private StringWriter stringWriter;
 		    private TextWriter originalOutput;
 
 		    public ConsoleOutput()
