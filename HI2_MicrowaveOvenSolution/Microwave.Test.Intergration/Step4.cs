@@ -151,7 +151,7 @@ namespace Microwave.Test.Intergration
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
-		    string output = null;
+		    string output = String.Empty;
 		    for (int i = 0; i < powerPressed; i++)
 		    {
 			    _powerButton.Press();

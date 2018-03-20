@@ -21,10 +21,13 @@ namespace MicrowaveOvenClasses.Boundary
             timer.AutoReset = true;  // Repeatable timer
         }
 
-
+		/// <summary>
+		/// starte the timer
+		/// </summary>
+		/// <param name="time"> time in sekunds</param>
         public void Start(int time)
         {
-            TimeRemaining = time;
+            TimeRemaining = time*1000;
             timer.Enabled = true;
         }
 
