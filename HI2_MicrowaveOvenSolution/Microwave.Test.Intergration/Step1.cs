@@ -11,7 +11,7 @@ using Assert = NUnit.Framework.Assert;
 namespace Microwave.Test.Intergration
 {
 	[TestFixture]
-	public class step1
+	public class Step1
 	{
 		private IOutput _outputDisplay;
 		private IOutput _outputPower;
