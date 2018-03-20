@@ -166,12 +166,15 @@ namespace Microwave.Test.Intergration
 		    }
 			//Act
 			_startButton.Press();
-			
+		    
+		    
+
 			//Assert
 			Assert.That( () =>
-					consoleOutput.GetOuput().Contains("Display") &&
-					consoleOutput.GetOuput().Contains($"{(timescalc/60):D2}:{(timescalc % 60):D2}"),
+					consoleOutput.GetOuput().Split('\n').Reverse().Take(2).ToArray()[1].Contains("Display") &&
+					consoleOutput.GetOuput().Split('\n').Reverse().Take(2).ToArray()[1].Contains($"{(timescalc/60):D2}:{(timescalc % 60):D2}"),
 						Is.True.After(testAfterTime * 1000  + 500));
+
 
 		}
 
