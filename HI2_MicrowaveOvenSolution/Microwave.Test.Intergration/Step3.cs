@@ -52,23 +52,37 @@ namespace Microwave.Test.Intergration
 		}
 
 		[Test]
-		public void Door_OpenDoor_OutputIsCalled()
+		public void Door_OpenDoor_CorrectOutputIsShown()
 		{
 			// Act
 			_door.Open();
 
 			// Assert
-			_fakeLightOutput.Received().OutputLine(Arg.Any<string>());
+			_fakeLightOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("light") &&
+				str.ToLower().Contains("turned on")));
+		}
+
+		[Test]
+		public void Door_CloseDoorWhenDoorIsOpen_CorrectOutputIsShown()
+		{
+			// Arrange
+			_door.Open();
+
+			// Act
+			_door.Close();
+
+			// Assert
+			_fakeLightOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("light") &&
+				str.ToLower().Contains("turned off")));
 		}
 
 		[TestCase(1)]
 		[TestCase(5)]
-		public void PowerButton_PressButton_OutputIsCalled(int timesToPress)
+		[TestCase(10)]
+		public void PowerButton_PressButton_CorrectOutputIsShown(int timesToPress)
 		{
-			// Arrange
-			_door.Open();
-			_door.Close();
-
 			// Act
 			for (int i = 0; i < timesToPress; i++)
 			{
@@ -76,16 +90,17 @@ namespace Microwave.Test.Intergration
 			}
 
 			// Assert
-			_fakeDisplayOutput.Received(timesToPress).OutputLine(Arg.Any<string>());
+			_fakeDisplayOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("display shows") &&
+				str.ToLower().Contains($"{timesToPress * 50} w")));
 		}
 
 		[TestCase(1)]
 		[TestCase(5)]
-		public void TimerButton_PressButton_OutputIsCalled(int timesToPress)
+		[TestCase(10)]
+		public void TimerButton_PressButton_CorrectOutputIsShown(int timesToPress)
 		{
 			// Arrange
-			_door.Open();
-			_door.Close();
 			_powerButton.Press();
 
 			// Act
@@ -95,16 +110,15 @@ namespace Microwave.Test.Intergration
 			}
 
 			// Assert
-			// timesToPress + 1 -> as Power-button will generate one call
-			_fakeDisplayOutput.Received(timesToPress + 1).OutputLine(Arg.Any<string>());
+			_fakeDisplayOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("display shows") &&
+				str.ToLower().Contains($"{timesToPress:D2}:00")));
 		}
 
 		[Test]
-		public void StartCancelButton_PressButon_OutputIsCalled()
+		public void StartCancelButton_PressButon_CorrectOutputIsShownOnLight()
 		{
 			// Arrange
-			_door.Open();
-			_door.Close();
 			_powerButton.Press();
 			_timeButton.Press();
 
@@ -112,11 +126,29 @@ namespace Microwave.Test.Intergration
 			_startCancelButton.Press();
 
 			// Assert
-			_fakePowerTubeOutput.Received().OutputLine(Arg.Any<string>());
+			_fakeLightOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("light") &&
+				str.ToLower().Contains("turned on")));
 		}
 
 		[Test]
-		public void Door_OpenDoorWhenRunning_OutputIsCalled()
+		public void StartCancelButton_PressButon_CorrectOutputIsShownOnPowertube()
+		{
+			// Arrange
+			_powerButton.Press();
+			_timeButton.Press();
+
+			// Act
+			_startCancelButton.Press();
+
+			// Assert
+			_fakePowerTubeOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("powertube works") &&
+				str.ToLower().Contains("50 %")));
+		}
+
+		[Test]
+		public void Door_OpenDoorWhenRunning_CorrectOutputIsShown()
 		{
 			// Arrange
 			_door.Open();
@@ -129,11 +161,13 @@ namespace Microwave.Test.Intergration
 			_door.Open();
 
 			// Assert
-			_fakePowerTubeOutput.Received().OutputLine(Arg.Any<string>());
+			_fakePowerTubeOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("powertube") &&
+				str.ToLower().Contains("turned off")));
 		}
 
 		[Test]
-		public void StartCancelButton_PressButtonWhenRunning_OutputIsCalled()
+		public void StartCancelButton_PressButtonWhenRunning_CorrectOutputIsShown()
 		{
 			// Arrange
 			_door.Open();
@@ -146,7 +180,9 @@ namespace Microwave.Test.Intergration
 			_startCancelButton.Press();
 
 			// Assert
-			_fakePowerTubeOutput.Received().OutputLine(Arg.Any<string>());
+			_fakePowerTubeOutput.Received().OutputLine(Arg.Is<string>(str =>
+				str.ToLower().Contains("powertube") &&
+				str.ToLower().Contains("turned off")));
 		}
 	}
 }

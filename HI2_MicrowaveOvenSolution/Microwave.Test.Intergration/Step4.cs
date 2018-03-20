@@ -85,10 +85,11 @@ namespace Microwave.Test.Intergration
 
 		[TestCase(1)]
 		[TestCase(5)]
-		public void output_timebuttonPress_OutputCorrect(int timesToPress) //virker ikke
+		public void output_timebuttonPress_inPowerState_OutputCorrect(int timesToPress) //virker ikke
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
+			_powerButton.Press();
 			//Act
 			for (int i = 0; i < timesToPress; i++)
 			{
@@ -97,12 +98,86 @@ namespace Microwave.Test.Intergration
 			//Assert
 			Assert.IsTrue(consoleOutput.GetOuput().Contains("Display") && consoleOutput.GetOuput().Contains($"{timesToPress:D2}:00"));
 	    }
-		
 
+	    [TestCase(1)]
+	    [TestCase(5)]
+	    public void output_timebuttonPress_notInPowerstate_OutputCorrect(int timesToPress) //virker ikke
+	    {
+		    //Arrange
+		    var consoleOutput = new ConsoleOutput();
+		    //Act
+		    for (int i = 0; i < timesToPress; i++)
+		    {
+			    _timerButton.Press();
+		    }
+		    //Assert
+		    Assert.IsFalse(consoleOutput.GetOuput().Contains("Display") && consoleOutput.GetOuput().Contains($"{timesToPress:D2}:00"));
+	    }
+
+	    [TestCase(1, 1)]
+	    [TestCase(1, 2)]
+	    [TestCase(1, 3)]
+		public void output_CookingState_PowerOutput(int timesPressed, int powerPressed)
+		{
+			//Arrange
+			var consoleOutput = new ConsoleOutput();
+			
+			for (int i = 0; i < powerPressed; i++)
+			{
+				_powerButton.Press();
+			}
+			for (int i = 0; i < timesPressed; i++)
+			{
+				_timerButton.Press();
+			}
+			//Act
+			_startButton.Press();
+
+			double procent = (timesPressed*50.0 / 750.0) * 100.0;
+			
+			//Assert
+			Assert.IsTrue(consoleOutput.GetOuput().Contains("PowerTube") && consoleOutput.GetOuput().Contains($"{(int)procent} %"));
+
+		}
+
+	    [TestCase(2, 3, 10)]
+	    public void output_CookingState_TimeOutput(int timesPressed, int powerPressed, int testAfterTime)
+	    {
+		    //Arrange
+		    var consoleOutput = new ConsoleOutput();
+
+			for (int i = 0; i < powerPressed; i++)
+			{
+				_powerButton.Press();
+			}
+
+			for (int i = 0; i < timesPressed; i++)
+		    {
+			    _timerButton.Press();
+		    }
+		  
+			
+		    //Act
+			_startButton.Press();
+			
+			
+
+			
+
+		    //Assert
+		    Assert.That(
+						consoleOutput.GetOuput().Contains("Display") && 
+						consoleOutput.GetOuput().Contains($"{timesPressed - 1:D2}:{60 - testAfterTime:D2}"),
+						Is.True.After(testAfterTime * 1000  +500));
+
+		}
+
+		//helper class
 		public class ConsoleOutput : IDisposable
 	    {
 			//From https://stackoverflow.com/questions/2139274/grabbing-the-output-sent-to-console-out-from-within-a-unit-test
-			private StringWriter stringWriter;
+
+		    private StringWriter stringWriter;
 		    private TextWriter originalOutput;
 
 		    public ConsoleOutput()
