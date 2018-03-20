@@ -41,7 +41,12 @@ namespace Microwave.Test.Intergration
 	        _output = new Output();
 
 			IDisplay display = new Display(_output);
-			_userInterface = new UserInterface(_powerButton,_timerButton,_startButton, _door = new Door(), display, new Light(_output), new CookController(new Timer(), display, new PowerTube(_output)));
+	        var cookController = new CookController(new Timer(), display, new PowerTube(_output));
+
+	        _userInterface = new UserInterface(_powerButton,_timerButton,_startButton, _door = new Door(), display, new Light(_output), cookController);
+
+	        cookController.UI = _userInterface;
+
         }
 
 	    [Test]
@@ -143,7 +148,6 @@ namespace Microwave.Test.Intergration
 
 	    [TestCase(2, 1, 1)]
 		[TestCase(2, 1, 10)]
-	    [TestCase(2, 1, 60)]
 		public void output_CookingState_TimeOutput(int timesPressed, int powerPressed, int testAfterTime)
 	    {
 			//Arrange
@@ -171,7 +175,6 @@ namespace Microwave.Test.Intergration
 					_consoleOutput.GetOuput().Split('\n').Reverse().Take(2).ToArray()[1].Contains("Display") &&
 					_consoleOutput.GetOuput().Split('\n').Reverse().Take(2).ToArray()[1].Contains($"{(timescalc/60):D2}:{(timescalc % 60):D2}"),
 						Is.True.After(testAfterTime * 1000  + 500));
-
 
 		}
 
