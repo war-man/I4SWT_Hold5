@@ -558,7 +558,7 @@ namespace Microwave.Test.Intergration
 				)))
 				.Do(x => wasCalled = true);
 
-			Assert.That(() => (wasCalled), Is.True.After(60100));
+			Assert.That(() => (wasCalled), Is.True.After(61000));
 		}
 
 		[Test]
