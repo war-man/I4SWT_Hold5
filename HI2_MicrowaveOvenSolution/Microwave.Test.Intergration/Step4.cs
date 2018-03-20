@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -56,6 +57,7 @@ namespace Microwave.Test.Intergration
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
+			_door.Open();
 
 		    //Act
 		    _door.Close();
@@ -83,7 +85,7 @@ namespace Microwave.Test.Intergration
 
 		[TestCase(1)]
 		[TestCase(5)]
-		public void output_timebuttonPress_inPowerState_OutputCorrect(int timesToPress) //virker ikke
+		public void output_timebuttonPress_inPowerState_OutputCorrect(int timesToPress)
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
@@ -99,7 +101,7 @@ namespace Microwave.Test.Intergration
 
 	    [TestCase(1)]
 	    [TestCase(5)]
-	    public void output_timebuttonPress_notInPowerstate_OutputCorrect(int timesToPress) //virker ikke
+	    public void output_timebuttonPress_notInPowerstate_OutputCorrect(int timesToPress)
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
@@ -151,35 +153,30 @@ namespace Microwave.Test.Intergration
 	    {
 		    //Arrange
 		    var consoleOutput = new ConsoleOutput();
+
 		    string output = String.Empty;
+
 		    for (int i = 0; i < powerPressed; i++)
 		    {
 			    _powerButton.Press();
-			   //output = consoleOutput.GetOuput();
+			   
 		    }
 		    for (int i = 0; i < timesPressed; i++)
 		    {
 			    _timerButton.Press();
-			    //output = consoleOutput.GetOuput();
+			   
 		    }
-
-			output = consoleOutput.GetOuput();
+			
 			//Act
 			_startButton.Press();
 		    output = consoleOutput.GetOuput();
 
-			for (int i = 0;i <testAfterTime; i++) {
-				
-				output = String.Empty;
-				output = consoleOutput.GetOuput();
-
-			}
-		    Console.WriteLine( $"ouput:\n {output} end");
+		    Debug.WriteLine( $"ouput:\n {output} end");
 			//Assert
 			Assert.That(
 						output.Contains("Display") && 
 						output.Contains($"{timesPressed - 1:D2}:{60 - testAfterTime:D2}"),
-						Is.True.After(testAfterTime * 1000  +500));
+						Is.True.After(testAfterTime * 1000  + 500));
 
 		}
 
