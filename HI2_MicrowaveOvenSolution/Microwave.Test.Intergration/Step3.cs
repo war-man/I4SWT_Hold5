@@ -144,8 +144,8 @@ namespace Microwave.Test.Intergration
 			// Assert
 			_fakePowerTubeOutput.Received().OutputLine(Arg.Is<string>(str =>
 				str.ToLower().Contains("powertube works") &&
-				str.ToLower().Contains("50 %")));
-		}
+				str.ToLower().Contains("7 %")));  // 7 % as (50 / 700 * 100) = 7,14
+        }
 
 		[Test]
 		public void Door_OpenDoorWhenRunning_CorrectOutputIsShown()
