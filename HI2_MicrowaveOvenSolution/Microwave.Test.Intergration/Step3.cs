@@ -52,7 +52,7 @@ namespace Microwave.Test.Intergration
 		}
 
 		[Test]
-		public void Door_OpenDoor_CorrectOutputIsShown()
+		public void DoorUserInterface_OpenDoor_CorrectOutputIsShown()
 		{
 			// Act
 			_door.Open();
@@ -64,7 +64,7 @@ namespace Microwave.Test.Intergration
 		}
 
 		[Test]
-		public void Door_CloseDoorWhenDoorIsOpen_CorrectOutputIsShown()
+		public void DoorUserInterface_CloseDoorWhenDoorIsOpen_CorrectOutputIsShown()
 		{
 			// Arrange
 			_door.Open();
@@ -81,7 +81,7 @@ namespace Microwave.Test.Intergration
 		[TestCase(1)]
 		[TestCase(5)]
 		[TestCase(10)]
-		public void PowerButton_PressButton_CorrectOutputIsShown(int timesToPress)
+		public void PowerButtonUserInterface_PressButton_CorrectOutputIsShown(int timesToPress)
 		{
 			// Act
 			for (int i = 0; i < timesToPress; i++)
@@ -98,7 +98,7 @@ namespace Microwave.Test.Intergration
 		[TestCase(1)]
 		[TestCase(5)]
 		[TestCase(10)]
-		public void TimerButton_PressButton_CorrectOutputIsShown(int timesToPress)
+		public void TimerButtonUserInterface_PressButton_CorrectOutputIsShown(int timesToPress)
 		{
 			// Arrange
 			_powerButton.Press();
@@ -116,7 +116,7 @@ namespace Microwave.Test.Intergration
 		}
 
 		[Test]
-		public void StartCancelButton_PressButon_CorrectOutputIsShownOnLight()
+		public void StartCancelButtonUserInterface_PressButon_CorrectOutputIsShownOnLight()
 		{
 			// Arrange
 			_powerButton.Press();
@@ -132,7 +132,7 @@ namespace Microwave.Test.Intergration
 		}
 
 		[Test]
-		public void StartCancelButton_PressButon_CorrectOutputIsShownOnPowertube()
+		public void StartCancelButtonUserInterface_PressButon_CorrectOutputIsShownOnPowertube()
 		{
 			// Arrange
 			_powerButton.Press();
@@ -148,7 +148,7 @@ namespace Microwave.Test.Intergration
         }
 
 		[Test]
-		public void Door_OpenDoorWhenRunning_CorrectOutputIsShown()
+		public void DoorUserInterface_OpenDoorWhenRunning_CorrectOutputIsShown()
 		{
 			// Arrange
 			_door.Open();
@@ -167,7 +167,7 @@ namespace Microwave.Test.Intergration
 		}
 
 		[Test]
-		public void StartCancelButton_PressButtonWhenRunning_CorrectOutputIsShown()
+		public void StartCancelButtonUserInterface_PressButtonWhenRunning_CorrectOutputIsShown()
 		{
 			// Arrange
 			_door.Open();
