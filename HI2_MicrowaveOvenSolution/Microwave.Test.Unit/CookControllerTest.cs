@@ -38,9 +38,9 @@ namespace Microwave.Test.Unit
         [Test]
         public void StartCooking_ValidParameters_PowerTubeStarted()
         {
-            uut.StartCooking(50, 60);
+			uut.StartCooking(50, 60);
 
-            powerTube.Received().TurnOn(50);
+			powerTube.Received().TurnOn((int) (50 / 700.0 * 100.0));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Microwave.Test.Unit
         {
             uut.StartCooking(50, 60);
 
-            timer.TimeRemaining.Returns(115);
+            timer.TimeRemaining.Returns(115000);
             timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
 
             display.Received().ShowTime(1, 55);
