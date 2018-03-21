@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -7,12 +8,14 @@ using NSubstitute;
 using NUnit.Framework;
 using NUnit.Framework.Internal.Commands;
 using Assert = NUnit.Framework.Assert;
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 namespace Microwave.Test.Intergration
 {
 	[TestFixture]
 	public class Step1
 	{
+		#region Setup
 		private IOutput _outputDisplay;
 		private IOutput _outputPower;
 
@@ -21,96 +24,93 @@ namespace Microwave.Test.Intergration
 		private IPowerTube _powerTube;
 		private ICookController _cookController;
 		private IUserInterface _userInterface;
+
 		[SetUp]
 		public void Setup()
 		{
 			_outputDisplay = Substitute.For<IOutput>();
 			_outputPower = Substitute.For<IOutput>();
-			_userInterface = Substitute.For<UserInterface>();
+			_userInterface = Substitute.For<IUserInterface>();
 
 			_display = new Display(_outputDisplay);
 			_timer = new Timer();
 			_powerTube = new PowerTube(_outputPower);
 			_cookController = new CookController(_timer, _display, _powerTube);
+		}
 
+		#endregion
 
+		#region CookController -> Display
+		[Test]
+		public void CookControllerDisplay_ShowTime_DisplayWritesTimeToOutput()
+		{
+			//Arrange
+			_cookController.StartCooking(50, 65);
+
+			//Act
+			((CookController)_cookController).OnTimerTick(_timer, null);
+
+			//Assert
+			_outputDisplay.Received().OutputLine($"Display shows: {65 / 60:D2}:{65 % 60:D2}");
+		}
+
+		#endregion
+
+		#region CookController -> PowerTube
+		[Test]
+		public void CookControllerPowerTube_TurnOn_PowerTubeWritesOnToConsole()
+		{
+			//Arrange
+
+			//Act
+			_cookController.StartCooking(50, 65);
+
+			//Assert
+			_outputPower.Received().OutputLine($"PowerTube works with {(int)(50 / 700.0 * 100)} %");
 		}
 
 		[Test]
-		public void CookController_StartCooking_OutputPowerRecieved_TurnOn()
+		public void CookControllerPowerTube_TurnOff_PowerTubeWritesOffToConsole()
 		{
 			//Arrange
-			int power = 50;
-			//double percent = (power / 700.0) * 100.0;
-			int timesCalled = 0;
+			_cookController.StartCooking(50, 65);
+
 			//Act
+			_cookController.Stop();
 
-			_outputPower.When(x=> x.OutputLine(Arg.Is<string>(s => s.Contains("PowerTube works"))))
-				.Do(x => ++timesCalled);
-
-			_cookController.StartCooking(power, 2);
-			
 			//Assert
-			Assert.That(() => (timesCalled == 1), Is.True.After(1500));
+			_outputPower.Received(1).OutputLine($"PowerTube turned off");
+		}
+
+		#endregion
+
+		#region CookController <-> Timer
+		[Test]
+		public void CookControllerTimer_StartAndOnTimerTick_DisplayWritesTimeToOutput()
+		{
+			//Arrange
+
+			//Act
+			_cookController.StartCooking(50, 65);
+			Thread.Sleep(1100);
+
+			//Assert
+			_outputDisplay.Received(1).OutputLine($"Display shows: {64 / 60:D2}:{64 % 60:D2}");
 		}
 
 		[Test]
-		public void CookController_StartCooking_OutputPowerRecieved_TurnOff_AndOnTimerExpired()
+		public void CookControllerTimer_OnTimerExpired_DisplayDoesNotWriteTimeToOutput()
 		{
 			//Arrange
-			int power = 50;
-			int timeSek = 2;
-			//double percent = (power / 700.0) * 100.0;
-			int timesCalled = 0;
+
 			//Act
-
-			_outputPower.When(x => x.OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off"))))
-				.Do(x => ++timesCalled);
-
-			_cookController.StartCooking(power, timeSek);
+			_cookController.StartCooking(50, 65);
+			_cookController.Stop();
 
 			//Assert
-			Assert.That(() => (timesCalled == 1), Is.True.After(timeSek *1000 +500));
+			_outputDisplay.DidNotReceive().OutputLine($"Display shows: {64 / 60:D2}:{64 % 60:D2}");
 		}
 
-
-		[Test]
-		public void CookController_StartCooking_OutputDisplayRecievedFiveTimes()
-		{
-			//Arrange
-			int timesCalled = 0;
-			//Act
-			_cookController.StartCooking(50, 5000);
-			
-			_outputDisplay.When(x => x.OutputLine(Arg.Any<string>()))
-				.Do(x => ++timesCalled);
-
-			//Assert
-			Assert.That(() => (timesCalled == 5), Is.True.After(5500));
-
-
-		}
-
-	/*	[Test]
-		public void CookController_CookingDone() //not done
-		{
-
-			//Arrange
-			int power = 50;
-			int timeSek = 2;
-			//double percent = (power / 700.0) * 100.0;
-			
-			//Act
-			
-			_cookController.StartCooking(power, timeSek);
-
-			//Assert
-			
-			Assert.That(_userInterface.Received().CookingIsDone(), Is.True.After(timeSek*1000+500));
-
-
-		}*/
-
-
+		#endregion
 	}
 }
