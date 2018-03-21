@@ -74,7 +74,7 @@ namespace Microwave.Test.Intergration
 	    }
 
 	    [TestCase(1)]
-	    [TestCase(5)]
+	    [TestCase(5)] // ikke nødvendigt at gøre andet end en gang. 
 		public void output_PowerbuttonPress_OutputCorrect(int timesToPress)
 	    {
 		    //Arrange
@@ -91,7 +91,7 @@ namespace Microwave.Test.Intergration
 	    }
 
 		[TestCase(1)]
-		[TestCase(5)]
+		[TestCase(5)] // ikke nødvendigt at gøre andet end en gang. 
 		public void output_timebuttonPress_inPowerState_OutputCorrect(int timesToPress)
 	    {
 		    //Arrange
@@ -147,7 +147,7 @@ namespace Microwave.Test.Intergration
 		}
 
 	    [TestCase(2, 1, 1)]
-		[TestCase(2, 1, 10)]
+		[TestCase(2, 1, 10)] // ikke nødvendigt at gøre andet end en gang. 
 		public void output_CookingState_TimeOutput(int timesPressed, int powerPressed, int testAfterTime)
 	    {
 			//Arrange
