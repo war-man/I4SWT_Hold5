@@ -8,7 +8,7 @@ namespace Microwave.Application
 	{
 		static void Main(string[] args)
 		{
-			// Create classes
+			// Setup
 			var door = new Door();
 			var powerButton = new Button();
 			var startCancelButton = new Button();
@@ -36,40 +36,54 @@ namespace Microwave.Application
 			// Simulation of user activities
 			Console.WriteLine("User opens the door.");
 			door.Open();
+			Console.WriteLine();
 
 			Console.WriteLine("User puts in his food and closes the door.");
 			door.Close();
+			Console.WriteLine();
 
-			Console.WriteLine("User sets up power level by pressing the power button a couple of times.");
+			Console.WriteLine("User increases the power level by pressing the power button a couple of times.");
 			for (int i = 0; i < 5; i++)
 			{
 				powerButton.Press();
 			}
+			Console.WriteLine();
 
 			Console.WriteLine("User sets up timer.");
 			timeButton.Press();
+			Console.WriteLine();
 
 			Console.WriteLine("User starts the microwave oven and stands there looking at his food turning around.");
 			startCancelButton.Press();
 			System.Threading.Thread.Sleep(10000);
+			Console.WriteLine();
 
 			Console.WriteLine("User wants to check if food is ready, so he opens the door.");
 			door.Open();
+			Console.WriteLine();
 
 			Console.WriteLine("Surprisingly, the food was not ready. User closes door again.");
 			door.Close();
+			Console.WriteLine();
 
 			Console.WriteLine("User sets up power level by pressing the power button a couple of times.");
 			for (int i = 0; i < 10; i++)
 			{
 				powerButton.Press();
 			}
+			Console.WriteLine();
 
 			Console.WriteLine("User sets up timer.");
 			timeButton.Press();
+			Console.WriteLine();
 
-			Console.WriteLine("User starts the microwave oven again.");
+			Console.WriteLine("User starts the microwave oven again. And waits for his food to finish cooking.");
 			startCancelButton.Press();
+			Console.WriteLine();
+
+			//Wait for foo
+			System.Threading.Thread.Sleep(61000);
+			Console.WriteLine();
 
 			// Wait while the classes, including the timer, do their job
 			Console.WriteLine("Press any button to close the application.");
