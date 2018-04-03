@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirTrafficMonitoringClasses;
+using TransponderReceiver;
 
 namespace AirTrafficMonitoring
 {
@@ -6,7 +7,8 @@ namespace AirTrafficMonitoring
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World");
+			var transponderReceiver = new TestTransponderReceiver(TransponderReceiverFactory.CreateTransponderDataReceiver());
+			transponderReceiver.Start();
 		}
 	}
 }
