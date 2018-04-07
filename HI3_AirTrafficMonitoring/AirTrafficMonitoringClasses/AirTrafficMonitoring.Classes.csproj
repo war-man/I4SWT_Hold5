@@ -51,6 +51,8 @@
     <Compile Include="TrackDataObjectifier.cs" />
     <Compile Include="TrackGenerator\TrackGenerator.cs" />
     <Compile Include="TrackManager\TrackManager.cs" />
+    <Compile Include="TrackPrinter\ITrackPrinter.cs" />
+    <Compile Include="TrackPrinter\TrackPrinter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

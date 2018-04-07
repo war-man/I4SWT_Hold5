@@ -1,6 +1,6 @@
 ﻿using AirTrafficMonitoring.Classes.TrackDataModels;
 using AirTrafficMonitoring.Classes.TrackGenerator;
-using System;
+using AirTrafficMonitoring.Classes.TrackPrinter;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,11 +9,13 @@ namespace AirTrafficMonitoring.Classes.TrackManager
 	public class TrackManager : ITrackManager
 	{
 		private readonly ITrackGenerator _trackGenerator;
+		private readonly ITrackPrinter _trackPrinter;
 		private readonly List<Track> _currentTracks;
 
-		public TrackManager(ITrackGenerator trackGenerator)
+		public TrackManager(ITrackGenerator trackGenerator, ITrackPrinter trackPrinter)
 		{
 			_trackGenerator = trackGenerator;
+			_trackPrinter = trackPrinter;
 
 			_currentTracks = new List<Track>();
 		}
@@ -36,17 +38,7 @@ namespace AirTrafficMonitoring.Classes.TrackManager
 				}
 			}
 
-			PrintCurrentTracks();
-		}
-
-		private void PrintCurrentTracks()
-		{
-			Console.Clear();
-
-			foreach (var track in _currentTracks)
-			{
-				Console.WriteLine(track + "\n");
-			}
+			_trackPrinter.Print(_currentTracks);
 		}
 	}
 }
