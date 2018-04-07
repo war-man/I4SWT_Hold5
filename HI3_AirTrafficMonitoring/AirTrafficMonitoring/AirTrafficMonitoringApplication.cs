@@ -1,4 +1,7 @@
-﻿using AirTrafficMonitoringClasses;
+﻿using AirTrafficMonitoring.Classes;
+using AirTrafficMonitoring.Classes.TrackGenerator;
+using AirTrafficMonitoring.Classes.TrackManager;
+using System;
 using TransponderReceiver;
 
 namespace AirTrafficMonitoring
@@ -7,8 +10,16 @@ namespace AirTrafficMonitoring
 	{
 		static void Main(string[] args)
 		{
-			var transponderReceiver = new TestTransponderReceiver(TransponderReceiverFactory.CreateTransponderDataReceiver());
-			transponderReceiver.Start();
+			new TrackDataObjectifier(TransponderReceiverFactory.CreateTransponderDataReceiver(),
+				new TrackManager(new TrackGenerator()));
+
+			while (true)
+			{
+				Console.WriteLine("Welcome to the AirTrafficMonitoring application. Press 'Q' to quit.");
+				var keyPressed = Console.ReadKey();
+				if (keyPressed.Key == ConsoleKey.Q)
+					return;
+			}
 		}
 	}
 }
