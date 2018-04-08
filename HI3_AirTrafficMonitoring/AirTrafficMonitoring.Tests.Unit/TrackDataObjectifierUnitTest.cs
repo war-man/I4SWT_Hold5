@@ -23,15 +23,12 @@ namespace AirTrafficMonitoring.Tests.Unit
 		private int _yCoordinate = 6000;
 		private int _altitude = 6000;
 		private DateTime _timestamp = new DateTime(2015, 10, 6, 21, 34, 56, 789);
-		private TrackData _trackData;
 
 		[SetUp]
 		public void Init()
 		{
 			_fakeTransponderReceiver = Substitute.For<ITransponderReceiver>();
 			_fakeTrackController = Substitute.For<ITrackController>();
-
-			_trackData = new TrackData(_tag, _xCoordinate, _yCoordinate, _altitude, _timestamp);
 
 			_uut = new TrackDataObjectifier(_fakeTransponderReceiver, _fakeTrackController);
 		}
@@ -77,7 +74,29 @@ namespace AirTrafficMonitoring.Tests.Unit
 		}
 
 		[Test]
-		public void OnTransponderDataReady_ListIsNull_TrackManagerReceivesEmptyList()
+		public void OnTransponderDataReady_CorrectInputLengthIsTwo_TwoObjectsCreated()
+		{
+			//Arrange
+			var list = new List<string>();
+			list.Add("ABC123;5000;6000;6000;20151006213456789");
+			list.Add("CBA321;5000;6000;6000;20151006213456789");
+
+			List<TrackData> parameterList = new List<TrackData>();
+			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
+				ls => parameterList = ls));
+
+			//Act
+			_fakeTransponderReceiver.TransponderDataReady +=
+				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+
+			//Assert
+			_fakeTrackController.Received(1).AddTrackDataObjects(Arg.Is<List<TrackData>>(
+				l => l.Count == 2
+			));
+		}
+
+		[Test]
+		public void OnTransponderDataReady_ListIsEmpty_TrackManagerReceivesEmptyList()
 		{
 			//Arrange
 			var list = new List<string>();
