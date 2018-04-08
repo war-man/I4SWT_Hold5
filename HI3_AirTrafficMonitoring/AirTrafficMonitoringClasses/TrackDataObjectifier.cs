@@ -1,16 +1,16 @@
 ﻿using AirTrafficMonitoring.Classes.TrackDataModels;
-using AirTrafficMonitoring.Classes.TrackManager;
 using System;
 using System.Collections.Generic;
+using AirTrafficMonitoring.Classes.TrackController;
 using TransponderReceiver;
 
 namespace AirTrafficMonitoring.Classes
 {
 	public class TrackDataObjectifier
 	{
-		private readonly ITrackManager _trackManager;
+		private readonly ITrackController _trackManager;
 
-		public TrackDataObjectifier(ITransponderReceiver transponderReceiver, ITrackManager trackManager)
+		public TrackDataObjectifier(ITransponderReceiver transponderReceiver, ITrackController trackManager)
 		{
 			transponderReceiver.TransponderDataReady += OnTransponderDataReady;
 			_trackManager = trackManager;

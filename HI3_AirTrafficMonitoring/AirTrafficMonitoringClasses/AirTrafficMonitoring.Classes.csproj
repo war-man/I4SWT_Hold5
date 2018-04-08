@@ -43,14 +43,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentTracksManager\CurrentTracksManager.cs" />
+    <Compile Include="CurrentTracksManager\ICurrentTracksManager.cs" />
     <Compile Include="TrackGenerator\ITrackGenerator.cs" />
-    <Compile Include="TrackManager\ITrackManager.cs" />
+    <Compile Include="TrackController\ITrackController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrackDataModels\Track.cs" />
     <Compile Include="TrackDataModels\TrackData.cs" />
     <Compile Include="TrackDataObjectifier.cs" />
     <Compile Include="TrackGenerator\TrackGenerator.cs" />
-    <Compile Include="TrackManager\TrackManager.cs" />
+    <Compile Include="TrackController\TrackController.cs" />
     <Compile Include="TrackPrinter\ITrackPrinter.cs" />
     <Compile Include="TrackPrinter\TrackPrinter.cs" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using AirTrafficMonitoring.Classes;
+using AirTrafficMonitoring.Classes.CurrentTracksManager;
+using AirTrafficMonitoring.Classes.TrackController;
 using AirTrafficMonitoring.Classes.TrackGenerator;
-using AirTrafficMonitoring.Classes.TrackManager;
 using AirTrafficMonitoring.Classes.TrackPrinter;
 using System;
 using TransponderReceiver;
@@ -11,8 +12,8 @@ namespace AirTrafficMonitoring
 	{
 		static void Main(string[] args)
 		{
-			new TrackDataObjectifier(TransponderReceiverFactory.CreateTransponderDataReceiver(),
-				new TrackManager(new TrackGenerator(), new TrackPrinter()));
+			var unused = new TrackDataObjectifier(TransponderReceiverFactory.CreateTransponderDataReceiver(),
+				new TrackController(new CurrentTracksManager(), new TrackGenerator(), new TrackPrinter()));
 
 			while (true)
 			{
