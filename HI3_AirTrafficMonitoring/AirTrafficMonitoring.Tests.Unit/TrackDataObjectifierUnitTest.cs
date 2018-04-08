@@ -1,5 +1,5 @@
 ﻿using AirTrafficMonitoring.Classes;
-using AirTrafficMonitoring.Classes.TrackManager;
+using AirTrafficMonitoring.Classes.TrackController;
 using NSubstitute;
 using NUnit.Framework;
 using TransponderReceiver;
@@ -12,15 +12,15 @@ namespace AirTrafficMonitoring.Tests.Unit
 		private TrackDataObjectifier _uut;
 
 		private ITransponderReceiver _fakeTransponderReceiver;
-		private ITrackManager _fakeTrackManager;
+		private ITrackController _fakeTrackController;
 
 		[SetUp]
 		public void Init()
 		{
 			_fakeTransponderReceiver = Substitute.For<ITransponderReceiver>();
-			_fakeTrackManager = Substitute.For<ITrackManager>();
+			_fakeTrackController = Substitute.For<ITrackController>();
 
-			_uut = new TrackDataObjectifier(_fakeTransponderReceiver, _fakeTrackManager);
+			_uut = new TrackDataObjectifier(_fakeTransponderReceiver, _fakeTrackController);
 		}
 	}
 }
