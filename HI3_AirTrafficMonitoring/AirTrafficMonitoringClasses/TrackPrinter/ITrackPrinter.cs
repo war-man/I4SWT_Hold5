@@ -5,6 +5,6 @@ namespace AirTrafficMonitoring.Classes.TrackPrinter
 {
 	public interface ITrackPrinter
 	{
-		void Print(IEnumerable<Track> trackList);
+		void Print(List<Track> trackList);
 	}
 }
