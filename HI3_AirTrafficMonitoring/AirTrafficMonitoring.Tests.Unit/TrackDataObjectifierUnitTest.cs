@@ -1,5 +1,9 @@
-﻿using AirTrafficMonitoring.Classes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AirTrafficMonitoring.Classes;
 using AirTrafficMonitoring.Classes.TrackController;
+using AirTrafficMonitoring.Classes.TrackDataModels;
 using NSubstitute;
 using NUnit.Framework;
 using TransponderReceiver;
@@ -13,6 +17,13 @@ namespace AirTrafficMonitoring.Tests.Unit
 
 		private ITransponderReceiver _fakeTransponderReceiver;
 		private ITrackController _fakeTrackController;
+		
+		private string _tag = "ABC123";
+		private int _xCoordinate = 5000;
+		private int _yCoordinate = 6000;
+		private int _altitude = 6000;
+		private DateTime _timestamp = new DateTime(2015, 10, 6, 21, 34, 56, 789);
+		private TrackData _trackData;
 
 		[SetUp]
 		public void Init()
@@ -20,7 +31,65 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_fakeTransponderReceiver = Substitute.For<ITransponderReceiver>();
 			_fakeTrackController = Substitute.For<ITrackController>();
 
+			_trackData = new TrackData(_tag, _xCoordinate, _yCoordinate, _altitude, _timestamp);
+
 			_uut = new TrackDataObjectifier(_fakeTransponderReceiver, _fakeTrackController);
+		}
+
+		[Test]
+		public void OnTransponderDataReady_CorrectInput_TrackManagerCalled()
+		{
+			//Arrange
+			var list = new List<string>();
+			list.Add("ABC123;5000;6000;6000;20151006213456789");
+
+			//Act
+			_fakeTransponderReceiver.TransponderDataReady +=
+				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+
+			//Assert
+			_fakeTrackController.Received(1).AddTrackDataObjects(Arg.Any<List<TrackData>>());
+		}
+
+		[Test]
+		public void OnTransponderDataReady_CorrectInput_ObjectParsedCorrectly()
+		{
+			//Arrange
+			var list = new List<string>();
+			list.Add("ABC123;5000;6000;6000;20151006213456789");
+
+			List<TrackData> parameterList = new List<TrackData>();
+			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
+				ls => parameterList = ls));
+
+			//Act
+			_fakeTransponderReceiver.TransponderDataReady +=
+				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+
+			//Assert
+			var result = parameterList.First();
+
+			Assert.That(result.Tag, Is.EqualTo(_tag));
+			Assert.That(result.XCoordinate, Is.EqualTo(_xCoordinate));
+			Assert.That(result.YCoordinate, Is.EqualTo(_yCoordinate));
+			Assert.That(result.Altitude, Is.EqualTo(_altitude));
+			Assert.That(result.Timestamp, Is.EqualTo(_timestamp));
+		}
+
+		[Test]
+		public void OnTransponderDataReady_ListIsNull_TrackManagerReceivesEmptyList()
+		{
+			//Arrange
+			var list = new List<string>();
+
+			//Act
+			_fakeTransponderReceiver.TransponderDataReady +=
+				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+
+			//Assert
+			_fakeTrackController.Received(1).AddTrackDataObjects(Arg.Is<List<TrackData>>(
+				l => l.Count == 0
+			));
 		}
 	}
 }

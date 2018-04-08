@@ -6,12 +6,9 @@ namespace AirTrafficMonitoring.Tests.Unit
 	[TestFixture]
 	class TrackPrinterUnitTest
 	{
-		private TrackPrinter _uut;
 
-		[SetUp]
-		public void Init()
-		{
-			_uut = new TrackPrinter();
-		}
+		// The TrackPrinter has been tested through the console window
+		// because of it's tight coupling to the Console class.
+
 	}
 }
