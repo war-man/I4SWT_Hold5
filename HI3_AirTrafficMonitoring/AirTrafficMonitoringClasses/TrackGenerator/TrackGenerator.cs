@@ -6,6 +6,8 @@ namespace AirTrafficMonitoring.Classes.TrackGenerator
 	{
 		public Track GenerateTrack(TrackData trackData)
 		{
+			if (trackData == null) return null;
+
 			return new Track(trackData.Tag, trackData);
 		}
 	}
