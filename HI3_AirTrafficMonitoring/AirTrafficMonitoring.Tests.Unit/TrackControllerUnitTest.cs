@@ -1,8 +1,8 @@
 ﻿using AirTrafficMonitoring.Classes.CurrentTracksManager;
+using AirTrafficMonitoring.Classes.Printer;
 using AirTrafficMonitoring.Classes.TrackController;
 using AirTrafficMonitoring.Classes.TrackDataModels;
 using AirTrafficMonitoring.Classes.TrackGenerator;
-using AirTrafficMonitoring.Classes.TrackPrinter;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -17,16 +17,18 @@ namespace AirTrafficMonitoring.Tests.Unit
 
 		private ICurrentTracksManager _fakeCurrentTracksManager;
 		private ITrackGenerator _fakeTrackGenerator;
-		private ITrackPrinter _fakeTrackPrinter;
+		private ITrackListFormatter _fakeTrackListFormatter;
+		private IPrinter _fakePrinter;
 
 		[SetUp]
 		public void Init()
 		{
 			_fakeCurrentTracksManager = Substitute.For<ICurrentTracksManager>();
 			_fakeTrackGenerator = Substitute.For<ITrackGenerator>();
-			_fakeTrackPrinter = Substitute.For<ITrackPrinter>();
+			_fakeTrackListFormatter = Substitute.For<ITrackListFormatter>();
+			_fakePrinter = Substitute.For<IPrinter>();
 
-			_uut = new TrackController(_fakeCurrentTracksManager, _fakeTrackGenerator, _fakeTrackPrinter);
+			_uut = new TrackController(_fakeCurrentTracksManager, _fakeTrackGenerator, _fakeTrackListFormatter, _fakePrinter);
 		}
 
 		[Test]
@@ -148,7 +150,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 		}
 
 		[Test]
-		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_PrintOnTrackPrinterNotCalled()
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_FormatOnTrackFormatterNotCalled()
 		{
 			// Arrange
 			var trackList = new List<Track>();
@@ -159,11 +161,41 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_uut.AddTrackDataObjects(new List<TrackData>());
 
 			// Assert
-			_fakeTrackPrinter.DidNotReceive().Print(Arg.Any<List<Track>>());
+			_fakeTrackListFormatter.DidNotReceive().Format(Arg.Any<List<Track>>());
 		}
 
 		[Test]
-		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs1_PrintOnTrackPrinterCalledWithCorrectTrackList()
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_ClearOnPrinterNotCalled()
+		{
+			// Arrange
+			var trackList = new List<Track>();
+			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
+			_fakeCurrentTracksManager.GetTrackCount().Returns(0);
+
+			// Act
+			_uut.AddTrackDataObjects(new List<TrackData>());
+
+			// Assert
+			_fakePrinter.DidNotReceive().Clear();
+		}
+
+		[Test]
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_WriteLineOnPrinterNotCalled()
+		{
+			// Arrange
+			var trackList = new List<Track>();
+			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
+			_fakeCurrentTracksManager.GetTrackCount().Returns(0);
+
+			// Act
+			_uut.AddTrackDataObjects(new List<TrackData>());
+
+			// Assert
+			_fakePrinter.DidNotReceive().WriteLine(Arg.Any<string>());
+		}
+
+		[Test]
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs1_FormatOnTrackFormatterCalledWithCorrectTrackList()
 		{
 			// Arrange
 			var trackObject = new Track("tag", new TrackData("tag", 0, 0, 0, DateTime.Now));
@@ -175,11 +207,46 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_uut.AddTrackDataObjects(new List<TrackData>());
 
 			// Assert
-			_fakeTrackPrinter.Received().Print(trackList);
+			_fakeTrackListFormatter.Received().Format(trackList);
 		}
 
 		[Test]
-		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs5_PrintOnTrackPrinterCalledWithCorrectTrackList()
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs1_ClearOnPrinterCalled()
+		{
+			// Arrange
+			var trackObject = new Track("tag", new TrackData("tag", 0, 0, 0, DateTime.Now));
+			var trackList = new List<Track> { trackObject };
+			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
+			_fakeCurrentTracksManager.GetTrackCount().Returns(1);
+
+			// Act
+			_uut.AddTrackDataObjects(new List<TrackData>());
+
+			// Assert
+			_fakePrinter.Received().Clear();
+		}
+
+		[Test]
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs1_WriteLineOnPrinterCalledWithCorrectString()
+		{
+			// Arrange
+			var trackObject = new Track("tag", new TrackData("tag", 0, 0, 0, DateTime.Now));
+			var trackList = new List<Track> { trackObject };
+			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
+			_fakeCurrentTracksManager.GetTrackCount().Returns(1);
+
+			var expectedString = "someString";
+			_fakeTrackListFormatter.Format(Arg.Any<List<Track>>()).Returns(expectedString);
+
+			// Act
+			_uut.AddTrackDataObjects(new List<TrackData>());
+
+			// Assert
+			_fakePrinter.Received().WriteLine(expectedString);
+		}
+
+		[Test]
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs5_FormatOnTrackFormatterCalledWithCorrectTrackList()
 		{
 			// Arrange
 			var trackObject1 = new Track("tag1", new TrackData("tag1", 0, 0, 0, DateTime.Now));
@@ -202,7 +269,37 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_uut.AddTrackDataObjects(new List<TrackData>());
 
 			// Assert
-			_fakeTrackPrinter.Received().Print(trackList);
+			_fakeTrackListFormatter.Received().Format(trackList);
+		}
+
+		[Test]
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs5_WriteLineOnPrinterCalledWithCorrectString()
+		{
+			// Arrange
+			var trackObject1 = new Track("tag1", new TrackData("tag1", 0, 0, 0, DateTime.Now));
+			var trackObject2 = new Track("tag2", new TrackData("tag2", 0, 0, 0, DateTime.Now));
+			var trackObject3 = new Track("tag3", new TrackData("tag3", 0, 0, 0, DateTime.Now));
+			var trackObject4 = new Track("tag4", new TrackData("tag4", 0, 0, 0, DateTime.Now));
+			var trackObject5 = new Track("tag5", new TrackData("tag5", 0, 0, 0, DateTime.Now));
+			var trackList = new List<Track>
+			{
+				trackObject1,
+				trackObject2,
+				trackObject3,
+				trackObject4,
+				trackObject5
+			};
+			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
+			_fakeCurrentTracksManager.GetTrackCount().Returns(5);
+
+			var expectedString = "someString";
+			_fakeTrackListFormatter.Format(Arg.Any<List<Track>>()).Returns(expectedString);
+
+			// Act
+			_uut.AddTrackDataObjects(new List<TrackData>());
+
+			// Assert
+			_fakePrinter.Received().WriteLine(expectedString);
 		}
 	}
 }
