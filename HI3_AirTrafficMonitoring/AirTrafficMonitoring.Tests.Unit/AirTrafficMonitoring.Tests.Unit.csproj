@@ -65,7 +65,7 @@
     <Compile Include="TrackDataUnitTest.cs" />
     <Compile Include="TrackGeneratorUnitTest.cs" />
     <Compile Include="TrackControllerUnitTest.cs" />
-    <Compile Include="TrackPrinterUnitTest.cs" />
+    <Compile Include="TrackListFormatterUnitTest.cs" />
     <Compile Include="TrackUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
