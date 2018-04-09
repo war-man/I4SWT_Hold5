@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AirTrafficMonitoring.Classes.TrackPrinter
+namespace AirTrafficMonitoring.Classes.Printer
 {
 	public class ConsolePrinter : IPrinter
 	{

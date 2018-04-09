@@ -1,7 +1,4 @@
-﻿using AirTrafficMonitoring.Classes.TrackDataModels;
-using System.Collections.Generic;
-
-namespace AirTrafficMonitoring.Classes.TrackPrinter
+﻿namespace AirTrafficMonitoring.Classes.Printer
 {
 	public interface IPrinter
 	{
