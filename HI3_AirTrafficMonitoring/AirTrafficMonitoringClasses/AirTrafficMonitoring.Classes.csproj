@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="CurrentTracksManager\CurrentTracksManager.cs" />
     <Compile Include="CurrentTracksManager\ICurrentTracksManager.cs" />
+    <Compile Include="Printer\ITrackListFormatter.cs" />
+    <Compile Include="Printer\TrackListFormatter.cs" />
     <Compile Include="TrackGenerator\ITrackGenerator.cs" />
     <Compile Include="TrackController\ITrackController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
