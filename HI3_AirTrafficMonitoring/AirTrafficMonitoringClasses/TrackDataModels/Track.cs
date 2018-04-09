@@ -25,7 +25,7 @@ namespace AirTrafficMonitoring.Classes.TrackDataModels
 			CurrentTrack = data;
 
 			// Calculate Delta values
-			
+
 			int deltaX = CurrentTrack.XCoordinate - PreviousTrack.XCoordinate;
 			int deltaY = CurrentTrack.YCoordinate - PreviousTrack.YCoordinate;
 
@@ -41,6 +41,7 @@ namespace AirTrafficMonitoring.Classes.TrackDataModels
 		}
 		public override string ToString()
 		{
+			// For next part of exercise, this should also print direction, velocity and position
 			return CurrentTrack.ToString();
 		}
 	}
