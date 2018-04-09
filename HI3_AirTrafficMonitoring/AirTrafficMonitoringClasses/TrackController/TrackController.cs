@@ -1,8 +1,8 @@
 ﻿using AirTrafficMonitoring.Classes.CurrentTracksManager;
+using AirTrafficMonitoring.Classes.Printer;
 using AirTrafficMonitoring.Classes.TrackDataModels;
 using AirTrafficMonitoring.Classes.TrackGenerator;
 using System.Collections.Generic;
-using AirTrafficMonitoring.Classes.Printer;
 
 namespace AirTrafficMonitoring.Classes.TrackController
 {
@@ -69,7 +69,6 @@ namespace AirTrafficMonitoring.Classes.TrackController
 				_printer.Clear();
 				_printer.WriteLine(formattedString);
 			}
-				
 		}
 	}
 }
