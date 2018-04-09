@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace AirTrafficMonitoring.Classes.TrackPrinter
 {
-	public interface ITrackPrinter
+	public interface IPrinter
 	{
-		void Print(List<Track> trackList);
+		void WriteLine(string String);
+		void Clear();
 	}
 }
