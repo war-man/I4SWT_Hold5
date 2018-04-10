@@ -17,8 +17,8 @@ namespace AirTrafficMonitoring.Classes.TrackDataModels
 		public double? Direction { get; private set; }
 		public double? Velocity { get; private set; }
 		public string CurrentPosition => CurrentTrack.XCoordinate + ";" + CurrentTrack.YCoordinate;
-		public TrackData CurrentTrack { get; set; }
-		public TrackData PreviousTrack { get; set; }
+		public TrackData CurrentTrack { get; private set; }
+		public TrackData PreviousTrack { get; private set; }
 		public void AddNewTrackData(TrackData data)
 		{
 			PreviousTrack = CurrentTrack;

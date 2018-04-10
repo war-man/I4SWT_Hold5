@@ -42,8 +42,7 @@ namespace AirTrafficMonitoring.Classes.CurrentTracksManager
 
 			var track = FindTrack(trackData.Tag);
 
-			if (track != null)
-				track.CurrentTrack = trackData;
+			track?.AddNewTrackData(trackData);
 		}
 	}
 }
