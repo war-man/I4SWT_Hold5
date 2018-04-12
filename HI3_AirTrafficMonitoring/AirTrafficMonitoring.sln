@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTrafficMonitoring", "AirTrafficMonitoring\AirTrafficMonitoring.csproj", "{3FD2E6FF-109D-4372-BEF3-8F0530DBC3E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTrafficMonitoring.Application", "AirTrafficMonitoring.Application\AirTrafficMonitoring.Application.csproj", "{3FD2E6FF-109D-4372-BEF3-8F0530DBC3E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTrafficMonitoring.Classes", "AirTrafficMonitoringClasses\AirTrafficMonitoring.Classes.csproj", "{46599C13-819F-4D0D-B7A9-8105134A01BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTrafficMonitoring.Classes", "AirTrafficMonitoring.Classes\AirTrafficMonitoring.Classes.csproj", "{46599C13-819F-4D0D-B7A9-8105134A01BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTrafficMonitoring.Tests.Unit", "AirTrafficMonitoring.Tests.Unit\AirTrafficMonitoring.Tests.Unit.csproj", "{1BE9D7D4-E7B9-4DE9-A625-A55179C28431}"
 EndProject

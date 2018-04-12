@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3FD2E6FF-109D-4372-BEF3-8F0530DBC3E0}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>AirTrafficMonitoring</RootNamespace>
-    <AssemblyName>AirTrafficMonitoring</AssemblyName>
+    <ProjectGuid>{46599C13-819F-4D0D-B7A9-8105134A01BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AirTrafficMonitoring.Classes</RootNamespace>
+    <AssemblyName>AirTrafficMonitoring.Classes</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -42,21 +40,24 @@
     <Reference Include="System.Xml" />
     <Reference Include="TransponderReceiver, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\AirTrafficMonitoringClasses\TransponderReceiver.dll</HintPath>
+      <HintPath>.\TransponderReceiver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirTrafficMonitoringApplication.cs" />
+    <Compile Include="CurrentTracksManager\CurrentTracksManager.cs" />
+    <Compile Include="CurrentTracksManager\ICurrentTracksManager.cs" />
+    <Compile Include="Printer\ITrackListFormatter.cs" />
+    <Compile Include="Printer\TrackListFormatter.cs" />
+    <Compile Include="TrackGenerator\ITrackGenerator.cs" />
+    <Compile Include="TrackController\ITrackController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AirTrafficMonitoringClasses\AirTrafficMonitoring.Classes.csproj">
-      <Project>{46599c13-819f-4d0d-b7a9-8105134a01bf}</Project>
-      <Name>AirTrafficMonitoring.Classes</Name>
-    </ProjectReference>
+    <Compile Include="TrackDataModels\Track.cs" />
+    <Compile Include="TrackDataModels\TrackData.cs" />
+    <Compile Include="TrackDataObjectifier.cs" />
+    <Compile Include="TrackGenerator\TrackGenerator.cs" />
+    <Compile Include="TrackController\TrackController.cs" />
+    <Compile Include="Printer\IPrinter.cs" />
+    <Compile Include="Printer\ConsolePrinter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
