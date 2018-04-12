@@ -1,35 +1,34 @@
-﻿using AirTrafficMonitoring.Classes.CurrentTracksManager;
-using AirTrafficMonitoring.Classes.Printer;
-using AirTrafficMonitoring.Classes.TrackDataModels;
-using AirTrafficMonitoring.Classes.TrackGenerator;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using System.Collections.Generic;
 
-namespace AirTrafficMonitoring.Classes.TrackController
+namespace AirTrafficMonitoring.Classes.Tracks
 {
 	public class TrackController : ITrackController
 	{
 		private readonly ITrackGenerator _trackGenerator;
 		private readonly ITrackListFormatter _formatter;
-		private readonly IPrinter _printer;
 		private readonly ICurrentTracksManager _currentTracksManager;
+
+		private const int XBoundarySouthWest = 10000;
+		private const int YBoundarySouthWest = 10000;
+		private const int XBoundaryNorthEast = 90000;
+		private const int YBoundaryNorthEast = 90000;
 
 		public TrackController(
 			ICurrentTracksManager currentTracksManager,
 			ITrackGenerator trackGenerator,
-			ITrackListFormatter formatter,
-			IPrinter printer)
+			ITrackListFormatter formatter)
 		{
 			_currentTracksManager = currentTracksManager;
 			_trackGenerator = trackGenerator;
 			_formatter = formatter;
-			_printer = printer;
 		}
 
-		public void AddTrackDataObjects(List<TrackData> trackDataList)
+		public string AddTrackDataObjects(List<TrackData> trackDataList)
 		{
-			if (trackDataList == null) return;
+			if (trackDataList == null) return "";
 
-			// Find tracks that are no longer in the area
+			// Find tracks that are no longer sends a transponder signal
 			var tracksToRemove = new List<Track>();
 			foreach (var trackData in _currentTracksManager.CurrentTracks)
 			{
@@ -41,15 +40,18 @@ namespace AirTrafficMonitoring.Classes.TrackController
 				}
 			}
 
-			// Remove tracks that are no longer in the area
+			// Remove tracks that are no longer sends a transponder signal
 			foreach (var track in tracksToRemove)
 			{
 				_currentTracksManager.RemoveTrack(track);
 			}
 
-			// Update current tracks or add new tracks if track is not already in the area
+			// Update current tracks or add new tracks if track has not sent a transponder signal before
 			foreach (var trackData in trackDataList)
 			{
+				// Check that track is within the boundaries of the monitored area
+				if (!CheckCoordinates(trackData.XCoordinate, trackData.YCoordinate)) continue;
+
 				var track = _currentTracksManager.FindTrack(trackData.Tag);
 
 				if (track == null)
@@ -62,13 +64,13 @@ namespace AirTrafficMonitoring.Classes.TrackController
 				}
 			}
 
-			if (_currentTracksManager.GetTrackCount() > 0)
-			{
-				string formattedString = _formatter.Format(_currentTracksManager.CurrentTracks);
+			return _formatter.Format(_currentTracksManager.CurrentTracks);
+		}
 
-				_printer.Clear();
-				_printer.WriteLine(formattedString);
-			}
+		private bool CheckCoordinates(int x, int y)
+		{
+			return x >= XBoundarySouthWest && x <= XBoundaryNorthEast &&
+				   y >= YBoundarySouthWest && y <= YBoundaryNorthEast;
 		}
 	}
 }

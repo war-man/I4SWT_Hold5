@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AirTrafficMonitoring.Classes;
-using AirTrafficMonitoring.Classes.TrackController;
-using AirTrafficMonitoring.Classes.TrackDataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
+using AirTrafficMonitoring.Classes.Objectifier;
+using AirTrafficMonitoring.Classes.Tracks;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TransponderReceiver;
 
 namespace AirTrafficMonitoring.Tests.Unit
@@ -17,7 +17,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 
 		private ITransponderReceiver _fakeTransponderReceiver;
 		private ITrackController _fakeTrackController;
-		
+
 		private string _tag = "ABC123";
 		private int _xCoordinate = 5000;
 		private int _yCoordinate = 6000;
@@ -30,7 +30,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_fakeTransponderReceiver = Substitute.For<ITransponderReceiver>();
 			_fakeTrackController = Substitute.For<ITrackController>();
 
-			_uut = new TrackDataObjectifier(_fakeTransponderReceiver, _fakeTrackController);
+			_uut = new TrackDataObjectifier();
 		}
 
 		[Test]

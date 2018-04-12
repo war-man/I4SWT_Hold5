@@ -1,10 +1,9 @@
-﻿using System;
+﻿using AirTrafficMonitoring.Classes.DataModels;
+using AirTrafficMonitoring.Classes.Tracks;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AirTrafficMonitoring.Classes.Printer;
-using AirTrafficMonitoring.Classes.TrackDataModels;
-using NSubstitute;
-using NUnit.Framework;
 
 namespace AirTrafficMonitoring.Tests.Unit
 {

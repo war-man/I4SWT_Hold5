@@ -1,6 +1,6 @@
-﻿using AirTrafficMonitoring.Classes.TrackDataModels;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
+using AirTrafficMonitoring.Classes.DataModels;
 
 namespace AirTrafficMonitoring.Tests.Unit
 {

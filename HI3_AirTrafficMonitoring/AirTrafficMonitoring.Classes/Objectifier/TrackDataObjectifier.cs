@@ -1,27 +1,14 @@
-﻿using AirTrafficMonitoring.Classes.TrackDataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using System;
 using System.Collections.Generic;
-using AirTrafficMonitoring.Classes.TrackController;
-using TransponderReceiver;
 
-namespace AirTrafficMonitoring.Classes
+namespace AirTrafficMonitoring.Classes.Objectifier
 {
-	public class TrackDataObjectifier
+	public class TrackDataObjectifier : ITrackDataObjectifier
 	{
-		private readonly ITrackController _trackManager;
-
-		public TrackDataObjectifier(ITransponderReceiver transponderReceiver, ITrackController trackManager)
-		{
-			transponderReceiver.TransponderDataReady += OnTransponderDataReady;
-			_trackManager = trackManager;
-		}
-
-		private void OnTransponderDataReady(
-			object sender, RawTransponderDataEventArgs rawTransponderDataEventArgs)
+		public List<TrackData> Objectify(List<string> transponderData)
 		{
 			var trackDataList = new List<TrackData>();
-
-			var transponderData = rawTransponderDataEventArgs.TransponderData;
 
 			foreach (var data in transponderData)
 			{
@@ -43,7 +30,7 @@ namespace AirTrafficMonitoring.Classes
 				trackDataList.Add(new TrackData(tag, xCoordinate, yCoordinate, altitude, date));
 			}
 
-			_trackManager.AddTrackDataObjects(trackDataList);
+			return trackDataList;
 		}
 	}
 }

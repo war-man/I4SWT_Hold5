@@ -1,5 +1,5 @@
-﻿using AirTrafficMonitoring.Classes.CurrentTracksManager;
-using AirTrafficMonitoring.Classes.TrackDataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
+using AirTrafficMonitoring.Classes.Tracks;
 using NUnit.Framework;
 using System;
 

@@ -13,6 +13,5 @@ namespace AirTrafficMonitoring.Classes.Printer
 		{
 			Console.Clear();
 		}
-
 	}
 }

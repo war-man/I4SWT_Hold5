@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AirTrafficMonitoring.Classes.TrackDataModels
+namespace AirTrafficMonitoring.Classes.DataModels
 {
 	public class Track
 	{
@@ -41,8 +41,12 @@ namespace AirTrafficMonitoring.Classes.TrackDataModels
 		}
 		public override string ToString()
 		{
-			// For next part of exercise, this should also print direction, velocity and position
-			return CurrentTrack.ToString();
+			return $"Tag: {Tag}\n" +
+				   $"Coordinates (X,Y): {CurrentTrack.XCoordinate},{CurrentTrack.YCoordinate}\n" +
+				   $"Altitude: {CurrentTrack.Altitude}\n" +
+				   $"Velocity: {Velocity:F2}\n" +
+				   $"Course: {Direction:F2}\n" +
+				   $"Timestamp: {CurrentTrack.Timestamp}";
 		}
 	}
 }

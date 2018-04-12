@@ -1,4 +1,4 @@
-﻿using AirTrafficMonitoring.Classes.TrackDataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using NUnit.Framework;
 using System;
 
@@ -20,6 +20,8 @@ namespace AirTrafficMonitoring.Tests.Unit
 		private const int Altitude = 6000;
 		private TrackData _trackData;
 		private DateTime _timestamp = DateTime.Now;
+
+		private const string Coordinates = "5000;6000";
 
 		#endregion
 
@@ -81,15 +83,16 @@ namespace AirTrafficMonitoring.Tests.Unit
 			Assert.That(_uut.PreviousTrack, Is.Null);
 		}
 
-		[Test]
-		public void Ctor_ToString_CurrentPos()
+		[TestCase("Tag")]
+		[TestCase("Coordinates")]
+		[TestCase("Altitude")]
+		[TestCase("Velocity")]
+		[TestCase("Course")]
+		[TestCase("Timestamp")]
+		public void ToString_ValidData_OutputContainsVariables(string toTestFor)
 		{
-			//Arrange
-			string testString = _trackData.ToString();
-
 			//Assert
-			Assert.That(testString, Is.EqualTo(_uut.ToString()));
-
+			StringAssert.Contains(toTestFor.ToLower(), _uut.ToString().ToLower());
 		}
 
 		[Test]

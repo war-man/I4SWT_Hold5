@@ -1,7 +1,7 @@
-﻿using AirTrafficMonitoring.Classes.TrackDataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using System.Collections.Generic;
 
-namespace AirTrafficMonitoring.Classes.CurrentTracksManager
+namespace AirTrafficMonitoring.Classes.Tracks
 {
 	public interface ICurrentTracksManager
 	{
