@@ -57,17 +57,38 @@ namespace AirTrafficMonitoring.Tests.Unit
 		}
 
 		[Test]
-		public void ToString_correct()
+		public void ToString_ContainsTag()
 		{
-			//Arrange
-			string testString = $"Tag: { Tag}\n" +
-								$"X-Coordinate: {XCoordinate}\n" +
-								$"Y-Coordinate: {YCoordinate}\n" +
-								$"Altitude: {Altitude}\n" +
-								$"Timestamp: {_timestamp}";
-
 			//Assert
-			Assert.That(_uut.ToString(), Is.EqualTo(testString));
+			StringAssert.Contains(Tag,_uut.ToString());
+		}
+
+		[Test]
+		public void ToString_ContainsXCoordinate()
+		{
+			//Assert
+			StringAssert.Contains(XCoordinate.ToString(), _uut.ToString());
+		}
+
+		[Test]
+		public void ToString_ContainsYCoordinate()
+		{
+			//Assert
+			StringAssert.Contains(YCoordinate.ToString(), _uut.ToString());
+		}
+
+		[Test]
+		public void ToString_ContainsAltitude()
+		{
+			//Assert
+			StringAssert.Contains(Altitude.ToString(), _uut.ToString());
+		}
+
+		[Test]
+		public void ToString_ContainsTimestamp()
+		{
+			//Assert
+			StringAssert.Contains(_timestamp.ToString(), _uut.ToString());
 		}
 	}
 }

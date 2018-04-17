@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CurrentTracksManagerUnitTest.cs" />
-    <Compile Include="EventLoggerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrackControllerUnitTest.cs" />
     <Compile Include="TrackDataObjectifierUnitTest.cs" />
