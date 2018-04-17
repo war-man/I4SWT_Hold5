@@ -5,9 +5,9 @@ namespace AirTrafficMonitoring.Classes.Tracks
 {
 	public class TrackController : ITrackController
 	{
-		private readonly ITrackGenerator _trackGenerator;
-		private readonly ITrackListFormatter _formatter;
 		private readonly ICurrentTracksManager _currentTracksManager;
+		private readonly ITrackGenerator _trackGenerator;
+		private readonly ITrackListFormatter _trackListFormatter;
 
 		private const int XBoundarySouthWest = 10000;
 		private const int YBoundarySouthWest = 10000;
@@ -21,12 +21,12 @@ namespace AirTrafficMonitoring.Classes.Tracks
 		{
 			_currentTracksManager = currentTracksManager;
 			_trackGenerator = trackGenerator;
-			_formatter = formatter;
+			_trackListFormatter = formatter;
 		}
 
-		public string AddTrackDataObjects(List<TrackData> trackDataList)
+		public List<Track> AddTrackDataObjects(List<TrackData> trackDataList)
 		{
-			if (trackDataList == null) return "";
+			if (trackDataList == null) return null;
 
 			// Find tracks that are no longer sends a transponder signal
 			var tracksToRemove = new List<Track>();
@@ -64,7 +64,12 @@ namespace AirTrafficMonitoring.Classes.Tracks
 				}
 			}
 
-			return _formatter.Format(_currentTracksManager.CurrentTracks);
+			return _currentTracksManager.CurrentTracks;
+		}
+
+		public string GetFormattedCurrentTracks()
+		{
+			return _trackListFormatter.Format(_currentTracksManager.CurrentTracks);
 		}
 
 		private bool CheckCoordinates(int x, int y)

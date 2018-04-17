@@ -5,6 +5,7 @@ namespace AirTrafficMonitoring.Classes.Tracks
 {
 	public interface ITrackController
 	{
-		string AddTrackDataObjects(List<TrackData> trackDataList);
+		List<Track> AddTrackDataObjects(List<TrackData> trackDataList);
+		string GetFormattedCurrentTracks();
 	}
 }
