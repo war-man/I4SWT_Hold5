@@ -10,6 +10,6 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 		void AddEvent(SeparationEvent separationEvent);
 		SeparationEvent FindEvent(string tag1, string tag2);
 		int GetEventCount();
-		void RemoveEvent(SeparationEvent separationEvent);
+		void RemoveEvent(string tag1, string tag2);
 	}
 }

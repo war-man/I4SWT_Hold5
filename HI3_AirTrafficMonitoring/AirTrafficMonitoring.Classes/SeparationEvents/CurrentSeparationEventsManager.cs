@@ -31,8 +31,10 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 			return CurrentEvents.Count;
 		}
 
-		public void RemoveEvent(SeparationEvent separationEvent)
+		public void RemoveEvent(string tag1, string tag2)
 		{
+			var separationEvent = FindEvent(tag1, tag2);
+
 			if (separationEvent != null)
 				CurrentEvents.Remove(separationEvent);
 		}
