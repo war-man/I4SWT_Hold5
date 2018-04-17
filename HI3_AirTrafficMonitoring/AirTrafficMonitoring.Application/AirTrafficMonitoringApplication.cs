@@ -6,7 +6,7 @@ using AirTrafficMonitoring.Classes.Tracks;
 using System;
 using TransponderReceiver;
 
-namespace AirTrafficMonitoring
+namespace AirTrafficMonitoring.Application
 {
 	class AirTrafficMonitoringApplication
 	{
@@ -18,7 +18,9 @@ namespace AirTrafficMonitoring
 				new TrackListFormatter());
 
 			var separationEventController = new SeparationEventController(
-				new CurrentSeparationEventsManager());
+				new CurrentSeparationEventsManager(),
+				new SeparationEventGenerator(),
+				new SeparationEventListFormatter());
 
 			var unused = new AirTrafficController(
 				TransponderReceiverFactory.CreateTransponderDataReceiver(),

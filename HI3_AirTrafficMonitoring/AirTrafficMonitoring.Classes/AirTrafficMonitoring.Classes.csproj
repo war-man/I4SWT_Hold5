@@ -58,8 +58,11 @@
     <Compile Include="SeparationEvents\CurrentSeparationEventsManager.cs" />
     <Compile Include="SeparationEvents\ICurrentSeparationEventsManager.cs" />
     <Compile Include="SeparationEvents\ISeparationEventController.cs" />
-    <Compile Include="SeparationEvents\ISeparationPrinter.cs" />
+    <Compile Include="SeparationEvents\ISeparationEventGenerator.cs" />
+    <Compile Include="SeparationEvents\ISeparationEventListFormatter.cs" />
     <Compile Include="SeparationEvents\SeparationEventController.cs" />
+    <Compile Include="SeparationEvents\SeparationEventGenerator.cs" />
+    <Compile Include="SeparationEvents\SeparationEventListFormatter.cs" />
     <Compile Include="Tracks\CurrentTracksManager.cs" />
     <Compile Include="Tracks\ICurrentTracksManager.cs" />
     <Compile Include="Tracks\ITrackController.cs" />
