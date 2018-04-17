@@ -15,10 +15,12 @@ namespace AirTrafficMonitoring.Tests.Unit
 	{
 		private TrackDataObjectifier _uut;
 
-		private ITransponderReceiver _fakeTransponderReceiver;
-		private ITrackController _fakeTrackController;
+		private string _correctInput1 = "ABC123;5000;6000;6000;20151006213456789";
+		private string _correctInput2 = "CBA321;5000;6000;6000;20151006213456789";
 
-		private string _tag = "ABC123";
+
+		private string _tag1 = "ABC123";
+		private string _tag2 = "CBA321";
 		private int _xCoordinate = 5000;
 		private int _yCoordinate = 6000;
 		private int _altitude = 6000;
@@ -27,168 +29,105 @@ namespace AirTrafficMonitoring.Tests.Unit
 		[SetUp]
 		public void Init()
 		{
-			_fakeTransponderReceiver = Substitute.For<ITransponderReceiver>();
-			_fakeTrackController = Substitute.For<ITrackController>();
-
 			_uut = new TrackDataObjectifier();
 		}
 
 		[Test]
-		public void OnTransponderDataReady_CorrectInput_TrackManagerCalled()
+		public void Objectify_CorrectInput_TagParsedCorrectly()
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add("ABC123;5000;6000;6000;20151006213456789");
+			list.Add(_correctInput1);
 
 			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			_fakeTrackController.Received(1).AddTrackDataObjects(Arg.Any<List<TrackData>>());
+			Assert.That(result[0].Tag, Is.EqualTo(_tag1));
 		}
 
 		[Test]
-		public void OnTransponderDataReady_CorrectInput_TagParsedCorrectly()
+		public void Objectify_CorrectInput_XCoordinateParsedCorrectly()
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add("ABC123;5000;6000;6000;20151006213456789");
-
-			List<TrackData> parameterList = new List<TrackData>();
-			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
-				ls => parameterList = ls));
+			list.Add(_correctInput1);
 
 			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			var result = parameterList.First();
-
-			Assert.That(result.Tag, Is.EqualTo(_tag));
+			Assert.That(result[0].XCoordinate, Is.EqualTo(_xCoordinate));
 		}
 
 		[Test]
-		public void OnTransponderDataReady_CorrectInput_XCoordinateParsedCorrectly()
+		public void Objectify_CorrectInput_YCoordinateParsedCorrectly()
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add("ABC123;5000;6000;6000;20151006213456789");
-
-			List<TrackData> parameterList = new List<TrackData>();
-			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
-				ls => parameterList = ls));
+			list.Add(_correctInput1);
 
 			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			var result = parameterList.First();
-
-			Assert.That(result.XCoordinate, Is.EqualTo(_xCoordinate));
+			Assert.That(result[0].YCoordinate, Is.EqualTo(_yCoordinate));
 		}
 
 		[Test]
-		public void OnTransponderDataReady_CorrectInput_YCoordinateParsedCorrectly()
+		public void Objectify_CorrectInput_AltitudeParsedCorrectly()
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add("ABC123;5000;6000;6000;20151006213456789");
-
-			List<TrackData> parameterList = new List<TrackData>();
-			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
-				ls => parameterList = ls));
+			list.Add(_correctInput1);
 
 			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			var result = parameterList.First();
-
-			Assert.That(result.YCoordinate, Is.EqualTo(_yCoordinate));
+			Assert.That(result[0].Altitude, Is.EqualTo(_altitude));
 		}
 
 		[Test]
-		public void OnTransponderDataReady_CorrectInput_AltitudeParsedCorrectly()
+		public void Objectify_CorrectInput_TimestampParsedCorrectly()
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add("ABC123;5000;6000;6000;20151006213456789");
-
-			List<TrackData> parameterList = new List<TrackData>();
-			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
-				ls => parameterList = ls));
+			list.Add(_correctInput1);
 
 			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			var result = parameterList.First();
-
-			Assert.That(result.Altitude, Is.EqualTo(_altitude));
+			Assert.That(result[0].Timestamp, Is.EqualTo(_timestamp));
 		}
 
 		[Test]
-		public void OnTransponderDataReady_CorrectInput_TimestampParsedCorrectly()
+		public void Objectify_CorrectInputCountIsTwo_TwoObjectsCreated()
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add("ABC123;5000;6000;6000;20151006213456789");
-
-			List<TrackData> parameterList = new List<TrackData>();
-			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
-				ls => parameterList = ls));
+			list.Add(_correctInput1);
+			list.Add(_correctInput2);
 
 			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			var result = parameterList.First();
-
-			Assert.That(result.Timestamp, Is.EqualTo(_timestamp));
+			Assert.That(result.Count, Is.EqualTo(2));
 		}
 
 		[Test]
-		public void OnTransponderDataReady_CorrectInputLengthIsTwo_TwoObjectsCreated()
-		{
-			//Arrange
-			var list = new List<string>();
-			list.Add("ABC123;5000;6000;6000;20151006213456789");
-			list.Add("CBA321;5000;6000;6000;20151006213456789");
-
-			List<TrackData> parameterList = new List<TrackData>();
-			_fakeTrackController.AddTrackDataObjects(Arg.Do<List<TrackData>>(
-				ls => parameterList = ls));
-
-			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
-
-			//Assert
-			_fakeTrackController.Received(1).AddTrackDataObjects(Arg.Is<List<TrackData>>(
-				l => l.Count == 2
-			));
-		}
-
-		[Test]
-		public void OnTransponderDataReady_ListIsEmpty_TrackManagerReceivesEmptyList()
+		public void Objectify_ListIsEmpty_EmptyTrackListReturned()
 		{
 			//Arrange
 			var list = new List<string>();
 
 			//Act
-			_fakeTransponderReceiver.TransponderDataReady +=
-				Raise.EventWith(_fakeTransponderReceiver, new RawTransponderDataEventArgs(list));
+			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			_fakeTrackController.Received(1).AddTrackDataObjects(Arg.Is<List<TrackData>>(
-				l => l.Count == 0
-			));
+			Assert.That(result.Count, Is.EqualTo(0));
 		}
 	}
 }

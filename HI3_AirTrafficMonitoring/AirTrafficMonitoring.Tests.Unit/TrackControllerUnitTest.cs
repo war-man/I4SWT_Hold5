@@ -203,7 +203,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 		}
 
 		[Test]
-		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_FormatOnTrackFormatterNotCalled()
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_FormatOnTrackFormatterCalledWithEmptyTrackList()
 		{
 			// Arrange
 			var trackList = new List<Track>();
@@ -214,7 +214,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_uut.AddTrackDataObjects(new List<TrackData>());
 
 			// Assert
-			_fakeTrackListFormatter.DidNotReceive().Format(Arg.Any<List<Track>>());
+			_fakeTrackListFormatter.Received().Format(trackList);
 		}
 
 		[Test]
