@@ -19,13 +19,13 @@ namespace AirTrafficMonitoring.Classes.DataModels
 		public string CurrentPosition => CurrentTrack.XCoordinate + ";" + CurrentTrack.YCoordinate;
 		public TrackData CurrentTrack { get; private set; }
 		public TrackData PreviousTrack { get; private set; }
+
 		public void AddNewTrackData(TrackData data)
 		{
 			PreviousTrack = CurrentTrack;
 			CurrentTrack = data;
 
 			// Calculate Delta values
-
 			int deltaX = CurrentTrack.XCoordinate - PreviousTrack.XCoordinate;
 			int deltaY = CurrentTrack.YCoordinate - PreviousTrack.YCoordinate;
 
@@ -39,13 +39,14 @@ namespace AirTrafficMonitoring.Classes.DataModels
 			// Calculate Velocity
 			Velocity = Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) / deltaTime;
 		}
+
 		public override string ToString()
 		{
-			return $"Tag: {Tag}\n" +
-				   $"Coordinates (X,Y): {CurrentTrack.XCoordinate},{CurrentTrack.YCoordinate}\n" +
-				   $"Altitude: {CurrentTrack.Altitude}\n" +
-				   $"Velocity: {Velocity:F2}\n" +
-				   $"Course: {Direction:F2}\n" +
+			return $"Tag: {Tag} | " +
+				   $"Coordinates (X,Y): {CurrentTrack.XCoordinate},{CurrentTrack.YCoordinate} | " +
+				   $"Altitude: {CurrentTrack.Altitude} m\n" +
+				   $"Velocity: {Velocity:F2} m/s | " +
+				   $"Course: {Direction:F2} degrees | " +
 				   $"Timestamp: {CurrentTrack.Timestamp}";
 		}
 	}
