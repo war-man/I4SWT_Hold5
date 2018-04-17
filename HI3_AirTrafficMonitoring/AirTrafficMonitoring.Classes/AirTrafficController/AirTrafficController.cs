@@ -36,11 +36,28 @@ namespace AirTrafficMonitoring.Classes.AirTrafficController
 			var trackDataList = _trackDataObjectifier.Objectify(e.TransponderData);
 
 			// Update tracks with given data
-			var formattedCurrentTracks = _trackController.AddTrackDataObjects(trackDataList);
+			var currentTracks = _trackController.AddTrackDataObjects(trackDataList);
 
-			// Print tracks
-			_consolePrinter.Clear();
-			_consolePrinter.WriteLine(formattedCurrentTracks);
+			// Check for separation events
+			var separationEvents = _separationEventController.CheckForSeparationEvents(currentTracks);
+
+			// Print current tracks to console
+			if (currentTracks?.Count > 0)
+			{
+				_consolePrinter.Clear();
+				_consolePrinter.WriteLine("Current tracks:\n");
+				_consolePrinter.WriteLine(_trackController.GetFormattedCurrentTracks());
+			}
+
+			// Print separation events to console and file
+			if (separationEvents?.Count > 0)
+			{
+				_consolePrinter.WriteLine("\n==================================================\n");
+				_consolePrinter.WriteLine("Current separation events:\n");
+				_consolePrinter.WriteLine(_separationEventController.GetFormattedSeparationEvents());
+
+				_eventLogger.WriteLine(_separationEventController.GetFormattedSeparationEvents());
+			}
 		}
 	}
 }
