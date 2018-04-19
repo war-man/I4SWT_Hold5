@@ -69,7 +69,16 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 
 		private bool CheckForVerticalConflict(Track track1, Track track2)
 		{
-			return track1.CurrentTrack.Altitude - track2.CurrentTrack.Altitude < VerticalLimit;
+			var track1Altitude = track1.CurrentTrack.Altitude;
+			var track2Altitude = track2.CurrentTrack.Altitude;
+
+			bool conflict;
+			if (track1Altitude > track2Altitude)
+				conflict = track1Altitude - track2Altitude < VerticalLimit;
+			else
+				conflict = track2Altitude - track1Altitude < VerticalLimit;
+
+			return conflict;
 		}
 	}
 }
