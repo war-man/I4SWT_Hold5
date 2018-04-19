@@ -203,7 +203,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 		}
 
 		[Test]
-		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_FormatOnTrackFormatterCalledWithEmptyTrackList()
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs0_CorrectCurrentTracksListIsReturned()
 		{
 			// Arrange
 			var trackList = new List<Track>();
@@ -211,14 +211,14 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_fakeCurrentTracksManager.GetTrackCount().Returns(0);
 
 			// Act
-			_uut.AddTrackDataObjects(new List<TrackData>());
+			var currentTracks = _uut.AddTrackDataObjects(new List<TrackData>());
 
 			// Assert
-			_fakeTrackListFormatter.Received().Format(trackList);
+			Assert.That(currentTracks, Is.EqualTo(trackList));
 		}
 
 		[Test]
-		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs5_FormatOnTrackFormatterCalledWithCorrectTrackList()
+		public void AddTrackDataObjects_CurrentTracksManagerListNumberOfElementsIs5_CorrectCurrentTracksListIsReturned()
 		{
 			// Arrange
 			var trackObject1 = new Track("tag1", new TrackData("tag1", 0, 0, 0, DateTime.Now));
@@ -238,10 +238,10 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_fakeCurrentTracksManager.GetTrackCount().Returns(5);
 
 			// Act
-			_uut.AddTrackDataObjects(new List<TrackData>());
+			var currentTracks = _uut.AddTrackDataObjects(new List<TrackData>());
 
 			// Assert
-			_fakeTrackListFormatter.Received().Format(trackList);
+			Assert.That(currentTracks, Is.EqualTo(trackList));
 		}
 	}
 }
