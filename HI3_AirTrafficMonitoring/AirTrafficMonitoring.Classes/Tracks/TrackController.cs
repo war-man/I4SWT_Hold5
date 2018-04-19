@@ -13,6 +13,8 @@ namespace AirTrafficMonitoring.Classes.Tracks
 		private const int YBoundarySouthWest = 10000;
 		private const int XBoundaryNorthEast = 90000;
 		private const int YBoundaryNorthEast = 90000;
+		private const int ZBoundaryLower = 500;
+		private const int ZBoundaryUpper = 20000;
 
 		public TrackController(
 			ICurrentTracksManager currentTracksManager,
@@ -50,7 +52,8 @@ namespace AirTrafficMonitoring.Classes.Tracks
 			foreach (var trackData in trackDataList)
 			{
 				// Check that track is within the boundaries of the monitored area
-				if (!CheckCoordinates(trackData.XCoordinate, trackData.YCoordinate)) continue;
+				if (!CheckCoordinates(trackData.XCoordinate, trackData.YCoordinate) &&
+					!CheckAltitude(trackData.Altitude)) continue;
 
 				var track = _currentTracksManager.FindTrack(trackData.Tag);
 
@@ -76,6 +79,11 @@ namespace AirTrafficMonitoring.Classes.Tracks
 		{
 			return x >= XBoundarySouthWest && x <= XBoundaryNorthEast &&
 				   y >= YBoundarySouthWest && y <= YBoundaryNorthEast;
+		}
+
+		private bool CheckAltitude(int altitude)
+		{
+			return altitude >= ZBoundaryLower && altitude <= ZBoundaryUpper;
 		}
 	}
 }
