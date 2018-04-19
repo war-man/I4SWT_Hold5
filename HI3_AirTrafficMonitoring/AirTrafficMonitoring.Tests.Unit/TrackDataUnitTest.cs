@@ -22,73 +22,65 @@ namespace AirTrafficMonitoring.Tests.Unit
 		}
 
 		[Test]
-		public void Ctor_Tag_correct()
+		public void Ctor_Tag_ParsedCorrectly()
 		{
 			//Assert
 			Assert.That(_uut.Tag, Is.EqualTo(Tag));
 		}
 
 		[Test]
-		public void Ctor_Xcoordinate_correct()
+		public void Ctor_Xcoordinate_ParsedCorrectly()
 		{
 			//Assert
 			Assert.That(_uut.XCoordinate, Is.EqualTo(XCoordinate));
 		}
 
 		[Test]
-		public void Ctor_Ycoordinate_correct()
+		public void Ctor_Ycoordinate_ParsedCorrectly()
 		{
 			//Assert
 			Assert.That(_uut.YCoordinate, Is.EqualTo(YCoordinate));
 		}
 
 		[Test]
-		public void Ctor_Altitude_correct()
+		public void Ctor_Altitude_ParsedCorrectly()
 		{
 			//Assert
 			Assert.That(_uut.Altitude, Is.EqualTo(Altitude));
 		}
 
 		[Test]
-		public void Ctor_Timestamp_correct()
+		public void Ctor_Timestamp_ParsedCorrectly()
 		{
 			//Assert
 			Assert.That(_uut.Timestamp, Is.EqualTo(_timestamp));
 		}
 
-		[Test]
-		public void ToString_ContainsTag()
+		[TestCase(Tag)]
+		[TestCase(XCoordinate)]
+		[TestCase(YCoordinate)]
+		[TestCase(Altitude)]
+		public void ToString_ContainsValues(object value)
 		{
 			//Assert
-			StringAssert.Contains(Tag,_uut.ToString());
-		}
-
-		[Test]
-		public void ToString_ContainsXCoordinate()
-		{
-			//Assert
-			StringAssert.Contains(XCoordinate.ToString(), _uut.ToString());
-		}
-
-		[Test]
-		public void ToString_ContainsYCoordinate()
-		{
-			//Assert
-			StringAssert.Contains(YCoordinate.ToString(), _uut.ToString());
-		}
-
-		[Test]
-		public void ToString_ContainsAltitude()
-		{
-			//Assert
-			StringAssert.Contains(Altitude.ToString(), _uut.ToString());
+			StringAssert.Contains(value.ToString().ToLower(), _uut.ToString().ToLower());
 		}
 
 		[Test]
 		public void ToString_ContainsTimestamp()
 		{
 			//Assert
-			StringAssert.Contains(_timestamp.ToString(), _uut.ToString());
+			StringAssert.Contains(_timestamp.ToString().ToLower(), _uut.ToString().ToLower());
+		}
+
+		[TestCase("Tag")]
+		[TestCase("Coordinates")]
+		[TestCase("Altitude")]
+		[TestCase("Timestamp")]
+		public void ToString_ContainsLabels(string label)
+		{
+			//Assert
+			StringAssert.Contains(label.ToLower(), _uut.ToString().ToLower());
 		}
 	}
 }
