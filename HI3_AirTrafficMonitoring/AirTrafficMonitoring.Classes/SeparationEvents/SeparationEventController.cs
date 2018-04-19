@@ -64,7 +64,7 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 			var deltaX = track1.CurrentTrack.XCoordinate - track2.CurrentTrack.XCoordinate;
 			var deltaY = track1.CurrentTrack.YCoordinate - track2.CurrentTrack.YCoordinate;
 
-			return Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) > HorizontalLimit;
+			return Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) < HorizontalLimit;
 		}
 
 		private bool CheckForVerticalConflict(Track track1, Track track2)
