@@ -62,6 +62,8 @@
     <Compile Include="CurrentSeparationEventsManagerUnitTest.cs" />
     <Compile Include="CurrentTracksManagerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeparationEventUnitTest.cs" />
+    <Compile Include="SeperationEventGeneratorUnitTest.cs" />
     <Compile Include="TrackControllerUnitTest.cs" />
     <Compile Include="TrackDataObjectifierUnitTest.cs" />
     <Compile Include="TrackDataUnitTest.cs" />

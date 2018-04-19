@@ -100,5 +100,17 @@ namespace AirTrafficMonitoring.Tests.Unit
 			Assert.AreEqual(tagCount, 2);
 		}
 
+		[TestCase("tag1")]
+		[TestCase("tag2")]
+		public void Format_TwoElements_BothTagsPrinted(string tag)
+		{
+			// Arrange
+			_trackList.Add(_track1);
+			_trackList.Add(_track2);
+
+			// Assert
+			StringAssert.Contains(tag.ToLower(), _uut.Format(_trackList));
+		}
+
 	}
 }
