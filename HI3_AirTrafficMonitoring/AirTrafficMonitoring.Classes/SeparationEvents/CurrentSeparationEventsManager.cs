@@ -15,7 +15,9 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 		public void AddEvent(SeparationEvent separationEvent)
 		{
 			if (separationEvent != null && separationEvent.Tag1 != separationEvent.Tag2)
-				CurrentEvents.Add(separationEvent);
+				//check if Event allready is in list
+				if(FindEvent(separationEvent.Tag1, separationEvent.Tag2) == null)
+					CurrentEvents.Add(separationEvent);
 		}
 
 		public SeparationEvent FindEvent(string tag1, string tag2)
