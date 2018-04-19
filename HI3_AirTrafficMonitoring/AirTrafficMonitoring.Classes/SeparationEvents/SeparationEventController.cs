@@ -33,6 +33,8 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 			{
 				foreach (var tempTrack in tempTrackList)
 				{
+					if (track.Tag == tempTrack.Tag) continue;
+
 					// Check for new separation events to be added
 					if (_currentSeparationEventsManager.FindEvent(track.Tag, tempTrack.Tag) == null &&
 						CheckForHorizontalConflict(track, tempTrack) &&
@@ -51,7 +53,7 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 				}
 			}
 
-			return null;
+			return _currentSeparationEventsManager.CurrentEvents;
 		}
 
 		public string GetFormattedSeparationEvents()
@@ -64,12 +66,21 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 			var deltaX = track1.CurrentTrack.XCoordinate - track2.CurrentTrack.XCoordinate;
 			var deltaY = track1.CurrentTrack.YCoordinate - track2.CurrentTrack.YCoordinate;
 
-			return Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) > HorizontalLimit;
+			return Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) < HorizontalLimit;
 		}
 
 		private bool CheckForVerticalConflict(Track track1, Track track2)
 		{
-			return track1.CurrentTrack.Altitude - track2.CurrentTrack.Altitude < VerticalLimit;
+			var track1Altitude = track1.CurrentTrack.Altitude;
+			var track2Altitude = track2.CurrentTrack.Altitude;
+
+			bool conflict;
+			if (track1Altitude > track2Altitude)
+				conflict = track1Altitude - track2Altitude < VerticalLimit;
+			else
+				conflict = track2Altitude - track1Altitude < VerticalLimit;
+
+			return conflict;
 		}
 	}
 }
