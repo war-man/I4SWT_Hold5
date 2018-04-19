@@ -53,7 +53,7 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 				}
 			}
 
-			return null;
+			return _currentSeparationEventsManager.CurrentEvents;
 		}
 
 		public string GetFormattedSeparationEvents()
