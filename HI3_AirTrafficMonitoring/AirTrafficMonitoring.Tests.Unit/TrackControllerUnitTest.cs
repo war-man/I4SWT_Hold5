@@ -33,8 +33,8 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_uut.AddTrackDataObjects(null);
 
 			// Assert
-			// Note that the "temp" variable is only there to make the compiler "happy"
-			var temp = _fakeCurrentTracksManager.DidNotReceive().CurrentTracks;
+			// Note that the "unused" variable is only there to make the compiler "happy"
+			var unused = _fakeCurrentTracksManager.DidNotReceive().CurrentTracks;
 		}
 
 		[Test]
