@@ -59,9 +59,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CurrentSeparationEventsManagerUnitTest.cs" />
     <Compile Include="CurrentTracksManagerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeparationEventListFormatterUnitTest.cs" />
+    <Compile Include="SeparationEventControllerUnitTest.cs" />
     <Compile Include="SeparationEventUnitTest.cs" />
     <Compile Include="SeperationEventGeneratorUnitTest.cs" />
     <Compile Include="TrackControllerUnitTest.cs" />
