@@ -10,7 +10,6 @@ namespace AirTrafficMonitoring.Tests.Unit
 		private Track _uut;
 
 		private const string Tag = "12345";
-
 		private const double DeltaTime = 1;
 
 		#region First TrackData
@@ -21,18 +20,25 @@ namespace AirTrafficMonitoring.Tests.Unit
 		private TrackData _trackData;
 		private DateTime _timestamp = DateTime.Now;
 
-		private const string Coordinates = "5000;6000";
-
 		#endregion
 
 		#region Second TrackData
 
-		private const int XCoordinateSecound = 6000;
-		private const int YCoordinateSecound = 7000;
-		private const int AltitudeSecound = 7000;
+		private const int XCoordinate2 = 6000;
+		private const int YCoordinate2 = 7000;
+		private const int Altitude2 = 7000;
 
-		private DateTime _timestampSecound;
-		private TrackData _trackDataSecound;
+		private DateTime _timestamp2;
+		private TrackData _trackData2;
+
+		#endregion
+
+		#region For Tests
+
+		private const string Coordinates = "5000;6000";
+		private const double CalculatedVelocity = 1414.21; //cut at 2 decimal points
+		private const double CalculatedDirection = 45;
+		private const double CalculatedInverseDirection = 225;
 
 		#endregion
 
@@ -44,43 +50,142 @@ namespace AirTrafficMonitoring.Tests.Unit
 
 			_uut = new Track(Tag, _trackData);
 
-			_timestampSecound = _timestamp.AddSeconds(DeltaTime);
-			_trackDataSecound = new TrackData(Tag, XCoordinateSecound, YCoordinateSecound, AltitudeSecound, _timestampSecound);
+			_timestamp2 = _timestamp.AddSeconds(DeltaTime);
+			_trackData2 = new TrackData(Tag, XCoordinate2, YCoordinate2, Altitude2, _timestamp2);
 		}
 
 		[Test]
-		public void Ctor_Tag_Correct()
+		public void Ctor_SingleTrackData_TagParsedCorrectly()
 		{
 			//Assert
 			Assert.That(_uut.Tag, Is.EqualTo(Tag));
 		}
 
 		[Test]
-		public void Ctor_CurrentTrack_Correct()
+		public void Ctor_SingleTrackData_CurrentTrackParsedCorrectly()
 		{
 			//Assert
 			Assert.That(_uut.CurrentTrack, Is.EqualTo(_trackData));
 		}
 
 		[Test]
-		public void Ctor_Direction_Null()
+		public void Ctor_SingleTrackData_DirectionIsNull()
 		{
 			//Assert
 			Assert.That(_uut.Direction, Is.Null);
 		}
 
 		[Test]
-		public void Ctor_Velocity_Null()
+		public void Ctor_SingleTrackData_VelocityIsNull()
 		{
 			//Assert
 			Assert.That(_uut.Velocity, Is.Null);
 		}
 
 		[Test]
-		public void Ctor_PreviousTrack_Null()
+		public void Ctor_SingleTrackData_PreviousTrackIsNull()
 		{
 			//Assert
 			Assert.That(_uut.PreviousTrack, Is.Null);
+		}
+
+		[Test]
+		public void AddNewTrackData_TagNotChanged()
+		{
+			//Act
+			_uut.AddNewTrackData(_trackData2);
+
+			//Assert
+			Assert.That(_uut.Tag, Is.EqualTo(Tag));
+		}
+
+		[Test]
+		public void AddNewTrackData_OneAdditionalTrackDataAdded_CurrentTrackIsNewTrackData()
+		{
+			//Act
+			_uut.AddNewTrackData(_trackData2);
+
+			//Assert
+			Assert.That(_uut.CurrentTrack, Is.EqualTo(_trackData2));
+		}
+
+		[Test]
+		public void AddNewTrackData_OneAdditionalTrackDataAdded_PreviousTrackIsOldTrackData()
+		{
+			//Act
+			_uut.AddNewTrackData(_trackData2);
+
+			//Assert
+			Assert.That(_uut.PreviousTrack, Is.EqualTo(_trackData));
+		}
+
+		[Test]
+		public void AddNewTrackData_OneAdditionalTrackDataAdded_DirectionCalculatedTo45Degrees()
+		{
+			//Act
+			_uut.AddNewTrackData(_trackData2);
+
+			//Assert
+			Assert.That(_uut.Direction, Is.EqualTo(CalculatedDirection));
+		}
+
+		[Test]
+		public void AddNewTrackData_TrackDataAddedInInverseOrder_DirectionCalculatedTo225Degrees()
+		{
+			//Arrange
+			_uut.AddNewTrackData(_trackData2);
+
+			//Act
+			_uut.AddNewTrackData(_trackData);
+
+			//Assert
+			Assert.That(_uut.Direction, Is.EqualTo(CalculatedInverseDirection));
+		}
+
+		[Test]
+		public void AddNewTrackData_OneAdditionalTrackDataAdded_VelocityCalculated()
+		{
+
+			//Act
+			_uut.AddNewTrackData(_trackData2);
+
+			//Assert
+			Assert.That(_uut.Velocity, Is.EqualTo(CalculatedVelocity).Within(0.01));
+		}
+
+		[TestCase(XCoordinate)]
+		[TestCase(YCoordinate)]
+		public void CurrentPosition_ContainsCoordinates(int coordinate)
+		{
+			//Assert
+			StringAssert.Contains(coordinate.ToString().ToLower(), _uut.CurrentPosition.ToLower());
+
+		}
+
+		[TestCase(XCoordinate2)]
+		[TestCase(YCoordinate2)]
+		public void CurrentPosition_OneAdditionalTrackDataAdded_PositionUpdated(int coordinate)
+		{
+			//Act
+			_uut.AddNewTrackData(_trackData2);
+
+			//Assert
+			StringAssert.Contains(coordinate.ToString().ToLower(), _uut.CurrentPosition.ToLower());
+		}
+
+		[TestCase(Tag)]
+		[TestCase(XCoordinate2)]
+		[TestCase(YCoordinate2)]
+		[TestCase(Altitude2)]
+		[TestCase(CalculatedVelocity)]
+		[TestCase(CalculatedDirection)]
+		public void ToString_OneAdditionalTrackDataAdded_ContainsValues(object value)
+		{
+			//Act
+			_uut.AddNewTrackData(_trackData2);
+
+			//Assert
+			StringAssert.Contains(value.ToString().ToLower(), _uut.ToString().ToLower());
 		}
 
 		[TestCase("Tag")]
@@ -89,110 +194,13 @@ namespace AirTrafficMonitoring.Tests.Unit
 		[TestCase("Velocity")]
 		[TestCase("Course")]
 		[TestCase("Timestamp")]
-		public void ToString_ValidData_OutputContainsVariables(string toTestFor)
-		{
-			//Assert
-			StringAssert.Contains(toTestFor.ToLower(), _uut.ToString().ToLower());
-		}
-
-		[Test]
-		public void Ctor_ToString_CurrentPosition()
-		{
-			//Assert
-			Assert.That(_uut.CurrentPosition, Is.EqualTo(_trackData.XCoordinate + ";" + _trackData.YCoordinate));
-		}
-
-		[Test]
-		public void AddNewTrackData_Tag_notChanged()
+		public void ToString_ValidData_ContainsLabels(string label)
 		{
 			//Act
-			_uut.AddNewTrackData(_trackDataSecound);
+			_uut.AddNewTrackData(_trackData2);
 
 			//Assert
-			Assert.That(_uut.Tag, Is.EqualTo(Tag));
+			StringAssert.Contains(label.ToLower(), _uut.ToString().ToLower());
 		}
-
-		[Test]
-		public void AddNewTrackData_CurrentTrack_equal_newTrackData()
-		{
-			//Act
-			_uut.AddNewTrackData(_trackDataSecound);
-
-			//Assert
-			Assert.That(_uut.CurrentTrack, Is.EqualTo(_trackDataSecound));
 		}
-
-		[Test]
-		public void AddNewTrackData_PreviousTrack_equal_oldTrackData()
-		{
-			//Act
-			_uut.AddNewTrackData(_trackDataSecound);
-
-			//Assert
-			Assert.That(_uut.PreviousTrack, Is.EqualTo(_trackData));
-		}
-
-		[Test]
-		public void AddNewTrackData_Direction_calculated45degres()
-		{
-			//Arrange
-			double xDiff = XCoordinateSecound - XCoordinate;
-			double yDiff = YCoordinateSecound - YCoordinate;
-
-			double direction = Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI;
-			if (direction < 0) direction += 360;
-
-			//Act
-			_uut.AddNewTrackData(_trackDataSecound);
-
-			//Assert
-			Assert.That(_uut.Direction, Is.EqualTo(direction));
-		}
-
-		[Test]
-		public void AddNewTrackData_Direction_calculated225degres()
-		{
-			//Arrange
-			double xDiff = XCoordinate - XCoordinateSecound;
-			double yDiff = YCoordinate - YCoordinateSecound;
-
-			double direction = Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI;
-			if (direction < 0) direction += 360;
-
-			//for going the oppiset way of 45 degres start by going to point secound
-			_uut.AddNewTrackData(_trackDataSecound);
-
-			//Act
-			//go back
-			_uut.AddNewTrackData(_trackData);
-
-			//Assert
-			Assert.That(_uut.Direction, Is.EqualTo(direction));
-		}
-
-		[Test]
-		public void AddNewTrackData_Velocity_calculated()
-		{
-			//Arrange
-			double xDiff = XCoordinateSecound - XCoordinate;
-			double yDiff = YCoordinateSecound - YCoordinate;
-			double speed = Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2)) / DeltaTime;
-
-			//Act
-			_uut.AddNewTrackData(_trackDataSecound);
-
-			//Assert
-			Assert.That(_uut.Velocity, Is.EqualTo(speed));
-		}
-
-		[Test]
-		public void AddNewTrackData_ToString_CurrentPosition()
-		{
-			//Act
-			_uut.AddNewTrackData(_trackDataSecound);
-
-			//Assert
-			Assert.That(_uut.CurrentPosition, Is.EqualTo(_trackDataSecound.XCoordinate + ";" + _trackDataSecound.YCoordinate));
-		}
-	}
 }
