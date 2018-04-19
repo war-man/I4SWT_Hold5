@@ -33,6 +33,8 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 			{
 				foreach (var tempTrack in tempTrackList)
 				{
+					if (track.Tag == tempTrack.Tag) continue;
+
 					// Check for new separation events to be added
 					if (_currentSeparationEventsManager.FindEvent(track.Tag, tempTrack.Tag) == null &&
 						CheckForHorizontalConflict(track, tempTrack) &&
