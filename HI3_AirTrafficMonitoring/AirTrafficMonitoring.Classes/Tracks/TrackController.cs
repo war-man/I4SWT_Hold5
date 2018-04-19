@@ -52,7 +52,7 @@ namespace AirTrafficMonitoring.Classes.Tracks
 			foreach (var trackData in trackDataList)
 			{
 				// Check that track is within the boundaries of the monitored area
-				if (!CheckCoordinates(trackData.XCoordinate, trackData.YCoordinate) &&
+				if (!CheckCoordinates(trackData.XCoordinate, trackData.YCoordinate) ||
 					!CheckAltitude(trackData.Altitude)) continue;
 
 				var track = _currentTracksManager.FindTrack(trackData.Tag);
