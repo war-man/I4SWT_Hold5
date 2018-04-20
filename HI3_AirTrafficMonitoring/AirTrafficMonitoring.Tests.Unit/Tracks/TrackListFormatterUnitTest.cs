@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.Tracks
 {
 	[TestFixture]
 	class TrackListFormatterUnitTest

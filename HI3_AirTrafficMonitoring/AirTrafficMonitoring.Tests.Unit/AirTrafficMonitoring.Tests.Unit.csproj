@@ -59,20 +59,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirTrafficControllerUnitTest.cs" />
-    <Compile Include="CurrentSeparationEventsManagerUnitTest.cs" />
-    <Compile Include="CurrentTracksManagerUnitTest.cs" />
+    <Compile Include="AirTrafficController\AirTrafficControllerUnitTest.cs" />
+    <Compile Include="SeparationEvents\CurrentSeparationEventsManagerUnitTest.cs" />
+    <Compile Include="Tracks\CurrentTracksManagerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeparationEventListFormatterUnitTest.cs" />
-    <Compile Include="SeparationEventControllerUnitTest.cs" />
-    <Compile Include="SeparationEventUnitTest.cs" />
-    <Compile Include="SeperationEventGeneratorUnitTest.cs" />
-    <Compile Include="TrackControllerUnitTest.cs" />
-    <Compile Include="TrackDataObjectifierUnitTest.cs" />
-    <Compile Include="TrackDataUnitTest.cs" />
-    <Compile Include="TrackGeneratorUnitTest.cs" />
-    <Compile Include="TrackListFormatterUnitTest.cs" />
-    <Compile Include="TrackUnitTest.cs" />
+    <Compile Include="SeparationEvents\SeparationEventListFormatterUnitTest.cs" />
+    <Compile Include="SeparationEvents\SeparationEventControllerUnitTest.cs" />
+    <Compile Include="DataModels\SeparationEventUnitTest.cs" />
+    <Compile Include="SeparationEvents\SeperationEventGeneratorUnitTest.cs" />
+    <Compile Include="Tracks\TrackControllerUnitTest.cs" />
+    <Compile Include="Objectifier\TrackDataObjectifierUnitTest.cs" />
+    <Compile Include="DataModels\TrackDataUnitTest.cs" />
+    <Compile Include="Tracks\TrackGeneratorUnitTest.cs" />
+    <Compile Include="Tracks\TrackListFormatterUnitTest.cs" />
+    <Compile Include="DataModels\TrackUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

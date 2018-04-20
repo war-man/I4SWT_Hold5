@@ -3,7 +3,7 @@ using AirTrafficMonitoring.Classes.Tracks;
 using NUnit.Framework;
 using System;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.Tracks
 {
 	[TestFixture]
 	class CurrentTracksManagerUnitTest

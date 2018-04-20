@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AirTrafficMonitoring.Classes.DataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using AirTrafficMonitoring.Classes.SeparationEvents;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 {
 	[TestFixture]
 	class CurrentSeparationEventsManagerUnitTest
@@ -30,7 +27,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 		{
 			List<SeparationEvent> eventlist = _uut.CurrentEvents;
 
-			Assert.That(eventlist,Is.Empty);
+			Assert.That(eventlist, Is.Empty);
 		}
 
 		[Test]
@@ -90,13 +87,13 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_uut.AddEvent(_eventOne);
 			_uut.AddEvent(_eventTwo);
 
-			Assert.That(_uut.FindEvent("tag2e2","tag1e2"), Is.EqualTo(_eventTwo));
+			Assert.That(_uut.FindEvent("tag2e2", "tag1e2"), Is.EqualTo(_eventTwo));
 		}
 
 		[Test]
 		public void GetEventCount_Ctor_returns_Zero()
 		{
-			Assert.AreEqual(0,_uut.GetEventCount());
+			Assert.AreEqual(0, _uut.GetEventCount());
 		}
 
 		[TestCase(1)]
@@ -105,10 +102,10 @@ namespace AirTrafficMonitoring.Tests.Unit
 		[TestCase(50)]
 		public void GetEventCount_get_right_event(int number)
 		{
-			
-			for (int i =0;i < number ; i++)
+
+			for (int i = 0; i < number; i++)
 			{
-				_uut.AddEvent(new SeparationEvent("tag1e" + i, "tag2e" + i, new DateTime(1995+i, 08, 09)));
+				_uut.AddEvent(new SeparationEvent("tag1e" + i, "tag2e" + i, new DateTime(1995 + i, 08, 09)));
 			}
 			Assert.AreEqual(number, _uut.GetEventCount());
 		}
@@ -116,7 +113,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 		[Test]
 		public void GetEventCount_remove_on_Empty_list_returns_Zero()
 		{
-			_uut.RemoveEvent("Tag1","Tag2");
+			_uut.RemoveEvent("Tag1", "Tag2");
 			Assert.AreEqual(0, _uut.GetEventCount());
 		}
 
@@ -137,7 +134,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 			List<SeparationEvent> beforlist = _uut.CurrentEvents;
 
 			//Act
-			_uut.RemoveEvent("not","There");
+			_uut.RemoveEvent("not", "There");
 
 			//Assert
 			Assert.That(beforlist, Is.EqualTo(_uut.CurrentEvents));
@@ -151,7 +148,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 
 			List<SeparationEvent> testlist = new List<SeparationEvent>();
 			testlist.Add(_eventTwo);
-			
+
 
 			//Act
 			_uut.RemoveEvent(_eventOne.Tag1, _eventOne.Tag2);

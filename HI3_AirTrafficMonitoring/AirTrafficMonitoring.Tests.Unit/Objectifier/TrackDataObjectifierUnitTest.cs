@@ -1,30 +1,25 @@
 ﻿using AirTrafficMonitoring.Classes.DataModels;
 using AirTrafficMonitoring.Classes.Objectifier;
-using AirTrafficMonitoring.Classes.Tracks;
-using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using TransponderReceiver;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.Objectifier
 {
 	[TestFixture]
 	class TrackDataObjectifierUnitTest
 	{
 		private TrackDataObjectifier _uut;
 
-		private string _correctInput1 = "ABC123;5000;6000;6000;20151006213456789";
-		private string _correctInput2 = "CBA321;5000;6000;6000;20151006213456789";
+		private const string CorrectInput1 = "ABC123;5000;6000;6000;20151006213456789";
+		private const string CorrectInput2 = "CBA321;5000;6000;6000;20151006213456789";
 
 
-		private string _tag1 = "ABC123";
-		private string _tag2 = "CBA321";
-		private int _xCoordinate = 5000;
-		private int _yCoordinate = 6000;
-		private int _altitude = 6000;
-		private DateTime _timestamp = new DateTime(2015, 10, 6, 21, 34, 56, 789);
+		private const string Tag1 = "ABC123";
+		private const int XCoordinate = 5000;
+		private const int YCoordinate = 6000;
+		private const int Altitude = 6000;
+		private readonly DateTime _timestamp = new DateTime(2015, 10, 6, 21, 34, 56, 789);
 
 		[SetUp]
 		public void Init()
@@ -37,13 +32,13 @@ namespace AirTrafficMonitoring.Tests.Unit
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add(_correctInput1);
+			list.Add(CorrectInput1);
 
 			//Act
 			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			Assert.That(result[0].Tag, Is.EqualTo(_tag1));
+			Assert.That(result[0].Tag, Is.EqualTo(Tag1));
 		}
 
 		[Test]
@@ -51,13 +46,13 @@ namespace AirTrafficMonitoring.Tests.Unit
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add(_correctInput1);
+			list.Add(CorrectInput1);
 
 			//Act
 			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			Assert.That(result[0].XCoordinate, Is.EqualTo(_xCoordinate));
+			Assert.That(result[0].XCoordinate, Is.EqualTo(XCoordinate));
 		}
 
 		[Test]
@@ -65,13 +60,13 @@ namespace AirTrafficMonitoring.Tests.Unit
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add(_correctInput1);
+			list.Add(CorrectInput1);
 
 			//Act
 			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			Assert.That(result[0].YCoordinate, Is.EqualTo(_yCoordinate));
+			Assert.That(result[0].YCoordinate, Is.EqualTo(YCoordinate));
 		}
 
 		[Test]
@@ -79,13 +74,13 @@ namespace AirTrafficMonitoring.Tests.Unit
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add(_correctInput1);
+			list.Add(CorrectInput1);
 
 			//Act
 			List<TrackData> result = _uut.Objectify(list);
 
 			//Assert
-			Assert.That(result[0].Altitude, Is.EqualTo(_altitude));
+			Assert.That(result[0].Altitude, Is.EqualTo(Altitude));
 		}
 
 		[Test]
@@ -93,7 +88,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add(_correctInput1);
+			list.Add(CorrectInput1);
 
 			//Act
 			List<TrackData> result = _uut.Objectify(list);
@@ -107,8 +102,8 @@ namespace AirTrafficMonitoring.Tests.Unit
 		{
 			//Arrange
 			var list = new List<string>();
-			list.Add(_correctInput1);
-			list.Add(_correctInput2);
+			list.Add(CorrectInput1);
+			list.Add(CorrectInput2);
 
 			//Act
 			List<TrackData> result = _uut.Objectify(list);

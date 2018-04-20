@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using AirTrafficMonitoring.Classes.DataModels;
+using NUnit.Framework;
 using System;
-using AirTrafficMonitoring.Classes.DataModels;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.DataModels
 {
 	[TestFixture]
 	class TrackDataUnitTest

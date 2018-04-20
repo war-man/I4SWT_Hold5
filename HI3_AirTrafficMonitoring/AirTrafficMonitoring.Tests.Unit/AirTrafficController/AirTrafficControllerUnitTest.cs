@@ -1,5 +1,4 @@
-﻿using AirTrafficMonitoring.Classes.AirTrafficController;
-using AirTrafficMonitoring.Classes.DataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using AirTrafficMonitoring.Classes.Objectifier;
 using AirTrafficMonitoring.Classes.Printer;
 using AirTrafficMonitoring.Classes.SeparationEvents;
@@ -11,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using TransponderReceiver;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 {
 	[TestFixture]
 	class AirTrafficControllerUnitTest
@@ -33,7 +32,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 			_fakeConsolePrinter = Substitute.For<IPrinter>();
 			_fakeEventLogger = Substitute.For<IPrinter>();
 
-			var unused = new AirTrafficController(
+			var unused = new Classes.AirTrafficController.AirTrafficController(
 				_fakeTransponderReceiver,
 				_fakeTrackDataObjectifier,
 				_fakeSeparationEventController,

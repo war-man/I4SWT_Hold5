@@ -1,12 +1,11 @@
 ﻿using AirTrafficMonitoring.Classes.DataModels;
-using AirTrafficMonitoring.Classes.Tracks;
+using AirTrafficMonitoring.Classes.SeparationEvents;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AirTrafficMonitoring.Classes.SeparationEvents;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 {
 	[TestFixture]
 	class SeparationEventListFormatterUnitTest

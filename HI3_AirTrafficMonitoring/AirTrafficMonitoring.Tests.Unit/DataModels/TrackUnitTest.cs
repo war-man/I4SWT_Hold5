@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.DataModels
 {
 	[TestFixture]
 	class TrackUnitTest
@@ -35,7 +35,6 @@ namespace AirTrafficMonitoring.Tests.Unit
 
 		#region For Tests
 
-		private const string Coordinates = "5000;6000";
 		private const double CalculatedVelocity = 1414.21; //cut at 2 decimal points
 		private const double CalculatedDirection = 45;
 		private const double CalculatedInverseDirection = 225;
@@ -202,5 +201,5 @@ namespace AirTrafficMonitoring.Tests.Unit
 			//Assert
 			StringAssert.Contains(label.ToLower(), _uut.ToString().ToLower());
 		}
-		}
+	}
 }

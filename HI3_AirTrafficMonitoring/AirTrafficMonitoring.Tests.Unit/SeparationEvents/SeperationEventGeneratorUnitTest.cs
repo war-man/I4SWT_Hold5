@@ -1,10 +1,9 @@
-﻿using System;
-using AirTrafficMonitoring.Classes.DataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using AirTrafficMonitoring.Classes.SeparationEvents;
-using NSubstitute;
 using NUnit.Framework;
+using System;
 
-namespace AirTrafficMonitoring.Tests.Unit
+namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 {
 	[TestFixture]
 	class SeparationEventGeneratorUnitTest
@@ -24,7 +23,7 @@ namespace AirTrafficMonitoring.Tests.Unit
 		public void GenerateSeparationEvent_ValidInput_DoesNotReturnNull()
 		{
 			// Arrange
-			Track track1 = new Track(Tag1,new TrackData(Tag1, 1000, 5000, 600, DateTime.Now));
+			Track track1 = new Track(Tag1, new TrackData(Tag1, 1000, 5000, 600, DateTime.Now));
 			Track track2 = new Track(Tag2, new TrackData(Tag2, 2000, 2000, 2000, DateTime.Now));
 
 			// Act
