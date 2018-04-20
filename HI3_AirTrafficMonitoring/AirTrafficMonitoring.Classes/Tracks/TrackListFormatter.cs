@@ -1,11 +1,8 @@
-﻿using System;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using AirTrafficMonitoring.Classes.TrackDataModels;
 
-namespace AirTrafficMonitoring.Classes.Printer
+namespace AirTrafficMonitoring.Classes.Tracks
 {
 	public class TrackListFormatter : ITrackListFormatter
 	{

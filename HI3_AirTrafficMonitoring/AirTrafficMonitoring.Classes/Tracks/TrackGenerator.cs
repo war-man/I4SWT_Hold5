@@ -1,6 +1,6 @@
-﻿using AirTrafficMonitoring.Classes.TrackDataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
 
-namespace AirTrafficMonitoring.Classes.TrackGenerator
+namespace AirTrafficMonitoring.Classes.Tracks
 {
 	public class TrackGenerator : ITrackGenerator
 	{

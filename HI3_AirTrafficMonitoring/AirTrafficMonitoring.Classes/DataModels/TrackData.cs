@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AirTrafficMonitoring.Classes.TrackDataModels
+namespace AirTrafficMonitoring.Classes.DataModels
 {
 	public class TrackData
 	{
@@ -22,8 +22,7 @@ namespace AirTrafficMonitoring.Classes.TrackDataModels
 		public override string ToString()
 		{
 			return $"Tag: {Tag}\n" +
-				   $"X-Coordinate: {XCoordinate}\n" +
-				   $"Y-Coordinate: {YCoordinate}\n" +
+				   $"Coordinates (X,Y): {XCoordinate},{YCoordinate}\n" +
 				   $"Altitude: {Altitude}\n" +
 				   $"Timestamp: {Timestamp}";
 		}

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AirTrafficMonitoring.Classes.TrackDataModels
+namespace AirTrafficMonitoring.Classes.DataModels
 {
 	public class Track
 	{
@@ -19,13 +19,13 @@ namespace AirTrafficMonitoring.Classes.TrackDataModels
 		public string CurrentPosition => CurrentTrack.XCoordinate + ";" + CurrentTrack.YCoordinate;
 		public TrackData CurrentTrack { get; private set; }
 		public TrackData PreviousTrack { get; private set; }
+
 		public void AddNewTrackData(TrackData data)
 		{
 			PreviousTrack = CurrentTrack;
 			CurrentTrack = data;
 
 			// Calculate Delta values
-
 			int deltaX = CurrentTrack.XCoordinate - PreviousTrack.XCoordinate;
 			int deltaY = CurrentTrack.YCoordinate - PreviousTrack.YCoordinate;
 
@@ -39,10 +39,15 @@ namespace AirTrafficMonitoring.Classes.TrackDataModels
 			// Calculate Velocity
 			Velocity = Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2)) / deltaTime;
 		}
+
 		public override string ToString()
 		{
-			// For next part of exercise, this should also print direction, velocity and position
-			return CurrentTrack.ToString();
+			return $"Tag: {Tag} | " +
+				   $"Coordinates (X,Y): {CurrentTrack.XCoordinate},{CurrentTrack.YCoordinate} | " +
+				   $"Altitude: {CurrentTrack.Altitude} m\n" +
+				   $"Velocity: {Velocity:F2} m/s | " +
+				   $"Course: {Direction:F2} degrees | " +
+				   $"Timestamp: {CurrentTrack.Timestamp}";
 		}
 	}
 }
