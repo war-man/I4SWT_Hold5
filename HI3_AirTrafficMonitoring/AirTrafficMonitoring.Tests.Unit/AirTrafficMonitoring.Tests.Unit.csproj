@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirTrafficControllerUnitTest.cs" />
     <Compile Include="CurrentSeparationEventsManagerUnitTest.cs" />
     <Compile Include="CurrentTracksManagerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
