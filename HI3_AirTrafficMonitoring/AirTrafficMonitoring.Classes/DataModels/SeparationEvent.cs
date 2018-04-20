@@ -17,7 +17,7 @@ namespace AirTrafficMonitoring.Classes.DataModels
 
 		public override string ToString()
 		{
-			return $"Track 1: {Tag1} | Track 2: {Tag2} | Timestamp: {Timestamp}";
+			return $"Track 1: {Tag1}, Track 2: {Tag2}, Timestamp: {Timestamp}";
 		}
 	}
 }
