@@ -66,6 +66,31 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 
 		[TestCase(11000, 12000, 13000, 15000, 16000, 12700)]
 		[TestCase(14600, 15500, 13000, 11000, 12000, 13300)]
+		public void CheckForSeparationEvents_2NonConflictingTracksWhoHasCurrentEvent_WriteLineOnEventLoggerCalledWithCorrectString(
+			int x1, int y1, int z1, int x2, int y2, int z2)
+		{
+			// Arrange
+			const string tag1 = "tag1";
+			var track1 = new Track(tag1, new TrackData(tag1, x1, y1, z1, DateTime.Now));
+
+			const string tag2 = "tag2";
+			var track2 = new Track(tag2, new TrackData(tag2, x2, y2, z2, DateTime.Now));
+
+			var trackList = new List<Track> { track1, track2 };
+
+			var separationEvent = new SeparationEvent(tag1, tag2, DateTime.Now);
+			_fakeCurrentSeparationEventsManager.FindEvent(tag1, tag2).Returns(separationEvent);
+
+			// Act
+			_uut.CheckForSeparationEvents(trackList);
+
+			// Assert
+			_fakeSeparationEventLogger.Received().WriteLine(Arg.Is<string>(
+				str => str.ToLower().Contains("dropped") && str.Contains(separationEvent.ToString())));
+		}
+
+		[TestCase(11000, 12000, 13000, 15000, 16000, 12700)]
+		[TestCase(14600, 15500, 13000, 11000, 12000, 13300)]
 		public void CheckForSeparationEvents_2NonConflictingTracksWhoHasCurrentEvent_RemoveEventOnEventsManagerCalledWithCorrectTags(
 			int x1, int y1, int z1, int x2, int y2, int z2)
 		{
@@ -132,6 +157,32 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 
 			// Assert
 			_fakeCurrentSeparationEventsManager.Received().AddEvent(separationEvent);
+		}
+
+		[TestCase(11000, 12000, 13000, 12000, 11000, 12800)]
+		[TestCase(85000, 86000, 14900, 83000, 84000, 15000)]
+		public void CheckForSeparationEvents_2ConflictingTracksNotInCurrentEvents_WriteLineOnEventLoggerCalledWithCorrectString(
+			int x1, int y1, int z1, int x2, int y2, int z2)
+		{
+			// Arrange
+			const string tag1 = "tag1";
+			var track1 = new Track(tag1, new TrackData(tag1, x1, y1, z1, DateTime.Now));
+
+			const string tag2 = "tag2";
+			var track2 = new Track(tag2, new TrackData(tag2, x2, y2, z2, DateTime.Now));
+
+			var trackList = new List<Track> { track1, track2 };
+
+			var separationEvent = new SeparationEvent(tag1, tag2, DateTime.Now);
+			_fakeSeparationEventGenerator.GenerateSeparationEvent(
+				Arg.Any<Track>(), Arg.Any<Track>(), Arg.Any<DateTime>()).Returns(separationEvent);
+
+			// Act
+			_uut.CheckForSeparationEvents(trackList);
+
+			// Assert
+			_fakeSeparationEventLogger.Received().WriteLine(Arg.Is<string>(
+				str => str.ToLower().Contains("raised") && str.Contains(separationEvent.ToString())));
 		}
 
 		[TestCase(11000, 12000, 13000, 12000, 11000, 12800)]
