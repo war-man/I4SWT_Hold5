@@ -52,7 +52,7 @@
     <Compile Include="Objectifier\ITrackDataObjectifier.cs" />
     <Compile Include="Objectifier\TrackDataObjectifier.cs" />
     <Compile Include="Printer\ConsolePrinter.cs" />
-    <Compile Include="Printer\EventLogger.cs" />
+    <Compile Include="Printer\SeparationEventLogger.cs" />
     <Compile Include="Printer\IPrinter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeparationEvents\CurrentSeparationEventsManager.cs" />

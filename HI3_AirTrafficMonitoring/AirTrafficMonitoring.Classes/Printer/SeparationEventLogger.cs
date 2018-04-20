@@ -3,14 +3,14 @@ using System.IO;
 
 namespace AirTrafficMonitoring.Classes.Printer
 {
-	public class EventLogger : IPrinter
+	public class SeparationEventLogger : IPrinter
 	{
 		private string _filename;
 		private string _completePath;
 
-		public EventLogger()
+		public SeparationEventLogger()
 		{
-			_filename = "\\logfile.txt";
+			_filename = "\\separationEvents.txt";
 			Directory = Environment.CurrentDirectory;
 			_completePath = Directory + _filename;
 		}
@@ -29,12 +29,13 @@ namespace AirTrafficMonitoring.Classes.Printer
 
 		public void WriteLine(string logString)
 		{
-			if (!File.Exists(_completePath)) File.Create(_completePath);
+			if (!File.Exists(_completePath))
+				File.Create(_completePath).Close();
 
-			using (StreamWriter file = new StreamWriter(_completePath))
+			using (var file = new StreamWriter(_completePath, true))
 			{
 				DateTime time = DateTime.Now;
-				file.WriteLine($"{time:yyyy - MM - dd HH:ss} : {logString}");
+				file.WriteLine($"{time} {logString}");
 			}
 		}
 
