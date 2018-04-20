@@ -22,12 +22,8 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		[Test]
 		public void GenerateSeparationEvent_ValidInput_DoesNotReturnNull()
 		{
-			// Arrange
-			Track track1 = new Track(Tag1, new TrackData(Tag1, 1000, 5000, 600, DateTime.Now));
-			Track track2 = new Track(Tag2, new TrackData(Tag2, 2000, 2000, 2000, DateTime.Now));
-
 			// Act
-			var seperationEvent = _uut.GenerateSeparationEvent(track1, track2, DateTime.Now);
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, DateTime.Now);
 
 			// Assert
 			Assert.That(seperationEvent, Is.Not.EqualTo(null));
@@ -36,12 +32,8 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		[Test]
 		public void GenerateSeparationEvent_ValidInput_SeparationEventCreated()
 		{
-			// Arrange
-			Track track1 = new Track(Tag1, new TrackData(Tag1, 1000, 5000, 600, DateTime.Now));
-			Track track2 = new Track(Tag2, new TrackData(Tag2, 2000, 2000, 2000, DateTime.Now));
-
 			// Act
-			var seperationEvent = _uut.GenerateSeparationEvent(track1, track2, DateTime.Now);
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, DateTime.Now);
 
 			// Assert
 			Assert.That(seperationEvent, Is.TypeOf<SeparationEvent>());
@@ -50,12 +42,8 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		[Test]
 		public void GenerateSeparationEvent_Track1IsNull_ReturnsNull()
 		{
-			// Arrange
-			Track track1 = null;
-			Track track2 = new Track(Tag2, new TrackData(Tag2, 2000, 2000, 2000, DateTime.Now));
-
 			// Act
-			var seperationEvent = _uut.GenerateSeparationEvent(track1, track2, DateTime.Now);
+			var seperationEvent = _uut.GenerateSeparationEvent(null, Tag2, DateTime.Now);
 
 			// Assert
 			Assert.That(seperationEvent, Is.EqualTo(null));
@@ -65,11 +53,9 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		public void GenerateSeparationEvent_Track2IsNull_ReturnsNull()
 		{
 			// Arrange
-			Track track1 = new Track(Tag1, new TrackData(Tag1, 1000, 5000, 600, DateTime.Now));
-			Track track2 = null;
-
+			
 			// Act
-			var seperationEvent = _uut.GenerateSeparationEvent(track1, track2, DateTime.Now);
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, null, DateTime.Now);
 
 			// Assert
 			Assert.That(seperationEvent, Is.EqualTo(null));
@@ -78,12 +64,8 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		[Test]
 		public void GenerateSeparationEvent_TimestampIsDefault_ReturnsNull()
 		{
-			// Arrange
-			Track track1 = new Track(Tag1, new TrackData(Tag1, 1000, 5000, 600, DateTime.Now));
-			Track track2 = new Track(Tag2, new TrackData(Tag2, 2000, 2000, 2000, DateTime.Now));
-
 			// Act
-			var seperationEvent = _uut.GenerateSeparationEvent(track1, track2, new DateTime());
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, new DateTime());
 
 			// Assert
 			Assert.That(seperationEvent, Is.EqualTo(null));
@@ -93,12 +75,8 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		[Test]
 		public void GenerateSeparationEvent_TagsAreTheSame_ReturnsNull()
 		{
-			// Arrange
-			Track track1 = new Track(Tag1, new TrackData(Tag1, 1000, 5000, 600, DateTime.Now));
-			Track track2 = new Track(Tag1, new TrackData(Tag1, 2000, 2000, 2000, DateTime.Now));
-
 			// Act
-			var seperationEvent = _uut.GenerateSeparationEvent(track1, track2, DateTime.Now);
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, DateTime.Now);
 
 			// Assert
 			Assert.That(seperationEvent, Is.EqualTo(null));
