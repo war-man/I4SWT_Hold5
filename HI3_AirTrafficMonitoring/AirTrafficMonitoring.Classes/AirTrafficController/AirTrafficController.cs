@@ -36,7 +36,7 @@ namespace AirTrafficMonitoring.Classes.AirTrafficController
 			var currentTracks = _trackController.AddTrackDataObjects(trackDataList);
 
 			// Check for separation events
-			var separationEvents = _separationEventController.CheckForSeparationEvents(currentTracks);
+			var currentSeparationEvents = _separationEventController.CheckForSeparationEvents(currentTracks);
 
 			// Print current tracks to console
 			if (currentTracks?.Count > 0)
@@ -46,8 +46,8 @@ namespace AirTrafficMonitoring.Classes.AirTrafficController
 				_consolePrinter.WriteLine(_trackController.GetFormattedCurrentTracks());
 			}
 
-			// Print separation events to console and file
-			if (separationEvents?.Count > 0)
+			// Print current separation events to console
+			if (currentSeparationEvents?.Count > 0)
 			{
 				_consolePrinter.WriteLine("\n==================================================\n");
 				_consolePrinter.WriteLine("Current separation events:\n");
