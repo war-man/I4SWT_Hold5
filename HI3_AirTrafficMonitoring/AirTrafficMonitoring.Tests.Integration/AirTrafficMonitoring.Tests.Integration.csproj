@@ -61,7 +61,12 @@
     <Compile Include="Step2_SeparationEvents\Step2_1.cs" />
     <Compile Include="Step3_CompleteSystem\Step3_1.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AirTrafficMonitoring.Classes\AirTrafficMonitoring.Classes.csproj">
+      <Project>{46599c13-819f-4d0d-b7a9-8105134a01bf}</Project>
+      <Name>AirTrafficMonitoring.Classes</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

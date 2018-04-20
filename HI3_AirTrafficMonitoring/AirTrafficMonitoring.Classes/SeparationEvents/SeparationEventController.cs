@@ -45,7 +45,7 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 						CheckForVerticalConflict(track, tempTrack))
 					{
 						var separationEvent = _separationEventGenerator.GenerateSeparationEvent(
-							track, tempTrack, DateTime.Now);
+							track.Tag, tempTrack.Tag, DateTime.Now);
 
 						_currentSeparationEventsManager.AddEvent(separationEvent);
 

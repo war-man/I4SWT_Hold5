@@ -5,6 +5,6 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 {
 	public interface ISeparationEventGenerator
 	{
-		SeparationEvent GenerateSeparationEvent(Track track1, Track track2, DateTime timestamp);
+		SeparationEvent GenerateSeparationEvent(String track1, String track2, DateTime timestamp);
 	}
 }
