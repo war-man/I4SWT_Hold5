@@ -5,15 +5,12 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 {
 	public class SeparationEventGenerator : ISeparationEventGenerator
 	{
-		public SeparationEvent GenerateSeparationEvent(String track1, String track2, DateTime timestamp)
+		public SeparationEvent GenerateSeparationEvent(string tag1, string tag2, DateTime timestamp)
 		{
-			if (track1 == null ||
-			    track2 == null ||
-			    timestamp == default(DateTime) ||
-			    track1 == track2
-			    ) return null;
+			if (tag1 == null || tag2 == null || timestamp == default(DateTime) || tag1 == tag2)
+				return null;
 
-			return new SeparationEvent(track1, track2, timestamp);
+			return new SeparationEvent(tag1, tag2, timestamp);
 		}
 	}
 }
