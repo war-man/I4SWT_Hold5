@@ -16,7 +16,6 @@ namespace AirTrafficMonitoring.Classes.DataModels
 		public string Tag { get; }
 		public double? Direction { get; private set; }
 		public double? Velocity { get; private set; }
-		public string CurrentPosition => CurrentTrack.XCoordinate + ";" + CurrentTrack.YCoordinate;
 		public TrackData CurrentTrack { get; private set; }
 		public TrackData PreviousTrack { get; private set; }
 

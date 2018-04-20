@@ -152,26 +152,6 @@ namespace AirTrafficMonitoring.Tests.Unit.DataModels
 			Assert.That(_uut.Velocity, Is.EqualTo(CalculatedVelocity).Within(0.01));
 		}
 
-		[TestCase(XCoordinate)]
-		[TestCase(YCoordinate)]
-		public void CurrentPosition_ContainsCoordinates(int coordinate)
-		{
-			//Assert
-			StringAssert.Contains(coordinate.ToString().ToLower(), _uut.CurrentPosition.ToLower());
-
-		}
-
-		[TestCase(XCoordinate2)]
-		[TestCase(YCoordinate2)]
-		public void CurrentPosition_OneAdditionalTrackDataAdded_PositionUpdated(int coordinate)
-		{
-			//Act
-			_uut.AddNewTrackData(_trackData2);
-
-			//Assert
-			StringAssert.Contains(coordinate.ToString().ToLower(), _uut.CurrentPosition.ToLower());
-		}
-
 		[TestCase(Tag)]
 		[TestCase(XCoordinate2)]
 		[TestCase(YCoordinate2)]
