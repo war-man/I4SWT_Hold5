@@ -131,7 +131,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 			_uut.CheckForSeparationEvents(trackList);
 
 			// Assert
-			_fakeSeparationEventGenerator.Received().GenerateSeparationEvent(track1, track2, Arg.Any<DateTime>());
+			_fakeSeparationEventGenerator.Received().GenerateSeparationEvent(track1.Tag, track2.Tag, Arg.Any<DateTime>());
 		}
 
 		[TestCase(11000, 12000, 13000, 12000, 11000, 12800)]
@@ -150,7 +150,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 
 			var separationEvent = new SeparationEvent(tag1, tag2, DateTime.Now);
 			_fakeSeparationEventGenerator.GenerateSeparationEvent(
-				Arg.Any<Track>(), Arg.Any<Track>(), Arg.Any<DateTime>()).Returns(separationEvent);
+				Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>()).Returns(separationEvent);
 
 			// Act
 			_uut.CheckForSeparationEvents(trackList);
@@ -175,7 +175,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 
 			var separationEvent = new SeparationEvent(tag1, tag2, DateTime.Now);
 			_fakeSeparationEventGenerator.GenerateSeparationEvent(
-				Arg.Any<Track>(), Arg.Any<Track>(), Arg.Any<DateTime>()).Returns(separationEvent);
+				Arg.Any<string>(), Arg.Any<string>(), Arg.Any<DateTime>()).Returns(separationEvent);
 
 			// Act
 			_uut.CheckForSeparationEvents(trackList);
