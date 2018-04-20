@@ -20,7 +20,6 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 		private ISeparationEventController _fakeSeparationEventController;
 		private ITrackController _fakeTrackController;
 		private IPrinter _fakeConsolePrinter;
-		private IPrinter _fakeEventLogger;
 
 		[SetUp]
 		public void Init()
@@ -30,15 +29,13 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 			_fakeSeparationEventController = Substitute.For<ISeparationEventController>();
 			_fakeTrackController = Substitute.For<ITrackController>();
 			_fakeConsolePrinter = Substitute.For<IPrinter>();
-			_fakeEventLogger = Substitute.For<IPrinter>();
 
 			var unused = new Classes.AirTrafficController.AirTrafficController(
 				_fakeTransponderReceiver,
 				_fakeTrackDataObjectifier,
 				_fakeSeparationEventController,
 				_fakeTrackController,
-				_fakeConsolePrinter,
-				_fakeEventLogger);
+				_fakeConsolePrinter);
 		}
 
 		[Test]
@@ -336,7 +333,7 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 		}
 
 		[Test]
-		public void OnTransponderDataReady_EventControllerReturnsNullSeparationEventsList_ClearOnEventLoggerNotCalled()
+		public void OnTransponderDataReady_EventControllerReturnsNullSeparationEventsList_ClearOnConsolePrinterNotCalled()
 		{
 			// Arrange
 			var transponderDataList = new List<string>();
@@ -348,11 +345,11 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 			_fakeTransponderReceiver.TransponderDataReady += Raise.EventWith(args);
 
 			// Assert
-			_fakeEventLogger.DidNotReceive().Clear();
+			_fakeConsolePrinter.DidNotReceive().Clear();
 		}
 
 		[Test]
-		public void OnTransponderDataReady_EventControllerReturnsNullSeparationEventsList_WriteLineOnEventLoggerNotCalled()
+		public void OnTransponderDataReady_EventControllerReturnsNullSeparationEventsList_WriteLineOnConsolePrinterNotCalled()
 		{
 			// Arrange
 			var transponderDataList = new List<string>();
@@ -364,11 +361,11 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 			_fakeTransponderReceiver.TransponderDataReady += Raise.EventWith(args);
 
 			// Assert
-			_fakeEventLogger.DidNotReceive().WriteLine(Arg.Any<string>());
+			_fakeConsolePrinter.DidNotReceive().WriteLine(Arg.Any<string>());
 		}
 
 		[Test]
-		public void OnTransponderDataReady_EventControllerReturnsEventsListWith0Elements_ClearOnEventLoggerNotCalled()
+		public void OnTransponderDataReady_EventControllerReturnsEventsListWith0Elements_ClearOnConsolePrinterNotCalled()
 		{
 			// Arrange
 			var transponderDataList = new List<string>();
@@ -385,7 +382,7 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 		}
 
 		[Test]
-		public void OnTransponderDataReady_EventControllerReturnsEventsListWith0Elements_WriteLineOnEventLoggerNotCalled()
+		public void OnTransponderDataReady_EventControllerReturnsEventsListWith0Elements_WriteLineOnConsolePrinterNotCalled()
 		{
 			// Arrange
 			var transponderDataList = new List<string>();
@@ -422,7 +419,7 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 		}
 
 		[Test]
-		public void OnTransponderDataReady_EventControllerReturnsEventsListWith1Element_WriteLineOnEventLoggerCalledWithCorectString()
+		public void OnTransponderDataReady_EventControllerReturnsEventsListWith1Element_WriteLineOnConsolePrinterCalledWithCorectString()
 		{
 			// Arrange
 			var transponderDataList = new List<string>();
@@ -469,7 +466,7 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 		}
 
 		[Test]
-		public void OnTransponderDataReady_EventControllerReturnsEventsListWith5Elements_WriteLineOnEventLoggerCalledWithCorectString()
+		public void OnTransponderDataReady_EventControllerReturnsEventsListWith5Elements_WriteLineOnConsolePrinterCalledWithCorectString()
 		{
 			// Arrange
 			var transponderDataList = new List<string>();

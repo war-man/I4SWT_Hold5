@@ -1,4 +1,5 @@
 ﻿using AirTrafficMonitoring.Classes.DataModels;
+using AirTrafficMonitoring.Classes.Printer;
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 		private readonly ICurrentSeparationEventsManager _currentSeparationEventsManager;
 		private readonly ISeparationEventGenerator _separationEventGenerator;
 		private readonly ISeparationEventListFormatter _separationEventListFormatter;
+		private readonly IPrinter _separationEventLogger;
 
 		private const int VerticalLimit = 300;
 		private const int HorizontalLimit = 5000;
@@ -16,11 +18,13 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 		public SeparationEventController(
 			ICurrentSeparationEventsManager currentSeparationEventsManager,
 			ISeparationEventGenerator separationEventGenerator,
-			ISeparationEventListFormatter formatter)
+			ISeparationEventListFormatter formatter,
+			IPrinter separationEventLogger)
 		{
 			_currentSeparationEventsManager = currentSeparationEventsManager;
 			_separationEventGenerator = separationEventGenerator;
 			_separationEventListFormatter = formatter;
+			_separationEventLogger = separationEventLogger;
 		}
 
 		public List<SeparationEvent> CheckForSeparationEvents(List<Track> trackList)
@@ -40,14 +44,21 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 						CheckForHorizontalConflict(track, tempTrack) &&
 						CheckForVerticalConflict(track, tempTrack))
 					{
-						_currentSeparationEventsManager.AddEvent(
-							_separationEventGenerator.GenerateSeparationEvent(track, tempTrack, DateTime.Now));
+						var separationEvent = _separationEventGenerator.GenerateSeparationEvent(
+							track, tempTrack, DateTime.Now);
+
+						_currentSeparationEventsManager.AddEvent(separationEvent);
+
+						_separationEventLogger.WriteLine("[Raised] " + separationEvent);
 					}
 					// Check for separation events that are no longer relevant
 					else if (_currentSeparationEventsManager.FindEvent(track.Tag, tempTrack.Tag) != null &&
 							 (!CheckForHorizontalConflict(track, tempTrack) ||
 							  !CheckForVerticalConflict(track, tempTrack)))
 					{
+						var separationEvent = _currentSeparationEventsManager.FindEvent(track.Tag, tempTrack.Tag);
+						_separationEventLogger.WriteLine("[Dropped] " + separationEvent);
+
 						_currentSeparationEventsManager.RemoveEvent(track.Tag, tempTrack.Tag);
 					}
 				}

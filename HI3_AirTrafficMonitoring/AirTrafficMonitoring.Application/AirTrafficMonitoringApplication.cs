@@ -20,15 +20,15 @@ namespace AirTrafficMonitoring.Application
 			var separationEventController = new SeparationEventController(
 				new CurrentSeparationEventsManager(),
 				new SeparationEventGenerator(),
-				new SeparationEventListFormatter());
+				new SeparationEventListFormatter(),
+				new SeparationEventLogger());
 
 			var unused = new AirTrafficController(
 				TransponderReceiverFactory.CreateTransponderDataReceiver(),
 				new TrackDataObjectifier(),
 				separationEventController,
 				trackController,
-				new ConsolePrinter(),
-				new EventLogger());
+				new ConsolePrinter());
 
 			while (true)
 			{

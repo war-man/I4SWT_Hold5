@@ -12,22 +12,19 @@ namespace AirTrafficMonitoring.Classes.AirTrafficController
 		private readonly ISeparationEventController _separationEventController;
 		private readonly ITrackController _trackController;
 		private readonly IPrinter _consolePrinter;
-		private readonly IPrinter _eventLogger;
 
 		public AirTrafficController(
 			ITransponderReceiver transponderReceiver,
 			ITrackDataObjectifier trackDataObjectifier,
 			ISeparationEventController separationEventController,
 			ITrackController trackController,
-			IPrinter consolePrinter,
-			IPrinter eventLogger)
+			IPrinter consolePrinter)
 		{
 			transponderReceiver.TransponderDataReady += OnTransponderDataReady;
 			_trackDataObjectifier = trackDataObjectifier;
 			_separationEventController = separationEventController;
 			_trackController = trackController;
 			_consolePrinter = consolePrinter;
-			_eventLogger = eventLogger;
 		}
 
 		public void OnTransponderDataReady(object sender, RawTransponderDataEventArgs e)
@@ -55,8 +52,6 @@ namespace AirTrafficMonitoring.Classes.AirTrafficController
 				_consolePrinter.WriteLine("\n==================================================\n");
 				_consolePrinter.WriteLine("Current separation events:\n");
 				_consolePrinter.WriteLine(_separationEventController.GetFormattedSeparationEvents());
-
-				_eventLogger.WriteLine(_separationEventController.GetFormattedSeparationEvents());
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using AirTrafficMonitoring.Classes.DataModels;
+using AirTrafficMonitoring.Classes.Printer;
 using AirTrafficMonitoring.Classes.SeparationEvents;
 using NSubstitute;
 using NUnit.Framework;
@@ -15,6 +16,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		private ICurrentSeparationEventsManager _fakeCurrentSeparationEventsManager;
 		private ISeparationEventGenerator _fakeSeparationEventGenerator;
 		private ISeparationEventListFormatter _fakeSeparationEventListFormatter;
+		private IPrinter _fakeSeparationEventLogger;
 
 		[SetUp]
 		public void Init()
@@ -22,11 +24,13 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 			_fakeCurrentSeparationEventsManager = Substitute.For<ICurrentSeparationEventsManager>();
 			_fakeSeparationEventGenerator = Substitute.For<ISeparationEventGenerator>();
 			_fakeSeparationEventListFormatter = Substitute.For<ISeparationEventListFormatter>();
+			_fakeSeparationEventLogger = Substitute.For<IPrinter>();
 
 			_uut = new SeparationEventController(
 				_fakeCurrentSeparationEventsManager,
 				_fakeSeparationEventGenerator,
-				_fakeSeparationEventListFormatter);
+				_fakeSeparationEventListFormatter,
+				_fakeSeparationEventLogger);
 		}
 
 		[Test]
