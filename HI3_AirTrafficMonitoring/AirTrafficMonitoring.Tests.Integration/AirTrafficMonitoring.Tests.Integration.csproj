@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Step1_Tracks\Step1_1.cs" />
+    <Compile Include="Step1_Tracks\Step1_2.cs" />
+    <Compile Include="Step1_Tracks\Step1_3.cs" />
     <Compile Include="Step2_SeparationEvents\Step2_1.cs" />
     <Compile Include="Step2_SeparationEvents\Step2_2.cs" />
     <Compile Include="Step2_SeparationEvents\Step2_3.cs" />
