@@ -21,6 +21,8 @@ namespace AirTrafficMonitoring.Classes.DataModels
 
 		public void AddNewTrackData(TrackData data)
 		{
+			if (data.Tag != Tag) return;
+
 			PreviousTrack = CurrentTrack;
 			CurrentTrack = data;
 

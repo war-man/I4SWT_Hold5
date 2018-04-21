@@ -44,7 +44,6 @@ namespace AirTrafficMonitoring.Tests.Unit.DataModels
 		[SetUp]
 		public void Init()
 		{
-
 			_trackData = new TrackData(Tag, XCoordinate, YCoordinate, Altitude, _timestamp);
 
 			_uut = new Track(Tag, _trackData);
@@ -144,12 +143,26 @@ namespace AirTrafficMonitoring.Tests.Unit.DataModels
 		[Test]
 		public void AddNewTrackData_OneAdditionalTrackDataAdded_VelocityCalculated()
 		{
-
 			//Act
 			_uut.AddNewTrackData(_trackData2);
 
 			//Assert
 			Assert.That(_uut.Velocity, Is.EqualTo(CalculatedVelocity).Within(0.01));
+		}
+
+		[Test]
+		public void AddNewTrackData_GivenTrackDataHasNonMatchingTag_CurrentTrackIsNotUpdated()
+		{
+			// Arrange
+			var previousCurrentTrack = _uut.CurrentTrack;
+
+			var trackDataObject = new TrackData("someOtherTag", 0, 10, 20, DateTime.Now);
+
+			// Act
+			_uut.AddNewTrackData(trackDataObject);
+
+			// Assert
+			Assert.That(_uut.CurrentTrack, Is.EqualTo(previousCurrentTrack));
 		}
 
 		[TestCase(Tag)]
