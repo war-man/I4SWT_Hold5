@@ -71,6 +71,7 @@
     <Compile Include="Step2_SeparationEvents\Step2_5.cs" />
     <Compile Include="Step2_SeparationEvents\Step2_6.cs" />
     <Compile Include="Step3_CompleteSystem\Step3_1.cs" />
+    <Compile Include="Step3_CompleteSystem\Step3_3.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AirTrafficMonitoring.Classes\AirTrafficMonitoring.Classes.csproj">
