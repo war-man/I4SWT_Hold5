@@ -53,7 +53,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		public void GenerateSeparationEvent_Track2IsNull_ReturnsNull()
 		{
 			// Arrange
-			
+
 			// Act
 			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, null, DateTime.Now);
 
@@ -76,7 +76,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		public void GenerateSeparationEvent_TagsAreTheSame_ReturnsNull()
 		{
 			// Act
-			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, DateTime.Now);
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag1, DateTime.Now);
 
 			// Assert
 			Assert.That(seperationEvent, Is.EqualTo(null));
