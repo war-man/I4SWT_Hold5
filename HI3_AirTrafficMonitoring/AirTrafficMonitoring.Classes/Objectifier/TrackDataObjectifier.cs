@@ -8,6 +8,8 @@ namespace AirTrafficMonitoring.Classes.Objectifier
 	{
 		public List<TrackData> Objectify(List<string> transponderData)
 		{
+			if (transponderData == null) return null;
+
 			var trackDataList = new List<TrackData>();
 
 			foreach (var data in transponderData)

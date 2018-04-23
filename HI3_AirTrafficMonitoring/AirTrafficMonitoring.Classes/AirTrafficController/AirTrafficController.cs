@@ -20,7 +20,7 @@ namespace AirTrafficMonitoring.Classes.AirTrafficController
 			ITrackController trackController,
 			IPrinter consolePrinter)
 		{
-			transponderReceiver.TransponderDataReady += OnTransponderDataReady;
+			if (transponderReceiver != null) transponderReceiver.TransponderDataReady += OnTransponderDataReady;
 			_trackDataObjectifier = trackDataObjectifier;
 			_separationEventController = separationEventController;
 			_trackController = trackController;
