@@ -10,8 +10,8 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 	{
 		private SeparationEventGenerator _uut;
 
-		private const string Tag1 = "hej123";
-		private const string Tag2 = "jeh321";
+		private const string Tag1 = "someTag";
+		private const string Tag2 = "someOtherTag";
 
 		[SetUp]
 		public void Init()
@@ -40,7 +40,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		}
 
 		[Test]
-		public void GenerateSeparationEvent_Track1IsNull_ReturnsNull()
+		public void GenerateSeparationEvent_Track1HasNullTag_ReturnsNull()
 		{
 			// Act
 			var seperationEvent = _uut.GenerateSeparationEvent(null, Tag2, DateTime.Now);
@@ -50,10 +50,8 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		}
 
 		[Test]
-		public void GenerateSeparationEvent_Track2IsNull_ReturnsNull()
+		public void GenerateSeparationEvent_Track2HasNullTag_ReturnsNull()
 		{
-			// Arrange
-
 			// Act
 			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, null, DateTime.Now);
 
