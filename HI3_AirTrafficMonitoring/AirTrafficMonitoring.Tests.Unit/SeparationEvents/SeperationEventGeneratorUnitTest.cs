@@ -40,6 +40,39 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		}
 
 		[Test]
+		public void GenerateSeparationEvent_ValidInput_Tag1IsSetCorrectly()
+		{
+			// Act
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, DateTime.Now);
+
+			// Assert
+			Assert.That(seperationEvent.Tag1, Is.EqualTo(Tag1));
+		}
+
+		[Test]
+		public void GenerateSeparationEvent_ValidInput_Tag2IsSetCorrectly()
+		{
+			// Act
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, DateTime.Now);
+
+			// Assert
+			Assert.That(seperationEvent.Tag2, Is.EqualTo(Tag2));
+		}
+
+		[Test]
+		public void GenerateSeparationEvent_ValidInput_TimestampIsSetCorrectly()
+		{
+			// Arrange
+			var timestamp = DateTime.Now;
+
+			// Act
+			var seperationEvent = _uut.GenerateSeparationEvent(Tag1, Tag2, timestamp);
+
+			// Assert
+			Assert.That(seperationEvent.Timestamp, Is.EqualTo(timestamp));
+		}
+
+		[Test]
 		public void GenerateSeparationEvent_Track1HasNullTag_ReturnsNull()
 		{
 			// Act
