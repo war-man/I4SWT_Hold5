@@ -28,6 +28,16 @@ namespace AirTrafficMonitoring.Tests.Unit.Objectifier
 		}
 
 		[Test]
+		public void Objectify_GivenListIsNull_NullIsReturned()
+		{
+			//Act
+			var result = _uut.Objectify(null);
+
+			//Assert
+			Assert.Null(result);
+		}
+
+		[Test]
 		public void Objectify_CorrectInput_TagParsedCorrectly()
 		{
 			//Arrange
