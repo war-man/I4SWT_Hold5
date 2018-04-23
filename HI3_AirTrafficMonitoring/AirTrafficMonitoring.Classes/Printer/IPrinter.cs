@@ -2,7 +2,7 @@
 {
 	public interface IPrinter
 	{
-		void WriteLine(string String);
+		void WriteLine(string stringToPrint);
 		void Clear();
 	}
 }

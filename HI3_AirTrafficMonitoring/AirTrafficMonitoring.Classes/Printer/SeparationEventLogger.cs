@@ -27,7 +27,7 @@ namespace AirTrafficMonitoring.Classes.Printer
 			}
 		}
 
-		public void WriteLine(string logString)
+		public void WriteLine(string stringToPrint)
 		{
 			if (!File.Exists(_completePath))
 				File.Create(_completePath).Close();
@@ -35,7 +35,7 @@ namespace AirTrafficMonitoring.Classes.Printer
 			using (var file = new StreamWriter(_completePath, true))
 			{
 				DateTime time = DateTime.Now;
-				file.WriteLine($"{time} {logString}");
+				file.WriteLine($"{time} {stringToPrint}");
 			}
 		}
 
