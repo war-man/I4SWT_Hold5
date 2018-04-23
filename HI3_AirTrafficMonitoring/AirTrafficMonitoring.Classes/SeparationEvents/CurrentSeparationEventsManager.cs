@@ -12,6 +12,8 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 
 		public List<SeparationEvent> CurrentEvents { get; }
 
+		public int EventCount => CurrentEvents.Count;
+
 		public void AddEvent(SeparationEvent separationEvent)
 		{
 			if (separationEvent != null &&
@@ -28,11 +30,6 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 
 			return CurrentEvents.Find(e => (e.Tag1 == tag1 || e.Tag1 == tag2) &&
 										   (e.Tag2 == tag1 || e.Tag2 == tag2));
-		}
-
-		public int GetEventCount()
-		{
-			return CurrentEvents.Count;
 		}
 
 		public void RemoveEvent(string tag1, string tag2)

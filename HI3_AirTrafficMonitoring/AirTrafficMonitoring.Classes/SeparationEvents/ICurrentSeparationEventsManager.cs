@@ -6,10 +6,10 @@ namespace AirTrafficMonitoring.Classes.SeparationEvents
 	public interface ICurrentSeparationEventsManager
 	{
 		List<SeparationEvent> CurrentEvents { get; }
+		int EventCount { get; }
 
 		void AddEvent(SeparationEvent separationEvent);
 		SeparationEvent FindEvent(string tag1, string tag2);
-		int GetEventCount();
 		void RemoveEvent(string tag1, string tag2);
 	}
 }

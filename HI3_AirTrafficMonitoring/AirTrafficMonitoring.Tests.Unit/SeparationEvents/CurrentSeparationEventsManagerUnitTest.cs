@@ -93,7 +93,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 		[Test]
 		public void GetEventCount_Ctor_returns_Zero()
 		{
-			Assert.AreEqual(0, _uut.GetEventCount());
+			Assert.AreEqual(0, _uut.EventCount);
 		}
 
 		[TestCase(1)]
@@ -107,14 +107,14 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 			{
 				_uut.AddEvent(new SeparationEvent("tag1e" + i, "tag2e" + i, new DateTime(1995 + i, 08, 09)));
 			}
-			Assert.AreEqual(number, _uut.GetEventCount());
+			Assert.AreEqual(number, _uut.EventCount);
 		}
 
 		[Test]
 		public void GetEventCount_remove_on_Empty_list_returns_Zero()
 		{
 			_uut.RemoveEvent("Tag1", "Tag2");
-			Assert.AreEqual(0, _uut.GetEventCount());
+			Assert.AreEqual(0, _uut.EventCount);
 		}
 
 		[Test]
@@ -123,7 +123,7 @@ namespace AirTrafficMonitoring.Tests.Unit.SeparationEvents
 			_uut.AddEvent(_eventOne);
 			_uut.RemoveEvent(_eventOne.Tag1, _eventOne.Tag2);
 
-			Assert.AreEqual(0, _uut.GetEventCount());
+			Assert.AreEqual(0, _uut.EventCount);
 		}
 
 		[Test]
