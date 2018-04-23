@@ -1,40 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AirTrafficMonitoring.Classes.DataModels;
+﻿using AirTrafficMonitoring.Classes.DataModels;
+using AirTrafficMonitoring.Classes.Printer;
 using AirTrafficMonitoring.Classes.SeparationEvents;
+using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Globalization;
 
 namespace AirTrafficMonitoring.Tests.Integration.Step2_SeparationEvents
 {
 	[TestFixture]
 	class Step2_3
 	{
-		private ISeparationEventListFormatter _uut;
-		private SeparationEvent _event1;
-		private List<SeparationEvent> _list;
+		// Actual classes
+		private ISeparationEventController _separationEventController;
+		private ICurrentSeparationEventsManager _currentSeparationEventsManager;
+		private ISeparationEventGenerator _separationEventGenerator;
+		private ISeparationEventListFormatter _separationEventListFormatter;
+
+		// Fakes
+		private IPrinter _fakeEventLogger;
 
 		[SetUp]
 		public void Init()
 		{
-			_uut = new SeparationEventListFormatter();
-			_event1 = new SeparationEvent("testTag11", "testTag12",DateTime.Now);
-			_list = new List<SeparationEvent>();
-			_list.Add(_event1);
+			_fakeEventLogger = Substitute.For<IPrinter>();
 
+			_currentSeparationEventsManager = new CurrentSeparationEventsManager();
+			_separationEventGenerator = new SeparationEventGenerator();
+			_separationEventListFormatter = new SeparationEventListFormatter();
+
+			_separationEventController = new SeparationEventController(
+				_currentSeparationEventsManager,
+				_separationEventGenerator,
+				_separationEventListFormatter,
+				_fakeEventLogger);
 		}
 
 		[Test]
-		public void Format_correct_string()
+		public void GetFormattedSeparationEvents_OneEventInCurrentEventsList_FormattedListContainsTag1()
 		{
-			//Arrange
-			var test = _event1.ToString();
-			//Ack
+			// Arrange
+			const string tag1 = "qwerty";
+			const string tag2 = "asdfgh";
+			var timestamp = DateTime.Now;
 
-			//Assert
-			StringAssert.Contains(_event1.ToString(), _uut.Format(_list));
+			_currentSeparationEventsManager.AddEvent(new SeparationEvent(tag1, tag2, timestamp));
+
+			// Act
+			var formattedSeparationEvents = _separationEventController.GetFormattedSeparationEvents();
+
+			// Assert
+			Assert.That(formattedSeparationEvents, Contains.Substring(tag1));
+		}
+
+		[Test]
+		public void GetFormattedSeparationEvents_OneEventInCurrentEventsList_FormattedListContainsTag2()
+		{
+			// Arrange
+			const string tag1 = "qwerty";
+			const string tag2 = "asdfgh";
+			var timestamp = DateTime.Now;
+
+			_currentSeparationEventsManager.AddEvent(new SeparationEvent(tag1, tag2, timestamp));
+
+			// Act
+			var formattedSeparationEvents = _separationEventController.GetFormattedSeparationEvents();
+
+			// Assert
+			Assert.That(formattedSeparationEvents, Contains.Substring(tag2));
+		}
+
+		[Test]
+		public void GetFormattedSeparationEvents_OneEventInCurrentEventsList_FormattedListContainsTimestamp()
+		{
+			// Arrange
+			const string tag1 = "qwerty";
+			const string tag2 = "asdfgh";
+			var timestamp = DateTime.Now;
+
+			_currentSeparationEventsManager.AddEvent(new SeparationEvent(tag1, tag2, timestamp));
+
+			// Act
+			var formattedSeparationEvents = _separationEventController.GetFormattedSeparationEvents();
+
+			// Assert
+			Assert.That(formattedSeparationEvents, Contains.Substring(timestamp.ToString(CultureInfo.CurrentCulture)));
 		}
 	}
 }
