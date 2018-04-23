@@ -4,9 +4,9 @@ namespace AirTrafficMonitoring.Classes.Printer
 {
 	public class ConsolePrinter : IPrinter
 	{
-		public void WriteLine(string stringToPrint)
+		public void WriteLine(string line)
 		{
-			Console.WriteLine(stringToPrint);
+			Console.WriteLine(line);
 		}
 
 		public void Clear()
