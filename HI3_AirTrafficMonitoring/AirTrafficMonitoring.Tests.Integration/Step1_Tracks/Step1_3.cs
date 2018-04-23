@@ -1,8 +1,9 @@
 ﻿using AirTrafficMonitoring.Classes.DataModels;
 using AirTrafficMonitoring.Classes.Tracks;
+using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 
 namespace AirTrafficMonitoring.Tests.Integration.Step1_Tracks
 {
@@ -11,117 +12,51 @@ namespace AirTrafficMonitoring.Tests.Integration.Step1_Tracks
 		// Actual classes
 		private ITrackController _trackController;
 		private ITrackGenerator _trackGenerator;
+
+		// Fakes
 		private ICurrentTracksManager _currentTracksManager;
-		private ITrackListFormatter _trackListFormatter;
+		private ITrackListFormatter _fakeTrackListFormatter;
+
+		// Boundaries for monitored area
+		private const int XBoundarySouthWest = 10000;
+		private const int YBoundarySouthWest = 10000;
+		private const int XBoundaryNorthEast = 90000;
+		private const int YBoundaryNorthEast = 90000;
+		private const int ZBoundaryLower = 500;
+		private const int ZBoundaryUpper = 20000;
 
 		[SetUp]
 		public void Init()
 		{
 			_currentTracksManager = new CurrentTracksManager();
 			_trackGenerator = new TrackGenerator();
-			_trackListFormatter = new TrackListFormatter();
+			_fakeTrackListFormatter = Substitute.For<ITrackListFormatter>();
 
-			_trackController = new TrackController(_currentTracksManager, _trackGenerator, _trackListFormatter);
+			_trackController = new TrackController(_currentTracksManager, _trackGenerator, _fakeTrackListFormatter);
 		}
 
-		[Test]
-		public void GetFormattedCurrentTracks_OneTrackInCurrentTracksList_FormattedListContainsTag()
+		[TestCase(XBoundarySouthWest, YBoundarySouthWest, ZBoundaryLower)]
+		[TestCase(XBoundarySouthWest, YBoundarySouthWest, ZBoundaryUpper)]
+		[TestCase(XBoundarySouthWest, YBoundaryNorthEast, ZBoundaryLower)]
+		[TestCase(XBoundarySouthWest, YBoundaryNorthEast, ZBoundaryUpper)]
+		[TestCase(XBoundaryNorthEast, YBoundarySouthWest, ZBoundaryLower)]
+		[TestCase(XBoundaryNorthEast, YBoundarySouthWest, ZBoundaryUpper)]
+		[TestCase(XBoundaryNorthEast, YBoundaryNorthEast, ZBoundaryLower)]
+		[TestCase(XBoundaryNorthEast, YBoundaryNorthEast, ZBoundaryUpper)]
+		public void AddTrackDataObjects_TrackNotInCurrentTracksListAndInsideArea_GenerateOnTrackGeneratorCalledWithCorrectTrackData(
+			int x, int y, int altitude)
 		{
 			// Arrange
 			const string tag = "tag";
-			const int xCoordinate = 10000;
-			const int yCoordinate = 11000;
-			const int altitude = 12000;
-			var timestamp = DateTime.Now;
-
-			var trackObject = new Track(tag, new TrackData(tag, xCoordinate, yCoordinate, altitude, timestamp));
-			_currentTracksManager.AddTrack(trackObject);
+			var trackDataObject = new TrackData(tag, x, y, altitude, DateTime.Now);
+			var trackDataList = new List<TrackData> { trackDataObject };
 
 			// Act
-			var formattedTracksList = _trackController.GetFormattedCurrentTracks();
+			_trackController.AddTrackDataObjects(trackDataList);
 
 			// Assert
-			Assert.That(formattedTracksList, Contains.Substring(tag));
-		}
-
-		[Test]
-		public void GetFormattedCurrentTracks_OneTrackInCurrentTracksList_FormattedListContainsXCoordinate()
-		{
-			// Arrange
-			const string tag = "tag";
-			const int xCoordinate = 10000;
-			const int yCoordinate = 11000;
-			const int altitude = 12000;
-			var timestamp = DateTime.Now;
-
-			var trackObject = new Track(tag, new TrackData(tag, xCoordinate, yCoordinate, altitude, timestamp));
-			_currentTracksManager.AddTrack(trackObject);
-
-			// Act
-			var formattedTracksList = _trackController.GetFormattedCurrentTracks();
-
-			// Assert
-			Assert.That(formattedTracksList, Contains.Substring(xCoordinate.ToString()));
-		}
-
-		[Test]
-		public void GetFormattedCurrentTracks_OneTrackInCurrentTracksList_FormattedListContainsYCoordinate()
-		{
-			// Arrange
-			const string tag = "tag";
-			const int xCoordinate = 10000;
-			const int yCoordinate = 11000;
-			const int altitude = 12000;
-			var timestamp = DateTime.Now;
-
-			var trackObject = new Track(tag, new TrackData(tag, xCoordinate, yCoordinate, altitude, timestamp));
-			_currentTracksManager.AddTrack(trackObject);
-
-			// Act
-			var formattedTracksList = _trackController.GetFormattedCurrentTracks();
-
-			// Assert
-			Assert.That(formattedTracksList, Contains.Substring(yCoordinate.ToString()));
-		}
-
-		[Test]
-		public void GetFormattedCurrentTracks_OneTrackInCurrentTracksList_FormattedListContainsAltitude()
-		{
-			// Arrange
-			const string tag = "tag";
-			const int xCoordinate = 10000;
-			const int yCoordinate = 11000;
-			const int altitude = 12000;
-			var timestamp = DateTime.Now;
-
-			var trackObject = new Track(tag, new TrackData(tag, xCoordinate, yCoordinate, altitude, timestamp));
-			_currentTracksManager.AddTrack(trackObject);
-
-			// Act
-			var formattedTracksList = _trackController.GetFormattedCurrentTracks();
-
-			// Assert
-			Assert.That(formattedTracksList, Contains.Substring(altitude.ToString()));
-		}
-
-		[Test]
-		public void GetFormattedCurrentTracks_OneTrackInCurrentTracksList_FormattedListContainsTimestamp()
-		{
-			// Arrange
-			const string tag = "tag";
-			const int xCoordinate = 10000;
-			const int yCoordinate = 11000;
-			const int altitude = 12000;
-			var timestamp = DateTime.Now;
-
-			var trackObject = new Track(tag, new TrackData(tag, xCoordinate, yCoordinate, altitude, timestamp));
-			_currentTracksManager.AddTrack(trackObject);
-
-			// Act
-			var formattedTracksList = _trackController.GetFormattedCurrentTracks();
-
-			// Assert
-			Assert.That(formattedTracksList, Contains.Substring(timestamp.ToString(CultureInfo.CurrentCulture)));
+			var track = _currentTracksManager.FindTrack(tag);
+			Assert.That(track.CurrentTrack, Is.EqualTo(trackDataObject));
 		}
 	}
 }
