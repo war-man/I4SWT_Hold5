@@ -11,9 +11,10 @@
   <Filters>
     <ExcludeFilters>
       <FilterEntry>
-        <ModuleMask>AirTrafficMonitoring.Tests.Unit</ModuleMask>
-        <ClassMask>AirTrafficMonitoring.Tests.Unit.*</ClassMask>
-        <FunctionMask>*</FunctionMask>
+        <ModuleMask>*.Tests*</ModuleMask>
+      </FilterEntry>
+	  <FilterEntry>
+        <ModuleMask>nunit.framework</ModuleMask>
       </FilterEntry>
     </ExcludeFilters>
   </Filters>
