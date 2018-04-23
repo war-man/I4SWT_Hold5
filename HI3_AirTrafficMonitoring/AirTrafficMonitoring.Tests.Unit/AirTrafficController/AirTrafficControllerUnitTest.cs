@@ -1,4 +1,5 @@
-﻿using AirTrafficMonitoring.Classes.DataModels;
+﻿using AirTrafficMonitoring.Classes.AirTrafficController;
+using AirTrafficMonitoring.Classes.DataModels;
 using AirTrafficMonitoring.Classes.Objectifier;
 using AirTrafficMonitoring.Classes.Printer;
 using AirTrafficMonitoring.Classes.SeparationEvents;
@@ -15,6 +16,8 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 	[TestFixture]
 	class AirTrafficControllerUnitTest
 	{
+		private IAirTrafficController _uut;
+
 		private ITransponderReceiver _fakeTransponderReceiver;
 		private ITrackDataObjectifier _fakeTrackDataObjectifier;
 		private ISeparationEventController _fakeSeparationEventController;
@@ -30,7 +33,7 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 			_fakeTrackController = Substitute.For<ITrackController>();
 			_fakeConsolePrinter = Substitute.For<IPrinter>();
 
-			var unused = new Classes.AirTrafficController.AirTrafficController(
+			_uut = new Classes.AirTrafficController.AirTrafficController(
 				_fakeTransponderReceiver,
 				_fakeTrackDataObjectifier,
 				_fakeSeparationEventController,
@@ -39,7 +42,17 @@ namespace AirTrafficMonitoring.Tests.Unit.AirTrafficController
 		}
 
 		[Test]
-		public void OnTransponderDataReady_GivenEventArgsIsNull_ObjectifierCalledWithNullTransponderData()
+		public void OnTransponderDataReady_GivenEventArgsIsNull_ObjectifierNotCalled()
+		{
+			// Act
+			_uut.OnTransponderDataReady(this, null);
+
+			// Assert
+			_fakeTrackDataObjectifier.DidNotReceive().Objectify(Arg.Any<List<string>>());
+		}
+
+		[Test]
+		public void OnTransponderDataReady_GivenTransponderDataListIsNull_ObjectifierCalledWithNullTransponderData()
 		{
 			// Act
 			var args = new RawTransponderDataEventArgs(null);
