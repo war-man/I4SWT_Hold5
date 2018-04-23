@@ -12,6 +12,8 @@ namespace AirTrafficMonitoring.Classes.Tracks
 
 		public List<Track> CurrentTracks { get; }
 
+		public int TrackCount => CurrentTracks.Count;
+
 		public void AddTrack(Track track)
 		{
 			if (track != null)
@@ -23,11 +25,6 @@ namespace AirTrafficMonitoring.Classes.Tracks
 			if (tag == null) return null;
 
 			return CurrentTracks.Find(t => t.Tag == tag);
-		}
-
-		public int GetTrackCount()
-		{
-			return CurrentTracks.Count;
 		}
 
 		public void RemoveTrack(Track track)

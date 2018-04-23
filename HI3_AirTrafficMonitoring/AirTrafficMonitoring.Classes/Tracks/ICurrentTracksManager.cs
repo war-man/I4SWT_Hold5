@@ -6,10 +6,10 @@ namespace AirTrafficMonitoring.Classes.Tracks
 	public interface ICurrentTracksManager
 	{
 		List<Track> CurrentTracks { get; }
+		int TrackCount { get; }
 
 		void AddTrack(Track track);
 		Track FindTrack(string tag);
-		int GetTrackCount();
 		void RemoveTrack(Track track);
 		void UpdateTrack(TrackData trackData);
 	}

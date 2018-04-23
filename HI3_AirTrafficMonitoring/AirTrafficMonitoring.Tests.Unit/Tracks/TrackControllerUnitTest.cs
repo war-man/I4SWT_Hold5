@@ -231,7 +231,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 			// Arrange
 			var trackList = new List<Track>();
 			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
-			_fakeCurrentTracksManager.GetTrackCount().Returns(0);
+			_fakeCurrentTracksManager.TrackCount.Returns(0);
 
 			// Act
 			var currentTracks = _uut.AddTrackDataObjects(new List<TrackData>());
@@ -258,7 +258,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 				trackObject5
 			};
 			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
-			_fakeCurrentTracksManager.GetTrackCount().Returns(5);
+			_fakeCurrentTracksManager.TrackCount.Returns(5);
 
 			// Act
 			var currentTracks = _uut.AddTrackDataObjects(new List<TrackData>());
@@ -283,7 +283,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 			// Arrange
 			var trackList = new List<Track>();
 			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
-			_fakeCurrentTracksManager.GetTrackCount().Returns(0);
+			_fakeCurrentTracksManager.TrackCount.Returns(0);
 
 			// Act
 			_uut.GetFormattedCurrentTracks();
@@ -310,7 +310,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 				trackObject5
 			};
 			_fakeCurrentTracksManager.CurrentTracks.Returns(trackList);
-			_fakeCurrentTracksManager.GetTrackCount().Returns(5);
+			_fakeCurrentTracksManager.TrackCount.Returns(5);
 
 			// Act
 			_uut.GetFormattedCurrentTracks();

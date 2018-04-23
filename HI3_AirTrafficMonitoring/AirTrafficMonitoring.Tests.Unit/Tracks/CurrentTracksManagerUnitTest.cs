@@ -31,7 +31,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 			_uut.AddTrack(null);
 
 			// Assert
-			Assert.That(_uut.GetTrackCount(), Is.EqualTo(2));
+			Assert.That(_uut.TrackCount, Is.EqualTo(2));
 		}
 
 		[Test]
@@ -95,7 +95,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 			}
 
 			// Act
-			var trackCount = _uut.GetTrackCount();
+			var trackCount = _uut.TrackCount;
 
 			// Assert
 			Assert.That(trackCount, Is.EqualTo(expectedTrackCount));
@@ -116,7 +116,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 			_uut.RemoveTrack(null);
 
 			// Assert
-			Assert.That(_uut.GetTrackCount(), Is.EqualTo(2));
+			Assert.That(_uut.TrackCount, Is.EqualTo(2));
 		}
 
 		[Test]
@@ -148,7 +148,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 			_uut.RemoveTrack(trackObject2);
 
 			// Assert
-			Assert.That(_uut.GetTrackCount(), Is.EqualTo(1));
+			Assert.That(_uut.TrackCount, Is.EqualTo(1));
 		}
 
 		[Test]
@@ -173,7 +173,7 @@ namespace AirTrafficMonitoring.Tests.Unit.Tracks
 			_uut.UpdateTrack(null);
 
 			// Assert
-			Assert.That(_uut.GetTrackCount(), Is.EqualTo(2));
+			Assert.That(_uut.TrackCount, Is.EqualTo(2));
 		}
 
 		[Test]

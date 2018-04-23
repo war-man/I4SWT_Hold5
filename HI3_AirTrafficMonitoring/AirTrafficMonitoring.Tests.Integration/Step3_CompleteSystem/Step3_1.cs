@@ -94,7 +94,7 @@ namespace AirTrafficMonitoring.Tests.Integration.Step3_CompleteSystem
 			_airTrafficController.OnTransponderDataReady(this, new RawTransponderDataEventArgs(new List<string>()));
 
 			// Assert
-			Assert.That(_currentTracksManager.GetTrackCount(), Is.EqualTo(5));
+			Assert.That(_currentTracksManager.TrackCount, Is.EqualTo(5));
 		}
 
 		[Test]
@@ -136,7 +136,7 @@ namespace AirTrafficMonitoring.Tests.Integration.Step3_CompleteSystem
 			_airTrafficController.OnTransponderDataReady(this, new RawTransponderDataEventArgs(new List<string>()));
 
 			// Assert
-			Assert.That(_currentTracksManager.GetTrackCount(), Is.EqualTo(0));
+			Assert.That(_currentTracksManager.TrackCount, Is.EqualTo(0));
 		}
 	}
 }
