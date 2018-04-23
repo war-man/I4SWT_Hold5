@@ -5,25 +5,25 @@ namespace AirTrafficMonitoring.Classes.Printer
 {
 	public class SeparationEventLogger : IPrinter
 	{
-		private string _filename;
+		private string _fileName;
 		private string _completePath;
 
 		public SeparationEventLogger()
 		{
-			_filename = "\\separationEvents.txt";
+			_fileName = "\\separationEvents.txt";
 			Directory = Environment.CurrentDirectory;
-			_completePath = Directory + _filename;
+			_completePath = Directory + _fileName;
 		}
 
 		public static string Directory { get; set; }
 
-		public string Filename
+		public string FileName
 		{
-			get => _filename;
+			get => _fileName;
 			set
 			{
-				_filename = value;
-				_completePath = Environment.CurrentDirectory + _filename;
+				_fileName = value;
+				_completePath = Environment.CurrentDirectory + _fileName;
 			}
 		}
 
