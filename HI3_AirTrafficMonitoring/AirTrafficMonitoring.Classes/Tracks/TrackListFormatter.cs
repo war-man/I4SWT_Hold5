@@ -8,7 +8,7 @@ namespace AirTrafficMonitoring.Classes.Tracks
 	{
 		public string Format(List<Track> trackList)
 		{
-			if (trackList.Count == 0) return "";
+			if (trackList == null || trackList.Count == 0) return "";
 
 			var returnString = new StringBuilder();
 

@@ -29,6 +29,8 @@ namespace AirTrafficMonitoring.Classes.AirTrafficController
 
 		public void OnTransponderDataReady(object sender, RawTransponderDataEventArgs e)
 		{
+			if (e == null) return;
+
 			// Objectify data received from TransponderReceiver
 			var trackDataList = _trackDataObjectifier.Objectify(e.TransponderData);
 
